@@ -5,7 +5,7 @@
 */
 
 const {
-  ActionRowBuilder, Modal, TextInputBuilder
+  ActionRowBuilder, ModalBuilder, TextInputBuilder
 } = require('discord.js')
 
 const imp = require('../../context-menus/user/empfangtools')
@@ -100,7 +100,7 @@ module.exports = {
         const prev3 = interaction
         const prev4 = target
         module.exports.prev = { prev3, prev4 }
-        const ve2Modal = new Modal().setCustomId('ve2Reason').setTitle('Grund')
+        const ve2Modal = new ModalBuilder().setCustomId('ve2Reason').setTitle('Grund')
         const ve2Grund = new TextInputBuilder()
           .setCustomId('ve2Grund')
           .setLabel('Grund für Verifizierungsebene 2')
