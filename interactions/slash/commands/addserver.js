@@ -57,7 +57,7 @@ module.exports = {
     client.modalCommands = new Collection()
     client.selectCommands = new Collection()
     client.contextCommands = new Collection()
-    const command = require(`../../../interactions/slash/${interaction.options.getString('module')}/${interaction.options.getString('command')}`)
+    const command = require(`../../../interactions/${interaction.options.getString('category')}/${interaction.options.getString('module')}/${interaction.options.getString('command')}`)
     if (interaction.options.getString('category') === 'slash') {
       client.slashCommands.set(command.data.name, command)
     } else if (interaction.options.getString('category') === 'buttons') {
