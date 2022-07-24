@@ -39,6 +39,7 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
+    interaction.deferReply()
     const client = interaction.client.application
     client.slashCommands = new Collection()
     client.buttonCommands = new Collection()
@@ -66,6 +67,7 @@ module.exports = {
       ...Array.from(client.contextCommands.values()).map((c) => c.data)
     ]
     client.commands.create(commandJsonData[0])
-    interaction.reply({ content: 'Command added.' })
+    interaction.editReply({ content: 'Command added.' })
+    return
   }
 }

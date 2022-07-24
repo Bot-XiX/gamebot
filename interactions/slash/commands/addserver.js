@@ -45,6 +45,7 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
+    interaction.deferReply()
     const client = interaction.client
     const guild = client.guilds.cache.get(interaction.options.getString('server'))
     client.slashCommands = new Collection()
@@ -74,6 +75,7 @@ module.exports = {
     ]
     console.log(commandJsonData)
     guild.commands.create(commandJsonData[0])
-    interaction.reply({ content: 'Command added.' })
+    interaction.editReply({ content: 'Command added.' })
+    return
   }
 }
