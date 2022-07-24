@@ -1,4 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js")
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord.js');
+require('dotenv').config();
 
 /**
 * @file Slash interaction: removeglobal
@@ -17,18 +20,16 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
-    const client = interaction.client.application
-    if(!interaction.options.getString('id')) {
-      client.commands.set([])
-      interaction.reply({ content: 'All commands removed' })
+    const rest = new REST({ version: '10' }).setToken(process.env.token);
+    const client = interaction.client.application;
+    if (!interaction.options.getString('id')) {
+      rest.delete(Routes.applicationCommands(client.id), { body: [] })
+        .then(() => interaction.reply('Successfully deleted guild commands'))
+        .catch(interaction.reply('Failed to delete guild commands'))
     } else {
-      const command = client.commands.get(interaction.options.getString('ID'))
-      if(!command) {
-        interaction.reply({ content: 'Command not found.' })
-        return
-      }
-      await command.delete()
-      interaction.reply({ content: 'Command removed.' })
+      rest.delete(Routes.applicationCommand(client.id, interaction.options.getString('id')))
+        .then(() => interaction.reply('Successfully deleted guild command'))
+        .catch(interaction.reply('Failed to delete guild command'))
     }
   }
 }

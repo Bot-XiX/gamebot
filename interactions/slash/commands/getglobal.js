@@ -16,11 +16,9 @@ module.exports = {
   async execute (interaction) {
     await interaction.deferReply()
     const client = interaction.client.application
-    console.log(client)
     const commands = await client.commands.fetch()
     const commandList = []
     for (const command of commands.values()) {
-      console.log(command.id)
       commandList.push(`${command.id} - ${command.name}`)
     }
 

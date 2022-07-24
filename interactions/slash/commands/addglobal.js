@@ -2,10 +2,7 @@
 * @file Slash interaction: addglobal
 * @author Felix * @since 1.0.0
 */
-const { SlashCommandBuilder, Collection, Client } = require('discord.js')
-const { REST } = require('@discordjs/rest')
-const { Routes } = require('discord-api-types/v9')
-require('dotenv').config()
+const { SlashCommandBuilder, Collection } = require('discord.js')
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('addglobal')
@@ -42,10 +39,7 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
-    const Discord = require('discord.js')
-    const client = new Client({
-      intents: new Discord.IntentsBitField(1179647)
-    })
+    const client = interaction.client.application
     client.slashCommands = new Collection()
     client.buttonCommands = new Collection()
     client.modalCommands = new Collection()
@@ -67,26 +61,11 @@ module.exports = {
       console.log('Error: Category not found!')
     }
     // Registration of Slash-Commands in Discord API
-
-    const rest = new REST({ version: '9' }).setToken(process.env.token)
-
     const commandJsonData = [
       ...Array.from(client.slashCommands.values()).map((c) => c.data.toJSON()),
       ...Array.from(client.contextCommands.values()).map((c) => c.data)
     ]
-      ; (async () => {
-      await interaction.deferReply()
-      try {
-        await rest.put(
-          Routes.applicationCommands(interaction.client.user.id),
-          { body: commandJsonData }
-        )
-
-        interaction.editReply('Successfully pushed to all servers!')
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        interaction.editReply('Error: ' + error)
-      }
-    })()
+    client.commands.create(commandJsonData[0])
+    interaction.reply({ content: 'Command added.' })
   }
 }

@@ -25,7 +25,6 @@ module.exports = {
     const commands = await guild.commands.fetch()
     const commandList = []
     for (const command of commands.values()) {
-      console.log(command.id)
       commandList.push(`${command.id} - ${command.name}`)
     }
     try {
