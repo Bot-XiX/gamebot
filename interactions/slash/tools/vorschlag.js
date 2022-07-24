@@ -1,6 +1,7 @@
 const {
   ActionRowBuilder,
-  ButtonBuilder
+  ButtonBuilder,
+  ButtonStyle
 } = require('discord.js')
 const { SlashCommandBuilder } = require('@discordjs/builders')
 module.exports = {
@@ -22,15 +23,15 @@ module.exports = {
         new ButtonBuilder()
           .setLabel('Vorschlag')
           .setCustomId('vorschlag_normal')
-          .setStyle('PRIMARY'),
+          .setStyle(ButtonStyle.Primary),
         new ButtonBuilder()
           .setLabel('Anonym')
           .setCustomId('vorschlag_anonym')
-          .setStyle('SECONDARY'),
+          .setStyle(ButtonStyle.Secondary),
         new ButtonBuilder()
           .setLabel('Event')
           .setCustomId('vorschlag_event')
-          .setStyle('SECONDARY')
+          .setStyle(ButtonStyle.Secondary)
       )
       interaction.channel.send({
         content: 'Drücke hier um einen Vorschlag einzureichen',
