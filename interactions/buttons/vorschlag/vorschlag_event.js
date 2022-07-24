@@ -2,7 +2,7 @@
  * @file Event button interaction
  * @since 1.0.0
 */
-const { ActionRowBuilder, Modal, TextInputBuilder } = require('discord.js')
+const { ActionRowBuilder, ModalBuilderBuilder, TextInputBuilder } = require('discord.js')
 module.exports = {
   id: 'vorschlag_event',
 
@@ -13,7 +13,7 @@ module.exports = {
    */
 
   async execute (interaction) {
-    const modal = new Modal()
+    const modal = new ModalBuilder()
       .setCustomId('vorschlag_event')
       .setTitle('Event Vorschlag')
     // Add components to modal
@@ -23,12 +23,12 @@ module.exports = {
     // The label is the prompt the user sees for this input
       .setLabel('Titel deines Vorschlags')
     // Short means only a single line of text
-      .setStyle('SHORT')
+      .setStyle(1)
     const beschreibung = new TextInputBuilder()
       .setCustomId('beschreibung')
       .setLabel('Beschreibung deines Vorschlags')
     // Paragraph means multiple lines of text.
-      .setStyle('PARAGRAPH')
+      .setStyle(2)
     // An action row only holds one text input,
     // so you need one action row per text input.
     const firstActionRow = new ActionRowBuilder().addComponents(titel)

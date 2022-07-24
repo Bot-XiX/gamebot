@@ -4,7 +4,7 @@
 */
 const {
   ActionRowBuilder,
-  Modal,
+  ModalBuilder,
   TextInputBuilder
 } = require('discord.js')
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
    */
 
   async execute (interaction) {
-    const modal = new Modal()
+    const modal = new ModalBuilder()
       .setCustomId('anonyme_frage')
       .setTitle('Anonyme Frage')
     // Add components to modal
@@ -27,12 +27,12 @@ module.exports = {
     // The label is the prompt the user sees for this input
       .setLabel('Titel deiner Frage')
     // Short means only a single line of text
-      .setStyle('SHORT')
+      .setStyle(1)
     const beschreibung = new TextInputBuilder()
       .setCustomId('beschreibung')
       .setLabel('Beschreibung deiner Frage')
     // Paragraph means multiple lines of text.
-      .setStyle('PARAGRAPH')
+      .setStyle(2)
     // An action row only holds one text input,
     // so you need one action row per text input.
     const firstActionRow = new ActionRowBuilder().addComponents(titel)
