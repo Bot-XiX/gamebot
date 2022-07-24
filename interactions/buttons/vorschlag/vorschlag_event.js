@@ -2,7 +2,7 @@
  * @file Event button interaction
  * @since 1.0.0
 */
-const { ActionRowBuilder, ModalBuilderBuilder, TextInputBuilder } = require('discord.js')
+const { ActionRowBuilder, ModalBuilder, TextInputBuilder } = require('discord.js')
 module.exports = {
   id: 'vorschlag_event',
 
