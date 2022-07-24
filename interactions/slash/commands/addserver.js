@@ -61,13 +61,14 @@ module.exports = {
     if (interaction.options.getString('category') === 'slash') {
       client.slashCommands.set(command.data.name, command)
     } else if (interaction.options.getString('category') === 'buttons') {
-      client.buttonCommands.set(command.data.name, command)
+      client.buttonCommands.set(command.id, command)
     } else if (interaction.options.getString('category') === 'modals') {
-      client.modalCommands.set(command.data.name, command)
+      client.modalCommands.set(command.id, command)
     } else if (interaction.options.getString('category') === 'select-menus') {
-      client.selectCommands.set(command.data.name, command)
+      client.selectCommands.set(command.id, command)
     } else if (interaction.options.getString('category') === 'context-menus') {
-      client.contextCommands.set(command.data.name, command)
+      const keyName = `${interaction.options.getString('category').toUpperCase()} ${interaction.options.getString('command')}`
+      client.contextCommands.set(keyName, command)
     } else {
       console.log('Error: Category not found!')
     }
