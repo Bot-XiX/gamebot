@@ -16,6 +16,10 @@ module.exports = {
       target.user.send({
         embeds: interaction.message.embeds
       })
+      interaction.reply({
+        content: 'Nachricht gesendet',
+        ephemeral: true
+      })
     } catch (e) {
       console.log(e)
       interaction.reply({

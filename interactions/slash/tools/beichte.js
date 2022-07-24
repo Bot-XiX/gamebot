@@ -1,6 +1,7 @@
 const {
   ActionRowBuilder,
-  ButtonBuilder
+  ButtonBuilder,
+  ButtonStyle
 } = require('discord.js')
 const { SlashCommandBuilder } = require('@discordjs/builders')
 module.exports = {
@@ -22,11 +23,11 @@ module.exports = {
         new ButtonBuilder()
           .setLabel('Frage')
           .setCustomId('anonyme_frage')
-          .setStyle('PRIMARY'),
+          .setStyle(ButtonStyle.Primary),
         new ButtonBuilder()
           .setLabel('Beichte')
           .setCustomId('anonyme_beichte')
-          .setStyle('SECONDARY')
+          .setStyle(ButtonStyle.Secondary)
       )
       interaction.channel.send({
         content: 'Drücke hier um einen Beichte oder Frage einzureichen',

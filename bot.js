@@ -171,8 +171,7 @@ const commandJsonData = [
   ...Array.from(client.slashCommands.values()).map((c) => c.data.toJSON()),
   ...Array.from(client.contextCommands.values()).map((c) => c.data)
 ]
-
-  ; (async () => {
+; (async () => {
   try {
     console.log('Started refreshing application (/) commands.')
 

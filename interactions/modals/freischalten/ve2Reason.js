@@ -3,7 +3,7 @@
  * @since 1.0.0
 */
 const imp = require('../../select-menus/empfangtools/empfangselectmenu')
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js')
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 const { ref, get, getDatabase } = require('firebase/database')
 module.exports = {
   id: 've2Reason',
@@ -69,7 +69,7 @@ module.exports = {
           new ButtonBuilder()
             .setCustomId('sendoptionalve2')
             .setLabel('Senden')
-            .setStyle('PRIMARY')
+            .setStyle(ButtonStyle.Primary)
         )
       interaction.reply({
         content: `${'Verifizierungsebene 2'} hinzugefügt\n\n**Möchtest du die VE2-Nachricht an den User senden?**`,
