@@ -45,7 +45,7 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
-    interaction.deferReply()
+    await interaction.deferReply()
     const client = interaction.client
     const guild = client.guilds.cache.get(interaction.options.getString('server'))
     client.slashCommands = new Collection()
