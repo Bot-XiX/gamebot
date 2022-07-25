@@ -6,7 +6,8 @@
 const {
   EmbedBuilder,
   ActionRowBuilder,
-  ButtonBuilder
+  ButtonBuilder,
+  ButtonStyle
 } = require('discord.js')
 module.exports = {
   id: 'vorschlag_anonym',
@@ -50,15 +51,15 @@ module.exports = {
         new ButtonBuilder()
           .setLabel('Vorschlag')
           .setCustomId('vorschlag_normal')
-          .setStyle('PRIMARY'),
+          .setStyle(ButtonStyle.Primary),
         new ButtonBuilder()
           .setLabel('Anonym')
           .setCustomId('vorschlag_anonym')
-          .setStyle('SECONDARY'),
+          .setStyle(ButtonStyle.Secondary),
         new ButtonBuilder()
           .setLabel('Event')
           .setCustomId('vorschlag_event')
-          .setStyle('SECONDARY')
+          .setStyle(ButtonStyle.Secondary)
       )
       const fetch = await interaction.channel.messages.fetch({
         limit: 10
