@@ -56,7 +56,7 @@ module.exports = {
     } else if (interaction.options.getString('category') === 'select-menus') {
       client.selectCommands.set(command.id, command)
     } else if (interaction.options.getString('category') === 'context-menus') {
-      const keyName = `${interaction.options.getString('module').toUpperCase()} ${interaction.options.getString('command')}`
+      const keyName = `${interaction.options.getString('module').toUpperCase()} ${command.data.name}`
       client.contextCommands.set(keyName, command)
     } else {
       console.log('Error: Category not found!')

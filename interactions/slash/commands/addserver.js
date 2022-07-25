@@ -63,7 +63,7 @@ module.exports = {
     } else if (interaction.options.getString('category') === 'select-menus') {
       client.selectCommands.set(command.id, command)
     } else if (interaction.options.getString('category') === 'context-menus') {
-      const keyName = `${interaction.options.getString('module').toUpperCase()} ${interaction.options.getString('command')}`
+      const keyName = `${interaction.options.getString('module').toUpperCase()} ${command.data.name}`
       client.contextCommands.set(keyName, command)
     } else {
       console.log('Error: Category not found!')
@@ -74,6 +74,7 @@ module.exports = {
       ...Array.from(client.contextCommands.values()).map((c) => c.data)
     ]
     console.log(commandJsonData)
+    console.log(client.contextCommands.values())
     guild.commands.create(commandJsonData[0])
     interaction.editReply({ content: 'Command added.' })
     return
