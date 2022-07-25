@@ -103,7 +103,7 @@ module.exports = {
         const ve2Grund = new TextInputBuilder()
           .setCustomId('ve2Grund')
           .setLabel('Grund für Verifizierungsebene 2')
-          .setStyle('PARAGRAPH')
+          .setStyle(2)
         const ve2GrundRow = new ActionRowBuilder().addComponents(ve2Grund)
         // Add inputs to the modal
         ve2Modal.addComponents(ve2GrundRow)
