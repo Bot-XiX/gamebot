@@ -18,10 +18,10 @@ module.exports = {
     const id = interaction.guild.id
     const log = interaction.guild.channels.cache.get(JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/vorstellungLog'))).slice(1).slice(0, -1))
     if (interaction.fields.getTextInputValue('name') &&
-        interaction.fields.getTextInputValue('age') &&
-        interaction.fields.getTextInputValue('location') &&
-        interaction.fields.getTextInputValue('gender') &&
-        interaction.fields.getTextInputValue('hobbies')
+      interaction.fields.getTextInputValue('age') &&
+      interaction.fields.getTextInputValue('location') &&
+      interaction.fields.getTextInputValue('gender') &&
+      interaction.fields.getTextInputValue('hobbies')
     ) {
       const embed = new EmbedBuilder()
         .setAuthor({
@@ -52,12 +52,13 @@ module.exports = {
               .setCustomId('declineuser')
               .setLabel('VE2')
               .setStyle(ButtonStyle.Danger)
-          // new ButtonBuilder()
-          //   .setCustomId('banuser')
+            // new ButtonBuilder()
+            //   .setCustomId('banuser')
           )
         // Add the row to the message
         log.send({ content: (interaction.user).toString() + '\n' + interaction.user.id, embeds: [embed], components: [buttonRow] })
-        interaction.reply({ content: 'Deine Vorstellung wurde gesendet! Das <@926239165463556126> wird sich zeitnah um die Freischaltung kümmern.', ephemeral: true })
+        const role = interaction.guild.roles.cache.get('926239165463556126')
+        interaction.reply({ content: `Deine Vorstellung wurde gesendet! Das ${role} wird sich zeitnah um die Freischaltung kümmern.`, ephemeral: true })
       } catch {
         return null
       }

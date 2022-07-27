@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require('discord.js')
 
 /**
  * @file Slash interaction: checkwork
@@ -8,8 +8,7 @@ const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('checkwork')
-    .setDescription('Überprüft, ob Freischaltungen ausstehen.')
-  // .addSubcommand((subcommand) => subcommand.setName().setDescription().add...)
+    .setDescription('Überprüft, ob Freischaltungen ausstehen.'), // .addSubcommand((subcommand) => subcommand.setName().setDescription().add...)
   // .addStringOption((option) => option.setName().setDescription().setRequired())
   // .addIntegerOption((option) => option.setName().setDescription().setRequired())
   // .addBooleanOption((option) => option.setName().setDescription().setRequired())
@@ -19,14 +18,14 @@ module.exports = {
   // .addMentionableOption((option) => option.setName().setDescription().setRequired())
   // .addNumberOption((option) => option.setName().setDescription().setRequired())
   // .addAttachmentOption((option) => option.setName().setDescription().setRequired())
-  ,
+
   /**
   * @description Executes when the slash command with ID checkwork is called.
   * @param {Object} interaction The Interaction Object of the command.
   */
-  async execute(interaction) {
-    function wait(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
+  async execute (interaction) {
+    function wait (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
     }
     const fetch = await interaction.channel.messages.fetch({
     })
