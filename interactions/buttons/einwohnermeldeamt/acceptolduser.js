@@ -11,7 +11,7 @@ module.exports = {
 
 * @param {Object} interaction The Interaction Object of the command.
 */
-  async execute (interaction) {
+  async execute(interaction) {
     const target = interaction.guild.members.cache.get(interaction.message.content.split('\n')[0].slice(2).slice(0, -1))
     target.roles.add(interaction.guild.roles.cache.find(r => r.name === 'Tourist'))
     target.roles.add(interaction.guild.roles.cache.find(r => r.name === 'Einwohner:in'))
@@ -27,6 +27,12 @@ module.exports = {
         content: `${interaction.user.tag} hat ${target.user} die Rolle \`Tourist + Einwohner:in\` hinzugefügt`
       })
     }
-    interaction.message.edit({ components: [] })
+    const embed = (interaction.message.embeds[0])
+    embed.data.color = 3066993
+    try {
+      await interaction.message.edit({ components: [], embed: [embed] })
+    } catch {
+      return null
+    }
   }
 }
