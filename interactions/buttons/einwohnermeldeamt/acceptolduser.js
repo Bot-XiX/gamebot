@@ -30,7 +30,7 @@ module.exports = {
     const embed = (interaction.message.embeds[0])
     embed.data.color = 3066993
     try {
-      await interaction.message.edit({ components: [], embed: [embed] })
+      await interaction.message.edit({ components: [], embeds: [embed] })
     } catch {
       return null
     }
