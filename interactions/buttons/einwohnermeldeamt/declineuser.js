@@ -12,7 +12,7 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
-    const target = interaction.guild.members.cache.get(interaction.message.content.split('\n')[0].slice(2).slice(0, -1))
+    const target = interaction.guild.members.cache.get(interaction.message.content.split('\n')[0].slice(8).slice(0, -1))
     const reasonModal = new ModalBuilder().setCustomId('ve2Reason').setTitle('VE2 Grund')
     // Add components to modal
     // Create the text input components

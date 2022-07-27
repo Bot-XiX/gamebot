@@ -56,7 +56,7 @@ module.exports = {
             //   .setCustomId('banuser')
           )
         // Add the row to the message
-        log.send({ content: (interaction.user).toString() + '\n' + interaction.user.id, embeds: [embed], components: [buttonRow] })
+        log.send({ content: 'User: ' + (interaction.user).toString() + '\nUser-ID: ' + interaction.user.id, embeds: [embed], components: [buttonRow] })
         const role = interaction.guild.roles.cache.get('926239165463556126')
         interaction.reply({ content: `Deine Vorstellung wurde gesendet! Das ${role} wird sich zeitnah um die Freischaltung kümmern.`, ephemeral: true })
       } catch {
