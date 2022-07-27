@@ -31,8 +31,12 @@ module.exports = {
     })
     module.exports.prev = target
     const check = JSON.stringify(await get(ref(db, interaction.member.guild.id + '/einwohnermeldeamt/config/VE2MsgEnabled'))).slice(1).slice(0, -1)
+    const serverIcon = interaction.guild.iconURL()
     const ve2MsgEmbed = new EmbedBuilder()
+      .setTitle('QueerCity Verifizierung')
+      .setThumbnail(serverIcon)
       .setDescription(JSON.stringify(await get(ref(db, interaction.member.guild.id + '/einwohnermeldeamt/config/VE2Msg'))).slice(1).slice(0, -1).replaceAll('\\n', '\n') + '\n**Grund:**\n' + interaction.fields.getTextInputValue('reason'))
+      .setFooter({ text: 'QueerCity Verifizierungssystem', iconURL: serverIcon })
     if (check === 'true') {
       try {
         await target.user.send({
