@@ -2,7 +2,7 @@
  * @file Modal interaction: ve2Reason
  * @since 1.0.0
 */
-const imp = require('../../select-menus/empfangtools/empfangselectmenu')
+const prev = require('../../buttons/einwohnermeldeamt/declineuser.js')
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 const { ref, get, getDatabase } = require('firebase/database')
 module.exports = {
@@ -20,33 +20,19 @@ module.exports = {
     const role = interaction.member.guild.roles.cache.find(
       (role) => role.name === 'Verifizierungsebene 2'
     )
-    const target = imp.prev.prev4
+    const target = prev.prev.target
     target.roles.add(role)
     empfangslog.send({
       content: `${interaction.user.tag} hat ${target.user} die Rolle \`Verifizierungsebene 2\` hinzugefügt`
     })
-    const fetch = await interaction.channel.messages.fetch({
-      limit: 10
-    })
-    const fetchfiltered = fetch.filter(function (list) {
-      return list.author.id === target.id
-    })
-    const lastmsgs = fetchfiltered.map(function (list) {
-      return list.content
-    })
-    const lastmsg = lastmsgs.reverse()
-    const embed = new EmbedBuilder()
-      .setAuthor({ name: target.displayName + "'s letzte Nachrichten", iconURL: target.user.displayAvatarURL() })
-      .setDescription(lastmsg.join('\n\n'))
-      .setFooter({ text: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL() })
     ve2log.send({
-      content: target.toString() + '\n\n' + interaction.fields.getTextInputValue('ve2Grund'),
-      embeds: [embed]
+      content: target.toString() + '\n\n' + interaction.fields.getTextInputValue('reason'),
+      embeds: [prev.prev.embed]
     })
     module.exports.prev = target
     const check = JSON.stringify(await get(ref(db, interaction.member.guild.id + '/einwohnermeldeamt/config/VE2MsgEnabled'))).slice(1).slice(0, -1)
     const ve2MsgEmbed = new EmbedBuilder()
-      .setDescription(JSON.stringify(await get(ref(db, interaction.member.guild.id + '/einwohnermeldeamt/config/VE2Msg'))).slice(1).slice(0, -1).replaceAll('\\n', '\n') + '\n**Grund:**\n' + interaction.fields.getTextInputValue('ve2Grund'))
+      .setDescription(JSON.stringify(await get(ref(db, interaction.member.guild.id + '/einwohnermeldeamt/config/VE2Msg'))).slice(1).slice(0, -1).replaceAll('\\n', '\n') + '\n**Grund:**\n' + interaction.fields.getTextInputValue('reason'))
     if (check === 'true') {
       try {
         await target.user.send({
@@ -77,6 +63,11 @@ module.exports = {
         embeds: [ve2MsgEmbed],
         ephemeral: true,
         attachments: []
+      })
+    } else {
+      interaction.reply({
+        content: '`Verifizierungsebene 2` hinzugefügt',
+        ephemeral: true
       })
     }
   }

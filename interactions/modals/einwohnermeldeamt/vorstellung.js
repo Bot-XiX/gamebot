@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js')
+const { EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js')
 const { get, ref, getDatabase } = require('firebase/database')
 
 /**
@@ -7,7 +7,7 @@ const { get, ref, getDatabase } = require('firebase/database')
  * @since 1.0.0
 */
 module.exports = {
-  id: 'vorstellungvorlage',
+  id: 'vorstellung',
   /**
 * @description Executes when the modal with ID vorstellung is called.
 
@@ -36,9 +36,23 @@ module.exports = {
           { name: 'Sexualität + Gender/Pronomen', value: interaction.fields.getTextInputValue('gender') },
           { name: 'Hobbies', value: interaction.fields.getTextInputValue('hobbies') }
         )
-
       try {
-        log.send({ content: (interaction.user).toString() +'\n'+interaction.user.id, embeds: [embed] })
+        const buttonRow = new ActionRowBuilder()
+          .addComponents(
+            new ButtonBuilder()
+              .setCustomId('acceptuser')
+              .setLabel('Freischalten')
+              .setStyle(ButtonStyle.Success), // Primary, Secondary, Success, Danger, Link
+            // .setEmoji('EMOJI') // If you want to use an emoji
+            new ButtonBuilder()
+              .setCustomId('declineuser')
+              .setLabel('VE2')
+              .setStyle(ButtonStyle.Danger)
+          // new ButtonBuilder()
+          //   .setCustomId('banuser')
+          );
+        // Add the row to the message
+        log.send({ content: (interaction.user).toString() + '\n' + interaction.user.id, embeds: [embed], components: [buttonRow] })
         interaction.reply({ content: 'Vorstellung wurde gesendet.', ephemeral: true })
       } catch {
         return null

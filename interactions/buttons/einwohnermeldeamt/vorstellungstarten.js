@@ -2,19 +2,19 @@ const { TextInputBuilder, ActionRowBuilder } = require('@discordjs/builders')
 const { ModalBuilder } = require('discord.js')
 
 /**
- * @file Button interaction: vorstellungvorlage
+ * @file Button interaction: vorstellungstarten
 
  * @since 1.0.0
 */
 module.exports = {
-  id: 'vorstellungvorlage',
+  id: 'vorstellungstarten',
   /**
-* @description Executes when the button with ID vorstellungvorlage is called.
+* @description Executes when the button with ID vorstellungstarten is called.
 
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
-    const modalModal = new ModalBuilder().setCustomId('vorstellungvorlage').setTitle('Vorstellung')
+    const modalModal = new ModalBuilder().setCustomId('vorstellung').setTitle('Vorstellung')
     const name = new TextInputBuilder()
       .setCustomId('name')
       .setLabel('Name')

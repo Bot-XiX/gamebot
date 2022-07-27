@@ -29,14 +29,10 @@ module.exports = {
       const newRow = new ActionRowBuilder()
         .addComponents(
           new ButtonBuilder()
-            .setCustomId('vorstellungvorlage')
-            .setLabel('Mit Vorlage')
-            .setStyle(ButtonStyle.Primary), // Primary, Secondary, Success, Danger, Link
-          // .setEmoji('EMOJI') // If you want to use an emoji
-          new ButtonBuilder()
-            .setCustomId('vorstellungcustom')
-            .setLabel('Ohne Vorlage')
-            .setStyle(ButtonStyle.Secondary)
+            .setCustomId('vorstellungstarten')
+            .setLabel('Verifikation starten')
+            .setStyle(ButtonStyle.Primary) // Primary, Secondary, Success, Danger, Link
+            .setEmoji('🛫') // If you want to use an emoji
         )
       // Add the row to the message
       try {
