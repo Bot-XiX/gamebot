@@ -14,7 +14,7 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
-    const modalModal = new ModalBuilder().setCustomId('vorstellung').setTitle('Vorstellung')
+    const modalModal = new ModalBuilder().setCustomId('vorstellungvorlage').setTitle('Vorstellung')
     const name = new TextInputBuilder()
       .setCustomId('name')
       .setLabel('Name')
