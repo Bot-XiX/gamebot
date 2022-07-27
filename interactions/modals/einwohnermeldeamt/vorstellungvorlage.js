@@ -25,8 +25,8 @@ module.exports = {
     ) {
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: `Vorstellung von ${interaction.member.tag}`,
-          iconURL: interaction.member.avatarURL({ format: 'png', dynamic: true, size: 1024 })
+          name: `Vorstellung von ${interaction.user.tag}`,
+          iconURL: interaction.member.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 })
         })
 
         .addFields(
@@ -38,7 +38,7 @@ module.exports = {
         )
 
       try {
-        log.send({ embeds: [embed] })
+        log.send({ content: interaction.user.tag, embeds: [embed] })
         interaction.reply({ content: 'Vorstellung wurde gesendet.', ephemeral: true })
       } catch {
         return null
