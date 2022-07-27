@@ -70,5 +70,6 @@ module.exports = {
         ephemeral: true
       })
     }
+    prev.prev.interaction.message.edit({ components: [] })
   }
 }

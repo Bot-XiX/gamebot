@@ -33,6 +33,6 @@ module.exports = {
     // Show the modal to the user
     await interaction.showModal(reasonModal);
     const embed = interaction.message.embeds[0]
-    module.exports.prev = { target, embed }
+    module.exports.prev = { target, embed, interaction }
   }
 }
