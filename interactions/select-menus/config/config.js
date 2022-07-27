@@ -37,6 +37,13 @@ module.exports = {
       } catch (e) {
         VE2LogStr = 'Nicht gefunden'
       }
+      let VorstellungLogStr
+      try {
+        const VorstellungLog = interaction.member.guild.channels.cache.get(JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/vorstellungLog'))).slice(1).slice(0, -1))
+        VorstellungLogStr = `[#${VorstellungLog.name}](https://discord.com/config/${VorstellungLog.guild.id}/${VorstellungLog.id})`
+      } catch (e) {
+        VE2LogStr = 'Nicht gefunden'
+      }
       let VE2MsgEnabled = JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/VE2MsgEnabled'))).slice(1).slice(0, -1)
       if (!VE2MsgEnabled) {
         await set(ref(db, id + '/einwohnermeldeamt/config/VE2MsgEnabled'), 'false')
@@ -53,6 +60,8 @@ module.exports = {
         .addFields(
           { name: 'Modul aktiviert', value: enabled },
           { name: 'E-Log Channel', value: eLogStr },
+          { name: 'Vorstellung-Log Channel', value: VorstellungLogStr },
+          { name: 'Vorstellung-Embed', value: 'Bitte bearbeiten um anzuzeigen' },
           { name: 'VE2-Log Channel', value: VE2LogStr },
           { name: 'VE2-Nachricht aktiviert', value: VE2MsgEnabled },
           { name: 'VE2-Nachricht', value: VE2Msg }
@@ -78,6 +87,16 @@ module.exports = {
                 label: 'VE2-Log Channel',
                 description: 'Ändere den VE2-Log Channel',
                 value: 've2log'
+              },
+              {
+                label: 'Vorstellung-Embed',
+                description: 'Ändert das Vorstellung-Embed',
+                value: 'vorstellungembed'
+              },
+              {
+                label: 'Vorstellung-Log Channel',
+                description: 'Ändere den Vorstellung-Log Channel',
+                value: 'vorstellunglog'
               },
               {
                 label: 'VE2-Message Enabled',
@@ -117,7 +136,7 @@ module.exports = {
       const adminRole = interaction.guild.roles.cache.get(`${JSON.stringify(await get(ref(db, id + '/anonym/config/adminRole'))).slice(2).slice(0, -1)}`)
       // ###########################################
       const anonymEmbed = new EmbedBuilder()
-        .setTitle('Einwohnermeldeamt Einstellungen')
+        .setTitle('Anonymisierung Einstellungen')
         .addFields(
           { name: 'Modul aktiviert', value: enabled },
           { name: 'Admin Rolle', value: String(adminRole) }

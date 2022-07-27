@@ -2,7 +2,7 @@
  * @file Select menu interaction: configempfangsteam
  * @since 1.0.0
 */
-const { EmbedBuilder } = require('discord.js')
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder } = require('discord.js')
 const prev = require('./config')
 const { set, ref, get, getDatabase } = require('firebase/database')
 module.exports = {
@@ -57,6 +57,75 @@ module.exports = {
         m.first().delete()
       })
     }
+    if (interaction.values.includes('vorstellungembed')) {
+      const vorstellungEmbed = new EmbedBuilder()
+        .setTitle('Placeholder title')
+      const editEmbedRow = new ActionRowBuilder()
+        .addComponents(
+          new SelectMenuBuilder()
+            .setCustomId('editvorstellungembed')
+            .setPlaceholder('Nothing selected')
+            .addOptions([
+              {
+                label: 'Title',
+                value: 'title'
+              },
+              {
+                label: 'URL',
+                value: 'url'
+              },
+              {
+                label: 'Author',
+                value: 'author'
+              },
+              {
+                label: 'Description',
+                value: 'description'
+              },
+              {
+                label: 'Thumbnail',
+                value: 'thumbnail'
+              },
+              {
+                label: 'Color',
+                value: 'color'
+              },
+              {
+                label: 'Image',
+                value: 'image'
+              },
+              {
+                label: 'Footer',
+                value: 'footer'
+              }
+            ])
+        )
+      const saveEmbedRow = new ActionRowBuilder()
+        .addComponents(
+          new ButtonBuilder()
+            .setCustomId('savevorstellungembed')
+            .setLabel('Save')
+            .setStyle(ButtonStyle.Success)
+        )
+      const msg = interaction.reply({
+        components: [editEmbedRow, saveEmbedRow],
+        attachments: [],
+        embeds: [vorstellungEmbed]
+      })
+      module.exports.prev = { interaction, vorstellungEmbed, editEmbedRow, saveEmbedRow, msg }
+    }
+    if (interaction.values.includes('vorstellunglog')) {
+      interaction.reply({
+        content: 'Please mention the channel where the Vorstellung-logs should be sent to.',
+        ephemeral: true
+      })
+      collect().then(async (m) => {
+        await set(ref(db, id + '/einwohnermeldeamt/config/vorstellungLog'), m.first().content.slice(2).slice(0, -1))
+        const vorstellungLog = interaction.member.guild.channels.cache.get(JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/vorstellungLog'))).slice(1).slice(0, -1))
+        interaction.editReply({ content: `Logs will be sent to ${vorstellungLog}` })
+        m.first().delete()
+      })
+    }
     if (interaction.values.includes('ve2msgenabled')) {
       if (JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/VE2MsgEnabled'))).slice(1).slice(0, -1) === 'true') {
         await set(ref(db, id + '/einwohnermeldeamt/config/VE2MsgEnabled'), 'false')
@@ -101,6 +170,13 @@ module.exports = {
     } catch (e) {
       VE2LogStr = 'Nicht gefunden'
     }
+    let VorstellungLogStr
+    try {
+      const VorstellungLog = interaction.member.guild.channels.cache.get(JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/vorstellungLog'))).slice(1).slice(0, -1))
+      VorstellungLogStr = `[#${VorstellungLog.name}](https://discord.com/config/${VorstellungLog.guild.id}/${VorstellungLog.id})`
+    } catch (e) {
+      VE2LogStr = 'Nicht gefunden'
+    }
     let VE2MsgEnabled = JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/VE2MsgEnabled'))).slice(1).slice(0, -1)
     if (!VE2MsgEnabled) {
       await set(ref(db, id + '/einwohnermeldeamt/config/VE2MsgEnabled'), 'false')
@@ -117,6 +193,8 @@ module.exports = {
       .addFields(
         { name: 'Modul aktiviert', value: enabled },
         { name: 'E-Log Channel', value: eLogStr },
+        { name: 'Vorstellung-Log Channel', value: VorstellungLogStr },
+        { name: 'Vorstellung-Embed', value: 'Bitte bearbeiten um anzuzeigen' },
         { name: 'VE2-Log Channel', value: VE2LogStr },
         { name: 'VE2-Nachricht aktiviert', value: VE2MsgEnabled },
         { name: 'VE2-Nachricht', value: VE2Msg }

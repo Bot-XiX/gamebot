@@ -2,7 +2,7 @@
  * @file Context menu (type:type) interaction: User avatar * @since 1.0.0
 */
 
-const { ButtonBuilder, ActionRowBuilder, ButtonStyle, EmbedBuilder } = require("discord.js")
+const { ButtonBuilder, ActionRowBuilder, ButtonStyle, EmbedBuilder } = require('discord.js')
 
 module.exports = {
   data: {
@@ -25,7 +25,7 @@ module.exports = {
       // .setFooter({ name: `Requested by ${interaction.user.tag}` })
 
     const row = new ActionRowBuilder()
-    try{
+    try {
       const download = new ButtonBuilder()
         .setURL(target.user.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 }))
         .setLabel('Download avatar')
@@ -40,7 +40,7 @@ module.exports = {
       components: [row],
       ephemeral: true,
       embeds: [embed]
-    });
+    })
     module.exports.interaction = interaction
   }
 }
