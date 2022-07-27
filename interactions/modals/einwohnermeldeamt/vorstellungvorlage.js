@@ -38,7 +38,7 @@ module.exports = {
         )
 
       try {
-        log.send({ content: interaction.user.tag, embeds: [embed] })
+        log.send({ content: interaction.user+'\n'+interaction.user.id, embeds: [embed] })
         interaction.reply({ content: 'Vorstellung wurde gesendet.', ephemeral: true })
       } catch {
         return null
