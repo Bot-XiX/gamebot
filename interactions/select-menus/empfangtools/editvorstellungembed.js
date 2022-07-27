@@ -10,7 +10,7 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
-    const embed = prev.prev.ticketEmbed
+    const embed = prev.prev.vorstellungEmbed
     async function editEmbed (value) {
       try {
         await prev.prev.interaction.editReply({ embeds: [value] })
