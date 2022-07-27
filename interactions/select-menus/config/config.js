@@ -42,7 +42,7 @@ module.exports = {
         const VorstellungLog = interaction.member.guild.channels.cache.get(JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/vorstellungLog'))).slice(1).slice(0, -1))
         VorstellungLogStr = `[#${VorstellungLog.name}](https://discord.com/config/${VorstellungLog.guild.id}/${VorstellungLog.id})`
       } catch (e) {
-        VE2LogStr = 'Nicht gefunden'
+        VorstellungLogStr = 'Nicht gefunden'
       }
       let VE2MsgEnabled = JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/VE2MsgEnabled'))).slice(1).slice(0, -1)
       if (!VE2MsgEnabled) {
