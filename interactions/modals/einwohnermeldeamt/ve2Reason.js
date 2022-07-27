@@ -71,7 +71,7 @@ module.exports = {
       })
     }
     const embed = await prev.prev.interaction.message.embeds[0]
-    var newmsg = (interaction.message.content) + '\nVE2 durch: ' + String(interaction.user)
+    const newmsg = (interaction.message.content) + '\nVE2 durch: ' + String(interaction.user)
     embed.data.color = 15158332
     try {
       await prev.prev.interaction.message.edit({ components: [], embeds: [embed] })

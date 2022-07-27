@@ -28,7 +28,7 @@ module.exports = {
       })
     }
     const embed = (interaction.message.embeds[0])
-    var newmsg = (interaction.message.content) + '\nFreigeschaltet (Tourist + Einwohner:in) durch: ' + String(interaction.user)
+    const newmsg = (interaction.message.content) + '\nFreigeschaltet (Tourist + Einwohner:in) durch: ' + String(interaction.user)
     embed.data.color = 3066993
     try {
       await interaction.message.edit({ components: [], embeds: [embed] })
