@@ -28,7 +28,7 @@ module.exports = {
       .setLabel('Wohnort')
       .setStyle(1)
     const gender = new TextInputBuilder()
-      .setCustomId('sex')
+      .setCustomId('gender')
       .setLabel('Sexualität + Gender/Pronomen')
       .setStyle(2)
     const hobbies = new TextInputBuilder()
