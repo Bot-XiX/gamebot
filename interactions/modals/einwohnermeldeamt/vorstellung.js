@@ -41,9 +41,13 @@ module.exports = {
           .addComponents(
             new ButtonBuilder()
               .setCustomId('acceptuser')
-              .setLabel('Freischalten')
+              .setLabel('Tourist freischalten')
               .setStyle(ButtonStyle.Success), // Primary, Secondary, Success, Danger, Link
             // .setEmoji('EMOJI') // If you want to use an emoji
+            new ButtonBuilder()
+              .setCustomId('acceptolduser')
+              .setLabel('Einwohner freischalten')
+              .setStyle(ButtonStyle.Success), // Primary, Secondary, Success, Danger, Link
             new ButtonBuilder()
               .setCustomId('declineuser')
               .setLabel('VE2')
