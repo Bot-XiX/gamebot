@@ -1,6 +1,4 @@
-const { EmbedBuilder } = require('discord.js')
 const { get, ref, getDatabase } = require('firebase/database')
-const target = require('../../modals/einwohnermeldeamt/vorstellung.js')
 /**
  * @file Button interaction: acceptuser
 

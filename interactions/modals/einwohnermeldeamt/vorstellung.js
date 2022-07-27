@@ -50,7 +50,7 @@ module.exports = {
               .setStyle(ButtonStyle.Danger)
           // new ButtonBuilder()
           //   .setCustomId('banuser')
-          );
+          )
         // Add the row to the message
         log.send({ content: (interaction.user).toString() + '\n' + interaction.user.id, embeds: [embed], components: [buttonRow] })
         interaction.reply({ content: 'Deine Vorstellung wurde gesendet! Das <@926239165463556126> wird sich zeitnah um die Freischaltung kümmern.', ephemeral: true })

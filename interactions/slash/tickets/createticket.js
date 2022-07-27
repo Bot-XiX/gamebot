@@ -1,5 +1,5 @@
-const { EmbedBuilder, SlashCommandBuilder, ActionRowBuilder, SelectMenuBuilder, ButtonBuilder } = require("@discordjs/builders");
-const { ButtonStyle } = require("discord.js");
+const { EmbedBuilder, SlashCommandBuilder, ActionRowBuilder, SelectMenuBuilder, ButtonBuilder } = require('@discordjs/builders')
+const { ButtonStyle } = require('discord.js')
 
 /**
  * @file Slash interaction: ticket
@@ -9,8 +9,7 @@ const { ButtonStyle } = require("discord.js");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('createticket')
-    .setDescription('Create a ticket embed')
-  // .addSubcommand((subcommand) => subcommand.setName().setDescription().add...)
+    .setDescription('Create a ticket embed'), // .addSubcommand((subcommand) => subcommand.setName().setDescription().add...)
   // .addStringOption((option) => option.setName().setDescription().setRequired())
   // .addIntegerOption((option) => option.setName().setDescription().setRequired())
   // .addBooleanOption((option) => option.setName().setDescription().setRequired())
@@ -20,7 +19,7 @@ module.exports = {
   // .addMentionableOption((option) => option.setName().setDescription().setRequired())
   // .addNumberOption((option) => option.setName().setDescription().setRequired())
   // .addAttachmentOption((option) => option.setName().setDescription().setRequired())
-  ,
+
   /**
 * @description Executes when the slash command with ID ticket is called.
 
@@ -29,23 +28,23 @@ module.exports = {
   async execute (interaction) {
     const ticketEmbed = new EmbedBuilder()
       .setTitle('Placeholder title')
-    //.setURL('')
-    //.setAuthor({
+    // .setURL('')
+    // .setAuthor({
     //        name: '',
     //        iconURL: '',
     //        url: ''
     //    })
-    //.setDescription('')
-    //.setThumbnail('')
-    //.setColor('')
-    //.addFields(
+    // .setDescription('')
+    // .setThumbnail('')
+    // .setColor('')
+    // .addFields(
     //    { name: '', value: '' },
     //    { name: '', value: '' },
-    //)
-    //.addField('Inline field title', 'Some value here', true)
-    //.setImage('')
-    //.setTimestamp()
-    //.setFooter({
+    // )
+    // .addField('Inline field title', 'Some value here', true)
+    // .setImage('')
+    // .setTimestamp()
+    // .setFooter({
     //       text: '',
     //       iconURL: ''
     // });
@@ -96,7 +95,7 @@ module.exports = {
           .setLabel('Save')
           .setStyle(ButtonStyle.Success) // Primary, Secondary, Success, Danger, Link
           // .setEmoji('EMOJI') // If you want to use an emoji
-      );
+      )
     // Add the row to the message
     // Add the row to the message
     const msg = interaction.reply({

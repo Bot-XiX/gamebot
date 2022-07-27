@@ -1,8 +1,4 @@
-const { ModalBuilder, TextInputBuilder, ActionRowBuilder } = require('discord.js');
-const e = require('express');
-const { getDatabase, ref } = require('firebase/database')
-const { get } = require('mongoose')
-const target = require('../../modals/einwohnermeldeamt/vorstellung.js')
+const { ModalBuilder, TextInputBuilder, ActionRowBuilder } = require('discord.js')
 /**
  * @file Button interaction: declineuser
 
@@ -17,7 +13,7 @@ module.exports = {
 */
   async execute (interaction) {
     const target = interaction.guild.members.cache.get(interaction.message.content.split('\n')[0].slice(2).slice(0, -1))
-    const reasonModal = new ModalBuilder().setCustomId('ve2Reason').setTitle('VE2 Grund');
+    const reasonModal = new ModalBuilder().setCustomId('ve2Reason').setTitle('VE2 Grund')
     // Add components to modal
     // Create the text input components
     const reason = new TextInputBuilder()
@@ -25,13 +21,13 @@ module.exports = {
     // The label is the prompt the user sees for this input
       .setLabel('Grund')
     // Short means only a single line of text
-      .setStyle(2);
+      .setStyle(2)
     // An action row only holds one text input,
-    const reasonRow = new ActionRowBuilder().addComponents(reason);
+    const reasonRow = new ActionRowBuilder().addComponents(reason)
     // Add inputs to the modal
-    reasonModal.addComponents(reasonRow);
+    reasonModal.addComponents(reasonRow)
     // Show the modal to the user
-    await interaction.showModal(reasonModal);
+    await interaction.showModal(reasonModal)
     const embed = interaction.message.embeds[0]
     module.exports.prev = { target, embed, interaction }
   }
