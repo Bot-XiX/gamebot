@@ -25,7 +25,7 @@ module.exports = {
         })
         .setDescription(interaction.fields.getTextInputValue('text'))
       try {
-        log.send({ content: interaction.user +'\n'+interaction.user.id, embeds: [embed] })
+        log.send({ content: (interaction.user).toString() +'\n'+interaction.user.id, embeds: [embed] })
         interaction.reply({ content: 'Vorstellung wurde gesendet.', ephemeral: true })
       } catch (e) {
         return null
