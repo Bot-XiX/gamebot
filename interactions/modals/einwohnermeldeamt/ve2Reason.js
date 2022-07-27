@@ -12,7 +12,7 @@ module.exports = {
 
       * @param {Object} interaction The Interaction Object of the command.
       */
-  async execute(interaction) {
+  async execute (interaction) {
     const db = getDatabase()
     const id = interaction.guild.id
     const empfangslog = interaction.member.guild.channels.cache.get(JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/eLog'))).slice(1).slice(0, -1))
