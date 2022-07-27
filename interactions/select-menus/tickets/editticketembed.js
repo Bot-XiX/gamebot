@@ -12,7 +12,7 @@ module.exports = {
   async execute (interaction) {
     const embed = prev.prev.ticketEmbed
     async function editEmbed (value) {
-      try{
+      try {
         await prev.prev.interaction.editReply({ embeds: [value] })
       } catch (error) {
         interaction.editReply({ content: 'Error editing embed.\nThere will be no element left. Consider adding another.' })
@@ -171,9 +171,9 @@ module.exports = {
           if (!color.startsWith('#')) {
             color = `#${color}`
           }
-          var reg = /^#([0-9a-f]{3}){1,2}$/i;
+          const reg = /^#([0-9a-f]{3}){1,2}$/i
           if (reg.test(color) && color.length === 7) {
-            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color)
             const colorArray = [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)]
             interaction.editReply({
               content: 'Farbe gesetzt.'

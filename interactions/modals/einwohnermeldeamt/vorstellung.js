@@ -41,19 +41,23 @@ module.exports = {
           .addComponents(
             new ButtonBuilder()
               .setCustomId('acceptuser')
-              .setLabel('Freischalten')
+              .setLabel('Tourist freischalten')
               .setStyle(ButtonStyle.Success), // Primary, Secondary, Success, Danger, Link
             // .setEmoji('EMOJI') // If you want to use an emoji
+            new ButtonBuilder()
+              .setCustomId('acceptolduser')
+              .setLabel('Einwohner freischalten')
+              .setStyle(ButtonStyle.Success), // Primary, Secondary, Success, Danger, Link
             new ButtonBuilder()
               .setCustomId('declineuser')
               .setLabel('VE2')
               .setStyle(ButtonStyle.Danger)
           // new ButtonBuilder()
           //   .setCustomId('banuser')
-          );
+          )
         // Add the row to the message
         log.send({ content: (interaction.user).toString() + '\n' + interaction.user.id, embeds: [embed], components: [buttonRow] })
-        interaction.reply({ content: 'Vorstellung wurde gesendet.', ephemeral: true })
+        interaction.reply({ content: 'Deine Vorstellung wurde gesendet! Das <@926239165463556126> wird sich zeitnah um die Freischaltung kümmern.', ephemeral: true })
       } catch {
         return null
       }

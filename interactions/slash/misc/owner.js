@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js")
+const { SlashCommandBuilder } = require('discord.js')
 
 /**
  * @file Slash interaction: owner
@@ -8,8 +8,7 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('owner')
-    .setDescription('description')
-  // .addSubcommand((subcommand) => subcommand.setName().setDescription().add...)
+    .setDescription('description'), // .addSubcommand((subcommand) => subcommand.setName().setDescription().add...)
   // .addStringOption((option) => option.setName().setDescription().setRequired())
   // .addIntegerOption((option) => option.setName().setDescription().setRequired())
   // .addBooleanOption((option) => option.setName().setDescription().setRequired())
@@ -19,7 +18,7 @@ module.exports = {
   // .addMentionableOption((option) => option.setName().setDescription().setRequired())
   // .addNumberOption((option) => option.setName().setDescription().setRequired())
   // .addAttachmentOption((option) => option.setName().setDescription().setRequired())
-  ,
+
   /**
 * @description Executes when the slash command with ID owner is called.
 

@@ -68,6 +68,5 @@ module.exports = {
     ]
     client.commands.create(commandJsonData[0])
     interaction.editReply({ content: 'Command added.' })
-    return
   }
 }

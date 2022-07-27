@@ -1,6 +1,5 @@
 
 const { getDatabase, ref, set } = require('firebase/database')
-const prev = require('../../slash/tickets/createticket.js')
 /**
  * @file Button interaction: saveticketembed
 
