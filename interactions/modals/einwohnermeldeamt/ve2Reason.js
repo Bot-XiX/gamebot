@@ -12,7 +12,7 @@ module.exports = {
 
       * @param {Object} interaction The Interaction Object of the command.
       */
-  async execute (interaction) {
+  async execute(interaction) {
     const db = getDatabase()
     const id = interaction.guild.id
     const empfangslog = interaction.member.guild.channels.cache.get(JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/eLog'))).slice(1).slice(0, -1))
@@ -70,6 +70,12 @@ module.exports = {
         ephemeral: true
       })
     }
-    prev.prev.interaction.message.edit({ components: [] })
+    const embed = await prev.prev.interaction.message.embeds[0]
+    embed.data.color = 15158332
+    try {
+      await prev.prev.interaction.message.edit({ components: [], embeds: [embed] })
+    } catch {
+      return null
+    }
   }
 }
