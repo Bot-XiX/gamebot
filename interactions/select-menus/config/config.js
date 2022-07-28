@@ -53,6 +53,10 @@ module.exports = {
       if (VE2Msg === 'ul') {
         VE2Msg = 'Nicht gefunden'
       }
+      let incompleteMsg = JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/incompleteMsg'))).slice(1).slice(0, -1)
+      if (incompleteMsg === 'ul') {
+        incompleteMsg = 'Nicht gefunden'
+      }
       VE2Msg = VE2Msg.replaceAll('\\n', '\n')
       // ###########################################
       const empfangsteamEmbed = new EmbedBuilder()
@@ -64,9 +68,10 @@ module.exports = {
           { name: 'Vorstellung-Embed', value: 'Bitte bearbeiten um anzuzeigen' },
           { name: 'VE2-Log Channel', value: VE2LogStr },
           { name: 'VE2-Nachricht aktiviert', value: VE2MsgEnabled },
-          { name: 'VE2-Nachricht', value: VE2Msg }
+          { name: 'VE2-Nachricht', value: VE2Msg },
+          { name: 'Unvollständig-Nachricht', value: incompleteMsg }
         )
-      //! ###########################################
+      // ###########################################
       configRow = new ActionRowBuilder()
         .addComponents(
           new SelectMenuBuilder()
@@ -107,6 +112,11 @@ module.exports = {
                 label: 'VE2-Message',
                 description: 'Ändere die VE2-Nachricht',
                 value: 've2msg'
+              },
+              {
+                label: 'Unvollständig-Message',
+                description: 'Ändere die Nachricht für unvollständige Vorstellungen',
+                value: 'incompletemsg'
               }
             ])
         )
@@ -134,7 +144,7 @@ module.exports = {
         enabled = 'false'
       }
       const adminRole = interaction.guild.roles.cache.get(`${JSON.stringify(await get(ref(db, id + '/anonym/config/adminRole'))).slice(2).slice(0, -1)}`)
-      // ###########################################
+      // #######################################################################
       const anonymEmbed = new EmbedBuilder()
         .setTitle('Anonymisierung Einstellungen')
         .addFields(

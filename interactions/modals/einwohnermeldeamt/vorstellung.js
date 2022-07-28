@@ -49,6 +49,10 @@ module.exports = {
               .setLabel('Einwohner freischalten')
               .setStyle(ButtonStyle.Success), // Primary, Secondary, Success, Danger, Link
             new ButtonBuilder()
+              .setCustomId('incomplete')
+              .setLabel('Unvollständig')
+              .setStyle(ButtonStyle.Danger), // Primary, Secondary, Success, Danger, Link
+            new ButtonBuilder()
               .setCustomId('declineuser')
               .setLabel('VE2')
               .setStyle(ButtonStyle.Danger)
