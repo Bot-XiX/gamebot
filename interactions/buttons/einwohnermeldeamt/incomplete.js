@@ -57,7 +57,7 @@ module.exports = {
     // An action row only holds one text input,
     // Add inputs to the modal
     interaction.reply({
-      content: 'Bitte wähle den Grund aus...',
+      content: 'Bitte wähle im folgenden Menü *einen oder mehrere Gründe* aus und bestätige dies, indem du außerhalb des Menüs klickst.',
       components: [incompleteRow],
       ephemeral: true
     })

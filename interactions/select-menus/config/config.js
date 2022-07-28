@@ -58,6 +58,7 @@ module.exports = {
         incompleteMsg = 'Nicht gefunden'
       }
       VE2Msg = VE2Msg.replaceAll('\\n', '\n')
+      incompleteMsg = incompleteMsg.replaceAll('\\n', '\n')
       // ###########################################
       const empfangsteamEmbed = new EmbedBuilder()
         .setTitle('Einwohnermeldeamt Einstellungen')
