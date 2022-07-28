@@ -19,6 +19,7 @@ module.exports = {
   // .addMentionableOption((option) => option.setName().setDescription().setRequired())
   // .addNumberOption((option) => option.setName().setDescription().setRequired())
   // .addAttachmentOption((option) => option.setName().setDescription().setRequired())
+  // Höhö wenn du das liest bist du doof
 
   /**
 * @description Executes when the slash command with ID ticket is called.
