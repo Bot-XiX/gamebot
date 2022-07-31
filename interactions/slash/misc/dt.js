@@ -31,7 +31,7 @@ module.exports = {
           // {name:'iframe', value:'88055924547140816'},
           { name: 'land-io', value: '903769130790969345' },
           { name: 'letterleague', value: '879863686565621790' },
-          { name: 'know-what-i.meme', value: '950505761862189096' },
+          { name: 'know-what-i-meme', value: '950505761862189096' },
           { name: 'pokernight', value: '755827207812677713' },
           { name: 'puttparty', value: '945737671223947305' },
           { name: 'sketchheads', value: '902271654783242291' },
