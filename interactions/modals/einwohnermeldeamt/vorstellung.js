@@ -55,6 +55,10 @@ module.exports = {
             new ButtonBuilder()
               .setCustomId('declineuser')
               .setLabel('VE2')
+              .setStyle(ButtonStyle.Danger),
+            new ButtonBuilder()
+              .setCustomId('tooold')
+              .setLabel('Zu alt')
               .setStyle(ButtonStyle.Danger)
             // new ButtonBuilder()
             //   .setCustomId('banuser')
