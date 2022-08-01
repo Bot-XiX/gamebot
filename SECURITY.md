@@ -5,5 +5,3 @@
 Current commit
 
 ## Reporting a Vulnerability
-
-Passport is currently on a vurnable version
