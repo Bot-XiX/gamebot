@@ -53,7 +53,17 @@ module.exports = {
       if (VE2Msg === 'ul') {
         VE2Msg = 'Nicht gefunden'
       }
+      let incompleteMsg = JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/incompleteMsg'))).slice(1).slice(0, -1)
+      if (incompleteMsg === 'ul') {
+        incompleteMsg = 'Nicht gefunden'
+      }
+      let tooOldMsg = JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/tooOldMsg'))).slice(1).slice(0, -1)
+      if (tooOldMsg === 'ul') {
+        tooOldMsg = 'Nicht gefunden'
+      }
       VE2Msg = VE2Msg.replaceAll('\\n', '\n')
+      incompleteMsg = incompleteMsg.replaceAll('\\n', '\n')
+      tooOldMsg = tooOldMsg.replaceAll('\\n', '\n')
       // ###########################################
       const empfangsteamEmbed = new EmbedBuilder()
         .setTitle('Einwohnermeldeamt Einstellungen')
@@ -64,7 +74,9 @@ module.exports = {
           { name: 'Vorstellung-Embed', value: 'Bitte bearbeiten um anzuzeigen' },
           { name: 'VE2-Log Channel', value: VE2LogStr },
           { name: 'VE2-Nachricht aktiviert', value: VE2MsgEnabled },
-          { name: 'VE2-Nachricht', value: VE2Msg }
+          { name: 'VE2-Nachricht', value: VE2Msg },
+          { name: 'Unvollständig-Nachricht', value: incompleteMsg },
+          { name: 'Zu alt-Nachricht', value: tooOldMsg }
         )
       //! ###########################################
       configRow = new ActionRowBuilder()
@@ -107,6 +119,16 @@ module.exports = {
                 label: 'VE2-Message',
                 description: 'Ändere die VE2-Nachricht',
                 value: 've2msg'
+              },
+              {
+                label: 'Unvollständig-Message',
+                description: 'Ändere die Nachricht für unvollständige Vorstellungen',
+                value: 'incompletemsg'
+              },
+              {
+                label: 'Zu Alt-Message',
+                description: 'Ändere die Nachricht für zu alte Mitglieder',
+                value: 'toooldmsg'
               }
             ])
         )
@@ -134,7 +156,7 @@ module.exports = {
         enabled = 'false'
       }
       const adminRole = interaction.guild.roles.cache.get(`${JSON.stringify(await get(ref(db, id + '/anonym/config/adminRole'))).slice(2).slice(0, -1)}`)
-      // ###########################################
+      // #######################################################################
       const anonymEmbed = new EmbedBuilder()
         .setTitle('Anonymisierung Einstellungen')
         .addFields(

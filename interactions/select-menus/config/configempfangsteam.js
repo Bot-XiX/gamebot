@@ -149,7 +149,28 @@ module.exports = {
         m.first().delete()
       })
     }
-
+    if (interaction.values.includes('incompletemsg')) {
+      interaction.reply({
+        content: 'Please send the incomplete-message.',
+        ephemeral: true
+      })
+      collect().then(async (m) => {
+        await set(ref(db, id + '/einwohnermeldeamt/config/incompleteMsg'), m.first().content)
+        interaction.editReply({ content: `**Incomplete-Message is set to:**\n${m.first().content}` })
+        m.first().delete()
+      })
+    }
+    if (interaction.values.includes('toooldmsg')) {
+      interaction.reply({
+        content: 'Please send the too old-message.',
+        ephemeral: true
+      })
+      collect().then(async (m) => {
+        await set(ref(db, id + '/einwohnermeldeamt/config/tooOldMsg'), m.first().content)
+        interaction.editReply({ content: `**Zu alt-Message is set to:**\n${m.first().content}` })
+        m.first().delete()
+      })
+    }
     //* ###########################################
     let enabled = JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/enabled'))).slice(1).slice(0, -1)
     if (!enabled) {
@@ -186,7 +207,17 @@ module.exports = {
     if (VE2Msg === 'ul') {
       VE2Msg = 'Nicht gefunden'
     }
+    let incompleteMsg = JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/incompleteMsg'))).slice(1).slice(0, -1)
+    if (incompleteMsg === 'ul') {
+      incompleteMsg = 'Nicht gefunden'
+    }
+    let tooOldMsg = JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/tooOldMsg'))).slice(1).slice(0, -1)
+    if (tooOldMsg === 'ul') {
+      tooOldMsg = 'Nicht gefunden'
+    }
     VE2Msg = VE2Msg.replaceAll('\\n', '\n')
+    incompleteMsg = incompleteMsg.replaceAll('\\n', '\n')
+    tooOldMsg = tooOldMsg.replaceAll('\\n', '\n')
     // ###########################################
     const empfangsteamEmbed = new EmbedBuilder()
       .setTitle('Einwohnermeldeamt Einstellungen')
@@ -197,7 +228,9 @@ module.exports = {
         { name: 'Vorstellung-Embed', value: 'Bitte bearbeiten um anzuzeigen' },
         { name: 'VE2-Log Channel', value: VE2LogStr },
         { name: 'VE2-Nachricht aktiviert', value: VE2MsgEnabled },
-        { name: 'VE2-Nachricht', value: VE2Msg }
+        { name: 'VE2-Nachricht', value: VE2Msg },
+        { name: 'Unvollständig-Nachricht', value: incompleteMsg },
+        { name: 'Zu alt-Nachricht', value: tooOldMsg }
       )
     //! ###########################################
     prev.prev.interaction.editReply({

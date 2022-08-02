@@ -1,7 +1,7 @@
-const { SlashCommandBuilder } = require("discord.js")
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord.js');
-require('dotenv').config();
+const { SlashCommandBuilder } = require('discord.js')
+const { REST } = require('@discordjs/rest')
+const { Routes } = require('discord.js')
+require('dotenv').config()
 
 /**
 * @file Slash interaction: removeserver
@@ -21,10 +21,10 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
-    const rest = new REST({ version: '10' }).setToken(process.env.token);
-    const client = interaction.client.application;
+    const rest = new REST({ version: '10' }).setToken(process.env.token)
+    const client = interaction.client.application
     const guild = await interaction.client.guilds.cache.get(interaction.options.getString('server'))
-    if(!interaction.options.getString('id')) {
+    if (!interaction.options.getString('id')) {
       rest.delete(Routes.applicationGuildCommands(client.id, guild.id), { body: [] })
         .then(() => interaction.reply('Successfully deleted guild commands'))
         .catch(interaction.reply('Failed to delete guild commands'))

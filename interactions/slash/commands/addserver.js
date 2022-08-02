@@ -20,9 +20,6 @@ module.exports = {
         .setRequired(true)
         .addChoices(
           { name: 'slash', value: 'slash' },
-          { name: 'buttons', value: 'buttons' },
-          { name: 'modals', value: 'modals' },
-          { name: 'select-menus', value: 'select-menus' },
           { name: 'context-menus', value: 'context-menus' }
         )
     )
@@ -56,12 +53,6 @@ module.exports = {
     const command = require(`../../../interactions/${interaction.options.getString('category')}/${interaction.options.getString('module')}/${interaction.options.getString('command')}`)
     if (interaction.options.getString('category') === 'slash') {
       client.slashCommands.set(command.data.name, command)
-    } else if (interaction.options.getString('category') === 'buttons') {
-      client.buttonCommands.set(command.id, command)
-    } else if (interaction.options.getString('category') === 'modals') {
-      client.modalCommands.set(command.id, command)
-    } else if (interaction.options.getString('category') === 'select-menus') {
-      client.selectCommands.set(command.id, command)
     } else if (interaction.options.getString('category') === 'context-menus') {
       const keyName = `${interaction.options.getString('module').toUpperCase()} ${command.data.name}`
       client.contextCommands.set(keyName, command)
@@ -73,10 +64,8 @@ module.exports = {
       ...Array.from(client.slashCommands.values()).map((c) => c.data.toJSON()),
       ...Array.from(client.contextCommands.values()).map((c) => c.data)
     ]
-    console.log(commandJsonData)
-    console.log(client.contextCommands.values())
     guild.commands.create(commandJsonData[0])
     interaction.editReply({ content: 'Command added.' })
-    return
+    return null
   }
 }
