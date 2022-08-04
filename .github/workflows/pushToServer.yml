@@ -14,7 +14,7 @@ jobs:
       with:
         switches: -avzr --delete
         path: src/
-        remote_path: /var/www/html/
-        remote_host: example.com
-        remote_user: debian
+        remote_path: /GameBot
+        remote_host: 185.250.249.107
+        remote_user: ubuntu
         remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
