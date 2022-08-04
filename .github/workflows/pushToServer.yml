@@ -18,9 +18,9 @@ jobs:
     - name: copy files to server
       uses: appleboy/scp-action@master
       with:
-        HOST: ${{ secrects.SSH_HOST }}
-        PORT: ${{ secrects.SSH_PORT }}
-        USERNAME: ${{ secrects.SSH_USER }}
-        password: ${{ secrects.SSH_PASSWORD }}
-        target: ${{ secrects.SSH_TARGET }}
+        HOST: ${{ secrets.SSH_HOST }}
+        PORT: ${{ secrets.SSH_PORT }}
+        USERNAME: ${{ secrets.SSH_USER }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        target: ${{ secrets.SSH_TARGET }}
         source: "./*"
