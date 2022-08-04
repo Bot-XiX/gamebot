@@ -9,12 +9,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: rsync deployments
-      uses: burnett01/rsync-deployments@5.2.1
+    - name: Node 16.16.0
+      uses: actions/setup-node@v1
       with:
-        switches: -avzr --delete
-        path: src/
-        remote_path: /GameBot
-        remote_host: 185.250.249.107
-        remote_user: ubuntu
-        remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
+        node-version: 16.16.0
+    - name: npm install
+      run: npm i
+    - name: copy files to server
+      uses: appleboy/scp-action@master
+      with:
+        HOST: ${{ secrects.SSH_HOST }}
+        PORT: ${{ secrects.SSH_PORT }}
+        USERNAME: ${{ secrects.SSH_USER }}
+        password: ${{ secrects.SSH_PASSWORD }}
+        target: ${{ secrects.SSH_TARGET }}
+        source: "./*"
