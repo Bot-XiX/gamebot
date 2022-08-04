@@ -5,7 +5,7 @@
     "main": "bot.js",
     "scripts": {
         "start": "pm2 start bot.js --watch",
-        "build": "node build"
+        "build": "node build",
         "dev": "pm2 start bot.js",
         "lint": "eslint . --ext .js",
         "fix": "eslint . --ext .js --fix .",
