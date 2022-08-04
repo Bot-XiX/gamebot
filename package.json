@@ -6,6 +6,7 @@
     "scripts": {
         "start": "pm2 start bot.js --watch",
         "dev": "pm2 start bot.js",
+        "build": "node build",
         "lint": "eslint . --ext .js",
         "fix": "eslint . --ext .js --fix .",
         "prettier": "prettier --write ."
