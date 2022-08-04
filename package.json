@@ -4,7 +4,7 @@
     "description": "A bot for playing games",
     "main": "bot.js",
     "scripts": {
-        "start": "node bot.js",
+        "start": "pm2 start bot.js --watch",
         "dev": "pm2 start bot.js",
         "lint": "eslint . --ext .js",
         "fix": "eslint . --ext .js --fix .",
