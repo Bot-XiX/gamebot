@@ -7,12 +7,12 @@ const { ref, get, set, getDatabase } = require('firebase/database')
  * @since 1.0.0
 */
 module.exports = {
-  id: 'createadminticket',
+  id: 'createadminticket', // 1. Export
   /**
   * @description Executes when the button with ID createadminticket is called.
   * @param {Object} interaction The Interaction Object of the command.
   */
-  async execute (interaction) {
+  async execute (interaction) { //2. Export
     const db = getDatabase()
     const id = interaction.guild.id
     const target = interaction.member
@@ -65,7 +65,7 @@ module.exports = {
       const rowRow = new ActionRowBuilder()
         .addComponents(
           new ButtonBuilder()
-            .setCustomId('closeticket')
+            .setCustomId('closeTicket')
             .setLabel('Ticket schließen')
             .setStyle(ButtonStyle.Danger) // Primary, Secondary, Success, Danger, Link
             .setEmoji('🔒') // If you want to use an emoji
