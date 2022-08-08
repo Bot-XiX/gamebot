@@ -7,7 +7,7 @@
 // Declare constants which will be used throughout the bot.
 
 const fs = require('fs')
-const { Client, Collection } = require('discord.js')
+const { Client, Collection, RateLimitError } = require('discord.js')
 const { REST } = require('@discordjs/rest')
 const { Routes } = require('discord-api-types/v9')
 require('dotenv').config()
