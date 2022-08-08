@@ -190,6 +190,83 @@ module.exports = {
         attachments: []
       })
     }
+    // Role config
+    if (interaction.values.includes('roleconfig')) {
+      const adminRole = interaction.guild.roles.cache.get(`${JSON.stringify(await get(ref(db, id + '/roleconfig/roles/adminRole'))).slice(2, -1)}`)
+      const modRole = interaction.guild.roles.cache.get(`${JSON.stringify(await get(ref(db, id + '/roleconfig/roles/modRole'))).slice(2, -1)}`)
+      // #######################################################################
+      const anonymEmbed = new EmbedBuilder()
+        .setTitle('RoleConfig Einstellungen')
+        .addFields(
+          { name: 'Admin Rolle', value: String(adminRole) },
+          { name: 'Support Rolle', value: String(modRole) }
+        )
+      //! ###########################################
+      configRow = new ActionRowBuilder()
+        .addComponents(
+          new SelectMenuBuilder()
+            .setCustomId('roleconfig')
+            .setPlaceholder('Nothing selected')
+            .addOptions([
+              {
+                label: 'Admin Rolle',
+                description: 'Ändere die Admin Rolle',
+                value: 'adminrole'
+              },
+              {
+                label: 'Support Rolle',
+                description: 'Ändere die Support Rolle',
+                value: 'modrole'
+              }
+            ])
+        )
+      interaction.reply({
+        content: 'Was magst du anpassen?',
+        components: [configRow],
+        embeds: [anonymEmbed],
+        ephemeral: true,
+        attachments: []
+      })
+    }
+    // Ticket config
+    if (interaction.values.includes('ticketconfig')) {
+      const adminTicketCount = JSON.stringify(await get(ref(db, id + '/tickets/config/count/admin')))
+      const adminTicketCountOutput = ('0000' + adminTicketCount).slice(-4)
+      const complaintCount = JSON.stringify(await get(ref(db, id + '/tickets/config/count/complaint')))
+      const complaintCountOutput = ('0000' + complaintCount).slice(-4)
+      const ticketConfigEmbed = new EmbedBuilder()
+        .setTitle('Ticket Einstellungen')
+        .addFields(
+          { name: 'Admin Ticket Count', value: adminTicketCountOutput },
+          { name: 'Beschwerde Count', value: complaintCountOutput }
+        )
+      //! ###########################################
+      configRow = new ActionRowBuilder()
+        .addComponents(
+          new SelectMenuBuilder()
+            .setCustomId('ticketconfig')
+            .setPlaceholder('Nothing selected')
+            .addOptions([
+              {
+                label: 'Admin Ticket Count',
+                description: 'Setzt den Counter für Admin-Tickets zurück',
+                value: 'adminticketcount'
+              },
+              {
+                label: 'Beschwerde Ticket Count',
+                description: 'Setzt den Counter für Beschwerden zurück',
+                value: 'complaintcount'
+              }
+            ])
+        )
+      interaction.reply({
+        content: 'Was magst du anpassen?',
+        components: [configRow],
+        embeds: [ticketConfigEmbed],
+        ephemeral: true,
+        attachments: []
+      })
+    }
     module.exports.prev = { interaction, configRow }
   }
 }

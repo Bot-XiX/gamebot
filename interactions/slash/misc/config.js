@@ -30,6 +30,16 @@ module.exports = {
               label: 'Anonymisierung',
               description: 'Anonymisierung Einstellungen',
               value: 'anonym'
+            },
+            {
+              label: 'Role config',
+              description: 'Rolleneinstellungen',
+              value: 'roleconfig'
+            },
+            {
+              label: 'Ticket config',
+              description: 'Ticketeinstellungen',
+              value: 'ticketconfig'
             }
           ])
       )

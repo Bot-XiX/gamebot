@@ -24,7 +24,7 @@ module.exports = {
       components: [prev.prev.configRow]
     })
     if (interaction.values.includes('enabled')) {
-      const enabled = JSON.stringify(await get(ref(db, id + '/anonym/config/enabled'))).slice(1).slice(0, -1)
+      const enabled = JSON.stringify(await get(ref(db, id + '/anonym/config/enabled'))).slice(1, -1)
       if (enabled === 'false') {
         await set(ref(db, id + '/anonym/config/enabled'), 'true')
         interaction.reply({ content: 'Module enabled.', ephemeral: true })
@@ -39,7 +39,7 @@ module.exports = {
         ephemeral: true
       })
       await collect().then(async (m) => {
-        await set(ref(db, id + '/anonym/config/adminRole'), m.first().content.slice(2).slice(0, -1))
+        await set(ref(db, id + '/anonym/config/adminRole'), m.first().content.slice(2, -1))
         const adminRole = interaction.guild.roles.cache.get(`${JSON.stringify(await get(ref(db, id + '/anonym/config/adminRole'))).slice(2).slice(0, -1)}`)
         interaction.editReply({ content: `IDs will be sent to ${adminRole}` })
         m.first().delete()
@@ -52,6 +52,8 @@ module.exports = {
       enabled = 'false'
     }
     const adminRole = interaction.guild.roles.cache.get(`${JSON.stringify(await get(ref(db, id + '/anonym/config/adminRole'))).slice(2).slice(0, -1)}`)
+    // (db, id + '/tickets/config/')
+    // (db, id + '/tickets/config/')
     // ###########################################
     const anonymEmbed = new EmbedBuilder()
       .setTitle('Einwohnermeldeamt Einstellungen')
