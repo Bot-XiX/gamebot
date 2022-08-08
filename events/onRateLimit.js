@@ -13,6 +13,6 @@ module.exports = {
    */
 
   execute (info) {
-    console.log(1);
+    console.log(`${info.client.user.tag} is ready!`);
   }
 }
