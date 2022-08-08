@@ -48,7 +48,6 @@ for (const file of eventFiles) {
     )
   }
 }
-
 /**********************************************************************/
 // Define Collection of Commands, Slash Commands and cooldowns
 
