@@ -34,7 +34,7 @@ module.exports = {
     const map = channel.permissionOverwrites.cache
     const mapArray = Array.from(map)
     for (let i = 0; i < mapArray.length; i++) {
-      if (interaction.guild.roles.cache.get(mapArray[i][0]) !== interaction.guild.roles.everyone && interaction.guild.members.cache.get(mapArray[i][0]) !== interaction.guild.roles.everyone) {
+      if (interaction.guild.members.cache.get(mapArray[i][0]) !== interaction.guild.roles.everyone && interaction.guild.members.cache.get(mapArray[i][0]) !== undefined) {
         channel.permissionOverwrites.edit(mapArray[i][0], {
           ViewChannel: true,
           SendMessages: true,
