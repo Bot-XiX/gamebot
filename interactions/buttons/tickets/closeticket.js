@@ -1,5 +1,5 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonStyle, ButtonBuilder, time } = require('discord.js')
-const { get, ref, getDatabase } = require('firebase/database')
+const { get, ref, getDatabase, set } = require('firebase/database')
 // const prev1 = require('./createadminticket')
 // const prev2 = require('./createcomplaint')
 
@@ -29,12 +29,33 @@ module.exports = {
       const targetAvatar = target.user.avatarURL()
       const fetch = await interaction.channel.messages.fetch({
       })
+      const array = Array.from(interaction.channel.permissionOverwrites.cache)
+      for (let i = 0; i < array.length; i++) {
+        await set(ref(db, id + '/tickets/channels/' + interaction.channel.id + '/permissions/' + array[i][0] + '/id'), array[i][1].id)
+      }
       const messages = Array.from(fetch)
       const getConfig = messages[messages.length - 1][1].embeds[0].footer.text.split(' | ')
       const configId = getConfig[1]
       const button = getConfig[2]
       const parentId = JSON.stringify(await get(ref(db, id + '/tickets/config/' + configId + '/buttons/components/' + button + '/closedChannel'))).slice(1, -1)
+      const modRole = JSON.stringify(await get(ref(db, id + '/tickets/config/' + configId + '/buttons/components/' + button + '/modRole'))).slice(1, -1)
       channel.setParent(await interaction.guild.channels.cache.get(parentId))
+      const map = channel.permissionOverwrites.cache
+      const mapArray = Array.from(map)
+      for (let i = 0; i < mapArray.length; i++) {
+        if (!interaction.guild.roles.cache.get(mapArray[i][0].id) === interaction.guild.roles.everyone) {
+          channel.permissionOverwrites.edit(mapArray[i][0], {
+            ViewChannel: false,
+            SendMessages: false,
+            ReadMessageHistory: false
+          })
+        }
+      }
+      channel.permissionOverwrites.edit(modRole, {
+        ViewChannel: true,
+        SendMessages: true,
+        ReadMessageHistory: true
+      })
       channel.setName(`🔒-${channelName}`).then(async () => {
         const closedEmbed = new EmbedBuilder()
           .setTitle('Ticket geschlossen')
