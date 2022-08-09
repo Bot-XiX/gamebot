@@ -1,14 +1,14 @@
 
 const { getDatabase, ref, set } = require('firebase/database')
 /**
- * @file Button interaction: savevorstellungembed
+ * @file Button interaction: saveVorstellungEmbed
 
  * @since 1.0.0
 */
 module.exports = {
-  id: 'savevorstellungembed',
+  id: 'saveVorstellungEmbed',
   /**
-* @description Executes when the button with ID savevorstellungembed is called.
+* @description Executes when the button with ID saveVorstellungEmbed is called.
 
 * @param {Object} interaction The Interaction Object of the command.
 */

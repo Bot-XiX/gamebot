@@ -29,30 +29,10 @@ module.exports = {
   async execute (interaction) {
     const ticketEmbed = new EmbedBuilder()
       .setTitle('Placeholder title')
-    // .setURL('')
-    // .setAuthor({
-    //        name: '',
-    //        iconURL: '',
-    //        url: ''
-    //    })
-    // .setDescription('')
-    // .setThumbnail('')
-    // .setColor('')
-    // .addFields(
-    //    { name: '', value: '' },
-    //    { name: '', value: '' },
-    // )
-    // .addField('Inline field title', 'Some value here', true)
-    // .setImage('')
-    // .setTimestamp()
-    // .setFooter({
-    //       text: '',
-    //       iconURL: ''
-    // });
     const editEmbedRow = new ActionRowBuilder()
       .addComponents(
         new SelectMenuBuilder()
-          .setCustomId('editticketembed')
+          .setCustomId('editTicket')
           .setPlaceholder('Nothing selected')
           .addOptions([
             {
@@ -86,19 +66,25 @@ module.exports = {
             {
               label: 'Footer',
               value: 'footer'
+            },
+            {
+              label: 'Add a button',
+              value: 'addButton'
+            },
+            {
+              label: 'Remove a button',
+              value: 'removeButton'
             }
           ])
       )
     const saveEmbedRow = new ActionRowBuilder()
       .addComponents(
         new ButtonBuilder()
-          .setCustomId('saveticketembed')
+          .setCustomId('saveTicketEmbed')
           .setLabel('Save')
           .setStyle(ButtonStyle.Success) // Primary, Secondary, Success, Danger, Link
           // .setEmoji('EMOJI') // If you want to use an emoji
       )
-    // Add the row to the message
-    // Add the row to the message
     const msg = interaction.reply({
       components: [editEmbedRow, saveEmbedRow],
       attachments: [],

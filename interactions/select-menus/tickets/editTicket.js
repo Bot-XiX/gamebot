@@ -1,24 +1,25 @@
-const prev = require('../../slash/tickets/createticket.js')
+const { ButtonBuilder } = require('@discordjs/builders')
+const { EmbedBuilder, ActionRowBuilder } = require('discord.js')
+const { set, ref, getDatabase } = require('firebase/database')
 /**
- * @file Select menu interaction: editticketembed
+ * @file Select menu interaction: editTicket
  * @since 1.0.0
 */
 module.exports = {
-  id: 'editticketembed',
+  id: 'editTicket',
   /**
-* @description Executes when the select menu with ID editticketembed is called.
+* @description Executes when the select menu with ID editTicket is called.
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
-    const embed = prev.prev.ticketEmbed
+    const embed = EmbedBuilder.from(interaction.message.embeds[0])
     async function editEmbed (value) {
       try {
-        await prev.prev.interaction.editReply({ embeds: [value] })
+        await interaction.message.edit({ embeds: [value] })
       } catch (error) {
         interaction.editReply({ content: 'Error editing embed.\nThere will be no element left. Consider adding another.' })
       }
     }
-    await prev.prev.interaction.editReply({ components: [prev.prev.editEmbedRow, prev.prev.saveEmbedRow] })
     function collect () {
       const msgFilter = (m) => m.author.id === interaction.member.id
       const msg = interaction.channel.awaitMessages({ filter: msgFilter, max: 1 })
@@ -253,6 +254,111 @@ module.exports = {
           m.first().delete()
         }
       })
+    } else if (interaction.values.includes('addButton')) {
+      const button = new ButtonBuilder()
+      let length
+      try {
+        length = interaction.message.components[2].components.length
+      } catch {
+        length = 0
+      }
+      if (length > 4) {
+        interaction.reply({
+          content: 'Maximal 5 Buttons sind möglich.'
+        })
+      } else {
+        interaction.reply({
+          content: 'Bitte gib den Text des Buttons an.',
+          ephemeral: true
+        })
+        await collect().then(async (m) => {
+          button.setLabel(m.first().content)
+          interaction.editReply({
+            content: 'Button Text gesetzt.\nBitte gib den Style des Buttons an.\n*(Possible Styles: primary, secondary, success, danger)*'
+          })
+          m.first().delete()
+          await collect().then(async (m) => {
+            if (m.first().content.toLowerCase() === 'primary') {
+              button.setStyle('Primary')
+            } else if (m.first().content.toLowerCase() === 'secondary') {
+              button.setStyle('Secondary')
+            } else if (m.first().content.toLowerCase() === 'success') {
+              button.setStyle('Success')
+            } else if (m.first().content.toLowerCase() === 'danger') {
+              button.setStyle('Danger')
+            } else {
+              button.setStyle('Primary')
+            }
+            interaction.editReply({
+              content: 'Button Style gesetzt.\nBitte gib den Emoji des Buttons an.\n Schreibe `none` um keinen Emoji zu setzen.'
+            })
+            m.first().delete()
+            await collect().then(async (m) => {
+              if (m.first().content !== 'none') {
+                button.setEmoji(m.first().content)
+              }
+              interaction.editReply({
+                content: 'Button Emoji gesetzt.'
+              })
+              m.first().delete()
+            })
+            let row
+            try {
+              row = ActionRowBuilder.from(interaction.message.components[2])
+              button.setCustomId('ticket' + length)
+            } catch {
+              row = new ActionRowBuilder()
+              button.setCustomId('ticket0')
+            }
+            row.addComponents(button)
+            interaction.message.edit({ components: [interaction.message.components[0], interaction.message.components[1], row] })
+            const db = getDatabase()
+            const id = interaction.guild.id
+            interaction.editReply({
+              content: 'Bitte erwähne die Moderationsrolle.'
+            })
+            await collect().then(async (m) => {
+              const role = interaction.guild.roles.cache.get(m.first().content.slice(3, -1))
+              set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modRole'), role.id)
+              interaction.editReply({
+                content: 'Moderationsrolle gesetzt.\nBitte schreibe die Kategorie-ID für offene Tickets.'
+              })
+              m.first().delete()
+              await collect().then(async (m) => {
+                const channel = interaction.guild.channels.cache.get(m.first().content)
+                set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/channel'), channel.id)
+                interaction.editReply({
+                  content: 'Channel gesetzt.\nBitte schreibe die Kategorie-ID für geschlossene Tickets.'
+                })
+                m.first().delete()
+                await collect().then(async (m) => {
+                  const channel = interaction.guild.channels.cache.get(m.first().content)
+                  set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/closedChannel'), channel.id)
+                  interaction.editReply({
+                    content: 'Channel gesetzt.\nBitte schreibe die Kategorie-ID für Ticket-Archiv.'
+                  })
+                  m.first().delete()
+                  await collect().then(async (m) => {
+                    const channel = interaction.guild.channels.cache.get(m.first().content)
+                    set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/archiveChannel'), channel.id)
+                    interaction.editReply({
+                      content: 'Channel gesetzt.\nBitte schreibe den Namen des Tickets.'
+                    })
+                    m.first().delete()
+                    await collect().then(async (m) => {
+                      set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/name'), m.first().content)
+                      interaction.editReply({
+                        content: 'Name gesetzt.\nFertig.'
+                      })
+                      m.first().delete()
+                    })
+                  })
+                })
+              })
+            })
+          })
+        })
+      }
     }
   }
 }

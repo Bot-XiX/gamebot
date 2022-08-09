@@ -1,14 +1,14 @@
 /**
- * @file Select menu interaction: configempfangsteam
+ * @file Select menu interaction: configEinwohnermeldeamt
  * @since 1.0.0
 */
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder } = require('discord.js')
 const prev = require('./config')
 const { set, ref, get, getDatabase } = require('firebase/database')
 module.exports = {
-  id: 'configempfangsteam',
+  id: 'configEinwohnermeldeamt',
   /**
-* @description Executes when the select menu with ID configempfangsteam is called.
+* @description Executes when the select menu with ID configEinwohnermeldeamt is called.
 
 * @param {Object} interaction The Interaction Object of the command.
 */
@@ -57,13 +57,13 @@ module.exports = {
         m.first().delete()
       })
     }
-    if (interaction.values.includes('vorstellungembed')) {
+    if (interaction.values.includes('vorstellungEmbed')) {
       const vorstellungEmbed = new EmbedBuilder()
         .setTitle('Placeholder title')
       const editEmbedRow = new ActionRowBuilder()
         .addComponents(
           new SelectMenuBuilder()
-            .setCustomId('editvorstellungembed')
+            .setCustomId('editVorstellungEmbed')
             .setPlaceholder('Nothing selected')
             .addOptions([
               {
@@ -103,7 +103,7 @@ module.exports = {
       const saveEmbedRow = new ActionRowBuilder()
         .addComponents(
           new ButtonBuilder()
-            .setCustomId('savevorstellungembed')
+            .setCustomId('saveVorstellungEmbed')
             .setLabel('Save')
             .setStyle(ButtonStyle.Success)
         )

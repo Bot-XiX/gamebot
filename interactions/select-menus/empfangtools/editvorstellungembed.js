@@ -1,12 +1,12 @@
-const prev = require('../config/configempfangsteam.js')
+const prev = require('../config/configEinwohnermeldeamt.js')
 /**
- * @file Select menu interaction: editvorstellungembed
+ * @file Select menu interaction: editVorstellungEmbed
  * @since 1.0.0
 */
 module.exports = {
-  id: 'editvorstellungembed',
+  id: 'editVorstellungEmbed',
   /**
-* @description Executes when the select menu with ID editvorstellungembed is called.
+* @description Executes when the select menu with ID editVorstellungEmbed is called.
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {

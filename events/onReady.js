@@ -2,13 +2,7 @@
  * @file Ready Event File.
  * @since 1.0.0
 */
-// const client = require('../bot.js')
-// const Dashboard = require('../dashboard/dashboard')
-// const dashboard = new Dashboard(client, {
-//     port: 4000,
-//     clientSecret: process.env.clientSecret,
-//     redirectURI: 'http://localhost:4000/auth/discord/callback',
-// })
+
 module.exports = {
   name: 'ready',
   once: true,
