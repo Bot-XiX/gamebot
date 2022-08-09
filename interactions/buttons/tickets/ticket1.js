@@ -87,7 +87,7 @@ module.exports = {
           )
         const ticketEmbed = new EmbedBuilder()
           .setTitle(`${name} Ticket (#${counter})`)
-          .setDescription(`${target.toString()} hat ein Admin-Ticket erstellt.\nBitte schildere hier dein Anliegen für die Administrator:innen!`)
+          .setDescription(`${target.toString()} hat ein ${name}-Ticket erstellt.\nBitte schildere hier dein Anliegen für die zuständigen User:innen!`)
           .setColor('#0099ff')
           .setTimestamp()
           .setFooter({
