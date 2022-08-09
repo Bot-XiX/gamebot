@@ -12,7 +12,7 @@ module.exports = {
   * @param {Object} interaction The Interaction Object of the command.
   */
   async execute (interaction) {
-    interaction.deferReply()
+    await interaction.deferReply()
     const db = getDatabase()
     const id = interaction.guild.id
     const fetch = await interaction.channel.messages.fetch({})
