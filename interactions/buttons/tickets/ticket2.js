@@ -91,7 +91,7 @@ module.exports = {
           .setColor('#0099ff')
           .setTimestamp()
           .setFooter({
-            text: `${name} Ticket | ${configID} | 0`
+            text: `${name} Ticket | ${configID} | 2`
           })
         const msg = channel.send({
           content: `Hey ${modRole}, ${target} hat ein Ticket für euch erstellt!`,
