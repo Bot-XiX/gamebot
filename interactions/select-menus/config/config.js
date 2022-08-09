@@ -82,7 +82,7 @@ module.exports = {
       configRow = new ActionRowBuilder()
         .addComponents(
           new SelectMenuBuilder()
-            .setCustomId('configempfangsteam')
+            .setCustomId('configEinwohnermeldeamt')
             .setPlaceholder('Nothing selected')
             .addOptions([
               {
@@ -103,7 +103,7 @@ module.exports = {
               {
                 label: 'Vorstellung-Embed',
                 description: 'Ändert das Vorstellung-Embed',
-                value: 'vorstellungembed'
+                value: 'vorstellungEmbed'
               },
               {
                 label: 'Vorstellung-Log Channel',
@@ -148,55 +148,13 @@ module.exports = {
         attachments: []
       })
     }
-    if (interaction.values.includes('anonym')) {
-      //* ###########################################
-      let enabled = JSON.stringify(await get(ref(db, id + '/anonym/config/enabled'))).slice(1).slice(0, -1)
-      if (enabled === 'ul') {
-        await set(ref(db, id + '/anonym/config/enabled'), 'false')
-        enabled = 'false'
-      }
-      const adminRole = interaction.guild.roles.cache.get(`${JSON.stringify(await get(ref(db, id + '/anonym/config/adminRole'))).slice(2).slice(0, -1)}`)
-      // #######################################################################
-      const anonymEmbed = new EmbedBuilder()
-        .setTitle('Anonymisierung Einstellungen')
-        .addFields(
-          { name: 'Modul aktiviert', value: enabled },
-          { name: 'Admin Rolle', value: String(adminRole) }
-        )
-      //! ###########################################
-      configRow = new ActionRowBuilder()
-        .addComponents(
-          new SelectMenuBuilder()
-            .setCustomId('configanonym')
-            .setPlaceholder('Nothing selected')
-            .addOptions([
-              {
-                label: 'Enable',
-                description: 'Aktiviert das Anonym-Modul',
-                value: 'enabled'
-              },
-              {
-                label: 'Admin Rolle',
-                description: 'Ändere die Admin Rolle',
-                value: 'adminrole'
-              }
-            ])
-        )
-      interaction.reply({
-        content: 'Was magst du anpassen?',
-        components: [configRow],
-        embeds: [anonymEmbed],
-        ephemeral: true,
-        attachments: []
-      })
-    }
     // Role config
-    if (interaction.values.includes('roleconfig')) {
-      const adminRole = interaction.guild.roles.cache.get(`${JSON.stringify(await get(ref(db, id + '/roleconfig/roles/adminRole'))).slice(2, -1)}`)
-      const modRole = interaction.guild.roles.cache.get(`${JSON.stringify(await get(ref(db, id + '/roleconfig/roles/modRole'))).slice(2, -1)}`)
+    if (interaction.values.includes('roles')) {
+      const adminRole = interaction.guild.roles.cache.get(`${JSON.stringify(await get(ref(db, id + '/roles/adminRole'))).slice(2, -1)}`)
+      const modRole = interaction.guild.roles.cache.get(`${JSON.stringify(await get(ref(db, id + '/roles/modRole'))).slice(2, -1)}`)
       // #######################################################################
       const anonymEmbed = new EmbedBuilder()
-        .setTitle('RoleConfig Einstellungen')
+        .setTitle('Role Einstellungen')
         .addFields(
           { name: 'Admin Rolle', value: String(adminRole) },
           { name: 'Support Rolle', value: String(modRole) }
@@ -205,7 +163,7 @@ module.exports = {
       configRow = new ActionRowBuilder()
         .addComponents(
           new SelectMenuBuilder()
-            .setCustomId('roleconfig')
+            .setCustomId('configRoles')
             .setPlaceholder('Nothing selected')
             .addOptions([
               {
@@ -229,7 +187,7 @@ module.exports = {
       })
     }
     // Ticket config
-    if (interaction.values.includes('ticketconfig')) {
+    if (interaction.values.includes('ticket')) {
       const adminTicketCount = JSON.stringify(await get(ref(db, id + '/tickets/config/count/admin')))
       const adminTicketCountOutput = ('0000' + adminTicketCount).slice(-4)
       const complaintCount = JSON.stringify(await get(ref(db, id + '/tickets/config/count/complaint')))
@@ -244,7 +202,7 @@ module.exports = {
       configRow = new ActionRowBuilder()
         .addComponents(
           new SelectMenuBuilder()
-            .setCustomId('ticketconfig')
+            .setCustomId('configTickets')
             .setPlaceholder('Nothing selected')
             .addOptions([
               {

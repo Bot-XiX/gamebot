@@ -1,5 +1,4 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
-const prev = require('./closeticket.js')
 
 /**
  * @file Button interaction: deleteticket
@@ -13,7 +12,6 @@ module.exports = {
   * @param {Object} interaction The Interaction Object of the command.
   */
   async execute (interaction) {
-    const channel = interaction.guild.channels.cache.get(interaction.channel.id)
     const rowRow = new ActionRowBuilder()
       .addComponents(
         new ButtonBuilder()
@@ -27,7 +25,7 @@ module.exports = {
           .setStyle(ButtonStyle.Secondary) // Primary, Secondary, Success, Danger, Link
       )
     // Add the row to the message
-    interaction.reply ({
+    interaction.reply({
       content: 'Möchtest du das Ticket wirklich löschen?',
       embeds: [],
       components: [rowRow]

@@ -1,6 +1,5 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js')
-const prev = require('./createadminticket') // id, execute, execute-->prev
-
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, time } = require('discord.js')
+const { get, ref, getDatabase, set } = require('firebase/database')
 /**
  * @file Button interaction: reopenticket
 
@@ -13,6 +12,8 @@ module.exports = {
   * @param {Object} interaction The Interaction Object of the command.
   */
   async execute (interaction) {
+    const db = getDatabase()
+    const id = interaction.guild.id
     const fetch = await interaction.channel.messages.fetch({})
     const msgArray = await Array.from(fetch)
     const lastMsg = msgArray[msgArray.length - 1][1]
@@ -21,20 +22,14 @@ module.exports = {
     const targetAvatar = target.user.avatarURL()
     interaction.message.edit({ components: [] })
     const channel = interaction.channel
-    let channelName = channel.name.split('-')
-    function wait (ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    var startTime = performance.now()
-    let endTime
-    channel.setName(`${channelName[1]}-${channelName[2]}`).then(async () => {
-      endTime = performance.now()
-    })
-    let timeTaken
-    setTimeout(async () => {
-      timeTaken = endTime - startTime
-    }, 1000)
-    await wait(2000)
+    const channelName = channel.name.split('-')
+    channel.setName(`${channelName[1]}-${channelName[2]}`)
+    const messages = Array.from(fetch)
+    const getConfig = messages[messages.length - 1][1].embeds[0].footer.text.split(' | ')
+    const configId = getConfig[1]
+    const button = getConfig[2]
+    const parentId = JSON.stringify(await get(ref(db, id + '/tickets/config/' + configId + '/buttons/components/' + button + '/channel'))).slice(1, -1)
+    channel.setParent(await interaction.guild.channels.cache.get(parentId))
     const reopenEmbed = new EmbedBuilder()
       .setTitle('Ticket wieder geöffnet')
       .setAuthor({
@@ -56,9 +51,6 @@ module.exports = {
           .setEmoji('🔒') // If you want to use an emoji
       )
     lastMsg.edit({ components: [rowRow] })
-    if (isNaN(timeTaken)) {
-      reopenEmbed.setDescription(`Das Ticket wurde durch ${targetName} wieder eröffnet.\n⚠️ Achtung, der Channel-Name konnte aufgrund der Discord-Zeitbegrenzung nicht umbenannt werden. ⚠️`)
-      interaction.editReply({ embeds: [reopenEmbed] })
-    }
+    set(ref(db, id + '/tickets/channels/' + interaction.channel.id + '/time'), time())
   }
 }

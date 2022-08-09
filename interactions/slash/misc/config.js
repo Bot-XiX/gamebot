@@ -2,8 +2,7 @@
  * @file Slash interaction: config
  * @since 1.0.0
 */
-const { SlashCommandBuilder } = require('@discordjs/builders')
-const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
+const { ActionRowBuilder, SelectMenuBuilder, SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -27,19 +26,14 @@ module.exports = {
               value: 'einwohnermeldeamt'
             },
             {
-              label: 'Anonymisierung',
-              description: 'Anonymisierung Einstellungen',
-              value: 'anonym'
-            },
-            {
               label: 'Role config',
               description: 'Rolleneinstellungen',
-              value: 'roleconfig'
+              value: 'roles'
             },
             {
               label: 'Ticket config',
               description: 'Ticketeinstellungen',
-              value: 'ticketconfig'
+              value: 'ticket'
             }
           ])
       )

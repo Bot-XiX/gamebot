@@ -3,14 +3,14 @@ const { ref, set, getDatabase, get } = require('firebase/database')
 const prev = require('./config')
 
 /**
- * @file Select menu interaction: ticketconfig
+ * @file Select menu interaction: configTickets
 
  * @since 1.0.0
 */
 module.exports = {
-  id: 'ticketconfig',
+  id: 'configTickets',
   /**
-  * @description Executes when the select menu with ID ticketconfig is called.
+  * @description Executes when the select menu with ID configTickets is called.
   * @param {Object} interaction The Interaction Object of the command.
   */
   async execute (interaction) {
