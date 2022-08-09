@@ -24,7 +24,6 @@ module.exports = {
     interaction.message.edit({ components: [] })
     const channel = interaction.channel
     const channelName = channel.name.split('-')
-
     const messages = Array.from(fetch)
     const getConfig = messages[messages.length - 1][1].embeds[0].footer.text.split(' | ')
     const configId = getConfig[1]
@@ -35,11 +34,11 @@ module.exports = {
     const map = channel.permissionOverwrites.cache
     const mapArray = Array.from(map)
     for (let i = 0; i < mapArray.length; i++) {
-      if (!interaction.guild.roles.cache.get(mapArray[i][0].id) === interaction.guild.roles.everyone) {
+      if (interaction.guild.roles.cache.get(mapArray[i][0]) !== interaction.guild.roles.everyone && interaction.guild.members.cache.get(mapArray[i][0]) !== interaction.guild.roles.everyone) {
         channel.permissionOverwrites.edit(mapArray[i][0], {
-          ViewChannel: false,
-          SendMessages: false,
-          ReadMessageHistory: false
+          ViewChannel: true,
+          SendMessages: true,
+          ReadMessageHistory: true
         })
       }
     }
@@ -47,11 +46,6 @@ module.exports = {
       ViewChannel: true,
       SendMessages: true,
       ReadMessageHistory: true
-    })
-    channel.permissionOverwrites.edit(interaction.guild.roles.everyone, {
-      ViewChannel: false,
-      SendMessages: false,
-      ReadMessageHistory: false
     })
     channel.setName(`${channelName[1]}-${channelName[2]}`)
     const reopenEmbed = new EmbedBuilder()

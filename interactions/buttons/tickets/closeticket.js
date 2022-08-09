@@ -43,13 +43,11 @@ module.exports = {
       const map = channel.permissionOverwrites.cache
       const mapArray = Array.from(map)
       for (let i = 0; i < mapArray.length; i++) {
-        if (!interaction.guild.roles.cache.get(mapArray[i][0].id) === interaction.guild.roles.everyone) {
-          channel.permissionOverwrites.edit(mapArray[i][0], {
-            ViewChannel: false,
-            SendMessages: false,
-            ReadMessageHistory: false
-          })
-        }
+        channel.permissionOverwrites.edit(mapArray[i][0], {
+          ViewChannel: false,
+          SendMessages: false,
+          ReadMessageHistory: false
+        })
       }
       channel.permissionOverwrites.edit(modRole, {
         ViewChannel: true,
