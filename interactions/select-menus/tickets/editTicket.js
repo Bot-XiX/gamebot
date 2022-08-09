@@ -245,9 +245,9 @@ module.exports = {
             m.first().delete()
           })
           if (footerName && footerIcon) {
-            editEmbed(embed.setFooter({ name: footerName, iconURL: footerIcon }))
+            editEmbed(embed.setFooter({ text: footerName, iconURL: footerIcon }))
           } else if (footerName) {
-            editEmbed(embed.setAuthor({ name: footerName }))
+            editEmbed(embed.setAuthor({ text: footerName }))
           }
         } else {
           editEmbed(embed.setAuthor(null))
