@@ -39,6 +39,7 @@ module.exports = {
       })
       .then(function (message) {
         message.react('👍')
+        message.react('🤷')
         message.react('👎')
         message.startThread({
           name: `${titel}`,
