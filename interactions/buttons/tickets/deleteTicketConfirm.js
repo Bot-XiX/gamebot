@@ -1,12 +1,12 @@
 /**
- * @file Button interaction: deleteticketconfirmed
+ * @file Button interaction: deleteTicketConfirm
 
  * @since 1.0.0
 */
 module.exports = {
-  id: 'deleteticketconfirmed',
+  id: 'deleteTicketConfirm',
   /**
-  * @description Executes when the button with ID deleteticketconfirmed is called.
+  * @description Executes when the button with ID deleteTicketConfirm is called.
   * @param {Object} interaction The Interaction Object of the command.
   */
   async execute (interaction) {

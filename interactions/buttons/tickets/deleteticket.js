@@ -1,26 +1,26 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 
 /**
- * @file Button interaction: deleteticket
+ * @file Button interaction: deleteTicket
 
  * @since 1.0.0
 */
 module.exports = {
-  id: 'deleteticket',
+  id: 'deleteTicket',
   /**
-  * @description Executes when the button with ID deleteticket is called.
+  * @description Executes when the button with ID deleteTicket is called.
   * @param {Object} interaction The Interaction Object of the command.
   */
   async execute (interaction) {
     const rowRow = new ActionRowBuilder()
       .addComponents(
         new ButtonBuilder()
-          .setCustomId('deleteticketconfirmed')
+          .setCustomId('deleteTicketConfirm')
           .setLabel('Löschen')
           .setStyle(ButtonStyle.Danger) // Primary, Secondary, Success, Danger, Link
           .setEmoji('🗑️'), // If you want to use an emoji
         new ButtonBuilder()
-          .setCustomId('cancelbutton')
+          .setCustomId('cancelButton')
           .setLabel('Abbrechen')
           .setStyle(ButtonStyle.Secondary) // Primary, Secondary, Success, Danger, Link
       )

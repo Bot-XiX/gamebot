@@ -1,11 +1,11 @@
 /**
- * @file Button interaction: cancelbutton
+ * @file Button interaction: cancelButton
  * @since 1.0.0
 */
 module.exports = {
-  id: 'cancelbutton',
+  id: 'cancelButton',
   /**
-  * @description Executes when the button with ID cancelbutton is called.
+  * @description Executes when the button with ID cancelButton is called.
   * @param {Object} interaction The Interaction Object of the command.
   */
   async execute (interaction) {
