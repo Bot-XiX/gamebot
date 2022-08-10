@@ -1,14 +1,14 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, time } = require('discord.js')
-const { get, ref, getDatabase, set } = require('firebase/database')
+const { get, ref, getDatabase, set, onValue } = require('firebase/database')
 /**
- * @file Button interaction: reopenticket
+ * @file Button interaction: reOpenTicket
 
  * @since 1.0.0
 */
 module.exports = {
-  id: 'reopenticket',
+  id: 'reOpenTicket',
   /**
-  * @description Executes when the button with ID reopenticket is called.
+  * @description Executes when the button with ID reOpenTicket is called.
   * @param {Object} interaction The Interaction Object of the command.
   */
   async execute (interaction) {
@@ -29,25 +29,25 @@ module.exports = {
     const configId = getConfig[1]
     const button = getConfig[2]
     const parentId = JSON.stringify(await get(ref(db, id + '/tickets/config/' + configId + '/buttons/components/' + button + '/channel'))).slice(1, -1)
-    const modRole = JSON.stringify(await get(ref(db, id + '/tickets/config/' + configId + '/buttons/components/' + button + '/modRole'))).slice(1, -1)
-    channel.setParent(interaction.guild.channels.cache.get(parentId))
-    const map = channel.permissionOverwrites.cache
-    const mapArray = Array.from(map)
-    for (let i = 0; i < mapArray.length; i++) {
-      if (interaction.guild.members.cache.get(mapArray[i][0]) !== interaction.guild.roles.everyone && interaction.guild.members.cache.get(mapArray[i][0]) !== undefined) {
-        channel.permissionOverwrites.edit(mapArray[i][0], {
-          ViewChannel: true,
-          SendMessages: true,
-          ReadMessageHistory: true
-        })
+    const ids = ref(db, id + '/tickets/channels/' + interaction.channel.id + '/permissions')
+    const unsub = onValue(ids, async (snapshot) => {
+      const permissions = await snapshot.val()
+      const map = (Object.keys(permissions).map(key => permissions[key]))
+      for (let i = 0; i < map.length; i++) {
+        if (map[i].id !== interaction.guild.roles.everyone.id) {
+          channel.permissionOverwrites.edit(map[i].id, {
+            ViewChannel: true,
+            SendMessages: true,
+            ReadMessageHistory: true,
+            AttachFiles: true,
+            EmbedLinks: true
+          })
+        }
       }
-    }
-    channel.permissionOverwrites.edit(modRole, {
-      ViewChannel: true,
-      SendMessages: true,
-      ReadMessageHistory: true
+      channel.setName(`${channelName[1]}-${channelName[2]}`)
+      channel.setParent(interaction.guild.channels.cache.get(parentId))
+      unsub()
     })
-    channel.setName(`${channelName[1]}-${channelName[2]}`)
     const reopenEmbed = new EmbedBuilder()
       .setTitle('Ticket wieder geöffnet')
       .setAuthor({

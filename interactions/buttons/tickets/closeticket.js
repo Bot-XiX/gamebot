@@ -15,12 +15,13 @@ module.exports = {
   * @param {Object} interaction The Interaction Object of the command.
   */
   async execute (interaction) {
+    interaction.deferReply()
     const db = getDatabase()
     const id = interaction.guild.id
     const timer = JSON.stringify(await get(ref(db, id + '/tickets/channels/' + interaction.channel.id + '/time'))).slice(4, -2)
     const times = time().slice(3, -1) - timer
     if (times < 600) {
-      interaction.reply({ content: `You can only a ticket every 10 minutes.\n Please wait another ${Math.floor((600 - times) / 60)} minutes.`, ephemeral: true })
+      interaction.editReply({ content: `You can only a ticket every 10 minutes.\n Please wait another ${Math.floor((600 - times) / 60)} minutes.`, ephemeral: true })
     } else {
       const channel = interaction.channel
       const channelName = channel.name
@@ -43,11 +44,12 @@ module.exports = {
       const map = channel.permissionOverwrites.cache
       const mapArray = Array.from(map)
       for (let i = 0; i < mapArray.length; i++) {
-        channel.permissionOverwrites.edit(mapArray[i][0], {
-          ViewChannel: false,
-          SendMessages: false,
-          ReadMessageHistory: false
-        })
+        await set(ref(db, id + '/tickets/channels/' + interaction.channel.id + '/permissions/' + mapArray[i][0] + '/id'), mapArray[i][1].id)
+      }
+      for (let i = 0; i < mapArray.length; i++) {
+        if (mapArray[i][1].id !== interaction.guild.roles.everyone.id) {
+          channel.permissionOverwrites.delete(mapArray[i][1].id)
+        }
       }
       channel.permissionOverwrites.edit(modRole, {
         ViewChannel: true,
@@ -69,17 +71,17 @@ module.exports = {
         const ticketControls = new ActionRowBuilder()
           .addComponents(
             new ButtonBuilder()
-              .setCustomId('reopenticket')
+              .setCustomId('reOpenTicket')
               .setLabel('Wieder öffnen')
               .setStyle(ButtonStyle.Primary) // Primary, Secondary, Success, Danger, Link
               .setEmoji('🔓'), // If you want to use an emoji
             new ButtonBuilder()
-              .setCustomId('deleteticket')
+              .setCustomId('deleteTicket')
               .setLabel('Löschen')
               .setStyle(ButtonStyle.Danger) // Primary, Secondary, Success, Danger, Link
               .setEmoji('🗑️') // If you want to use an emoji
           )
-        await interaction.reply({ embeds: [closedEmbed], components: [ticketControls] })
+        await interaction.editReply({ embeds: [closedEmbed], components: [ticketControls] })
         interaction.message.edit({
           components: []
         })
