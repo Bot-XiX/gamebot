@@ -33,9 +33,11 @@ module.exports = {
     const unsub = onValue(ids, async (snapshot) => {
       const permissions = await snapshot.val()
       const map = (Object.keys(permissions).map(key => permissions[key]))
+      await channel.setName(`${channelName[1]}-${channelName[2]}`)
+      await channel.setParent(interaction.guild.channels.cache.get(parentId), { lockPermissions: false })
       for (let i = 0; i < map.length; i++) {
-        if (map[i].id !== interaction.guild.roles.everyone.id) {
-          channel.permissionOverwrites.edit(map[i].id, {
+        if (interaction.guild.roles.cache.get(map[i].id) !== interaction.guild.roles.everyone) {
+          await channel.permissionOverwrites.edit(map[i].id, {
             ViewChannel: true,
             SendMessages: true,
             ReadMessageHistory: true,
@@ -44,8 +46,6 @@ module.exports = {
           })
         }
       }
-      channel.setName(`${channelName[1]}-${channelName[2]}`)
-      channel.setParent(interaction.guild.channels.cache.get(parentId))
       unsub()
     })
     const reopenEmbed = new EmbedBuilder()

@@ -298,16 +298,14 @@ module.exports = {
               })
               m.first().delete()
               await collect().then(async (m) => {
-                const emoji = client.emojis.cache.get(m.first().content.split(':')[2].slice(0, -1))
-                console.log(emoji)
                 if (m.first().content !== 'none') {
+                  const emoji = client.emojis.cache.get(m.first().content.split(':')[2].slice(0, -1))
                   try {
                     button.setEmoji({ id: emoji.id })
                     interaction.editReply({
                       content: `Button Emoji gesetzt: ${emoji}}\nBitte erwähne die Moderationsrolle.`
                     })
                   } catch (e) {
-                    console.log(e)
                     interaction.editReply({
                       content: 'Button Emoji nicht gesetzt.\nKein Zugriff auf diesen Emoji oder Emoji ist animiert.\nBitte erwähne die Moderationsrolle.'
                     })

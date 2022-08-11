@@ -44,22 +44,17 @@ module.exports = {
           const channel = await interaction.guild.channels.create({
             name: channelName,
             type: ChannelType.Text,
-            parent: openCategory
+            parent: openCategory,
+            permissionOverwrites: [{ id: interaction.guild.roles.everyone.id, deny: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ReadMessageHistory, PermissionsBitField.Flags.AttachFiles, PermissionsBitField.Flags.EmbedLinks] }]
           })
-          channel.permissionOverwrites.set([])
-          await channel.permissionOverwrites.edit(interaction.guild.roles.everyone, {
-            ViewChannel: false,
-            SendMessages: false,
-            ReadMessageHistory: false
-          })
-          channel.permissionOverwrites.edit(target, {
+          await channel.permissionOverwrites.edit(target, {
             ViewChannel: true,
             SendMessages: true,
             ReadMessageHistory: true,
             AttachFiles: true,
             EmbedLinks: true
           })
-          channel.permissionOverwrites.edit(modRole, {
+          await channel.permissionOverwrites.edit(modRole, {
             ViewChannel: true,
             SendMessages: true,
             ReadMessageHistory: true,

@@ -40,15 +40,15 @@ module.exports = {
       const button = getConfig[2]
       const parentId = JSON.stringify(await get(ref(db, id + '/tickets/config/' + configId + '/buttons/components/' + button + '/closedChannel'))).slice(1, -1)
       const modRole = JSON.stringify(await get(ref(db, id + '/tickets/config/' + configId + '/buttons/components/' + button + '/modRole'))).slice(1, -1)
-      channel.setParent(await interaction.guild.channels.cache.get(parentId))
+      channel.setParent(await interaction.guild.channels.cache.get(parentId), { lockPermissions: false })
       const map = channel.permissionOverwrites.cache
       const mapArray = Array.from(map)
       for (let i = 0; i < mapArray.length; i++) {
         await set(ref(db, id + '/tickets/channels/' + interaction.channel.id + '/permissions/' + mapArray[i][0] + '/id'), mapArray[i][1].id)
       }
       for (let i = 0; i < mapArray.length; i++) {
-        if (mapArray[i][1].id !== interaction.guild.roles.everyone.id) {
-          channel.permissionOverwrites.delete(mapArray[i][1].id)
+        if (interaction.guild.roles.cache.get(mapArray[i][1].id) !== interaction.guild.roles.everyone) {
+          await channel.permissionOverwrites.delete(mapArray[i][1].id)
         }
       }
       channel.permissionOverwrites.edit(modRole, {
