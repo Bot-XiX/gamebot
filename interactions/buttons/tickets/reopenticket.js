@@ -37,6 +37,7 @@ module.exports = {
       await channel.setParent(interaction.guild.channels.cache.get(parentId), { lockPermissions: false })
       for (let i = 0; i < map.length; i++) {
         if (interaction.guild.roles.cache.get(map[i].id) !== interaction.guild.roles.everyone) {
+          console.log(map[i])
           await channel.permissionOverwrites.edit(map[i].id, {
             ViewChannel: true,
             SendMessages: true,
