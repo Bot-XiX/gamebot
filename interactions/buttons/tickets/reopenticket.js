@@ -36,14 +36,16 @@ module.exports = {
       await channel.setName(`${channelName[1]}-${channelName[2]}`)
       await channel.setParent(interaction.guild.channels.cache.get(parentId), { lockPermissions: false })
       for (let i = 0; i < map.length; i++) {
-        if (interaction.guild.roles.cache.get(map[i].id) !== interaction.guild.roles.everyone || interaction.guild.roles.cache.find(r => r.name === 'text mute') !== interaction.guild.roles.cache.get(map[i].id)) {
-          await channel.permissionOverwrites.edit(map[i].id, {
-            ViewChannel: true,
-            SendMessages: true,
-            ReadMessageHistory: true,
-            AttachFiles: true,
-            EmbedLinks: true
-          })
+        if (interaction.guild.roles.cache.get(map[i].id) !== interaction.guild.roles.everyone) {
+          if (interaction.guild.roles.cache.find(r => r.name === 'text mute') !== interaction.guild.roles.cache.get(map[i].id)) {
+            await channel.permissionOverwrites.edit(map[i].id, {
+              ViewChannel: true,
+              SendMessages: true,
+              ReadMessageHistory: true,
+              AttachFiles: true,
+              EmbedLinks: true
+            })
+          }
         }
       }
       unsub()
