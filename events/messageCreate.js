@@ -24,7 +24,6 @@ module.exports = {
       message.content === `<@!${client.user.id}>`
     ) {
       require('../messages/onMention').execute(message)
-      return
     }
   }
 }
