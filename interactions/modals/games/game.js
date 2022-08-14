@@ -131,6 +131,7 @@ module.exports = {
             run()
           })
         } catch (e) {
+          console.log(e)
           interaction.editReply({ content: 'Event liegt in der Vergangenheit' })
         }
       }
