@@ -1,7 +1,6 @@
 const { EmbedBuilder, GuildScheduledEventPrivacyLevel, GuildScheduledEventEntityType, PermissionsBitField, ChannelType, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js")
 const { get, ref, getDatabase } = require("firebase/database")
 const moment = require("moment");
-const { data } = require("../../slash/misc/test");
 
 /**
  * @file Modal interaction: game
