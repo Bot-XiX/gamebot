@@ -84,6 +84,39 @@ module.exports = {
             )
             interaction.channel.send({ embeds: [embed], components: [rowRow] })
             interaction.editReply({ content: 'Event erfolgreich erstellt!' })
+            async function run () {
+              const row1 = new ActionRowBuilder().addComponents(
+                new ButtonBuilder()
+                  .setLabel('Looking for Group')
+                  .setCustomId('lfg')
+                  .setStyle(ButtonStyle.Primary)
+                  .setEmoji('🎮')
+              )
+              const fetch = await interaction.channel.messages.fetch({
+                limit: 10
+              })
+              const fetchfiltered = fetch.filter(function (list) {
+                return (
+                  list.content === 'Drücke hier um nach einer Gruppe zu suchen'
+                )
+              })
+              const id = fetchfiltered.map(function (list) {
+                return list.id
+              })
+              if (id.length !== 0) {
+                interaction.channel.messages
+                  .fetch(id.toString())
+                  .then((message) => {
+                    message.delete()
+                  })
+                  .catch({})
+              }
+              interaction.channel.send({
+                content: 'Drücke hier um nach einer Gruppe zu suchen',
+                components: [row1]
+              })
+            }
+            run()
           })
         } catch (e) {
           console.log(e)
