@@ -54,7 +54,6 @@ module.exports = {
         const combinedDate = mapArray[2][1].value[0] + ' ' + mapArray[1][1].value + ':00'
         let date = await moment(combinedDate, "DD.MM.YYYY HH:mm", 'de').toDate()
         let channel = interaction.guild.channels.cache.get(JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/game/waitingChannel'))).slice(1,-1))
-        }
         try {
           const rowRow = new ActionRowBuilder()
             .addComponents(
