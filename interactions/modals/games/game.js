@@ -27,9 +27,9 @@ module.exports = {
       }
     }
     try {
-      await interaction.deferReply({ ephemeral: true })
       const mapArray = Array.from(interaction.fields.fields)
       if (moment(mapArray[1][1].value, "HH:mm", true).isValid()) {
+        await interaction.deferReply({ ephemeral: true })
         const game = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[0][1].value[0] + '/name'))).slice(1, -1)
         const logo = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[0][1].value[0] + '/logo'))).slice(1, -1)
         let banner = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[0][1].value[0] + '/banner'))).slice(1, -1)
