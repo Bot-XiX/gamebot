@@ -45,8 +45,8 @@ module.exports = {
         } catch {
           null
         }
-        const combinedDate = mapArray[2][1].value[0] + ' ' + mapArray[1][1].value
-        const date = await moment(combinedDate, "DD.MM.YYYY HH:mm", 'de').toDate()
+        const combinedDate = mapArray[2][1].value[0] + ' ' + mapArray[1][1].value+':00'
+        const date = await moment(combinedDate, "DD.MM.YYYY HH:mm", 'de').valueOf()
         let channel = await interaction.guild.channels.cache.find(channel => channel.name === 'waiting')
         if (!channel) {
           await interaction.guild.channels.create({
