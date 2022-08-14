@@ -227,21 +227,31 @@ module.exports = {
     }
     if (interaction.values.includes('games')) {
       const games = await ref(db, id + '/games')
-      console.log(games)
       const gameSelectMenu = new SelectMenuBuilder()
         .setCustomId('configGames')
         .setPlaceholder('Nothing selected')
       const unsub = onValue(games, async (snapshot)  => {
         const games = snapshot.val()
         gameSelectMenu.addOptions([{ label: 'Spiel hinzufügen', value: 'addGame' }])
-        console.log(games)
         for (const game in games) {
           gameSelectMenu.addOptions([{ label: games[game].name, value: game }])
         }
         const configRow = new ActionRowBuilder().addComponents(gameSelectMenu)
+        const rowRow = new ActionRowBuilder()
+          .addComponents(
+            new ButtonBuilder()
+              .setCustomId('addGameWaitingChannel')
+              .setLabel('Set Waiting Channel')
+              .setStyle(ButtonStyle.Primary), // Primary, Secondary, Success, Danger, Link
+            // .setEmoji('EMOJI') // If you want to use an emoji
+            new ButtonBuilder()
+              .setCustomId('addGameRole')
+              .setLabel('Set role')
+              .setStyle(ButtonStyle.Primary) // Primary, Secondary, Success, Danger, Link
+          )
         interaction.reply({
           content: 'Was magst du anpassen?',
-          components: [configRow],
+          components: [configRow, rowRow],
           embeds: [],
           ephemeral: true,
           attachments: []
