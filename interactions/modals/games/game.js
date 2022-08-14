@@ -53,10 +53,10 @@ module.exports = {
         }
         const combinedDate = mapArray[2][1].value[0] + ' ' + mapArray[1][1].value+':00'
         let date = await moment(combinedDate, "DD.MM.YYYY HH:mm", 'de').valueOf()
-        date -= (60 * 1000 * 60 * 24)
-        if (hasDST(new Date(date))) {
-          date-=(60 * 1000 * 60 * 24)
-        }
+        // date -= (60 * 1000 * 60 * 24)
+        // if (hasDST(new Date(date))) {
+        //   date-=(60 * 1000 * 60 * 24)
+        // }
         let channel = await interaction.guild.channels.cache.find(channel => channel.name === 'waiting')
         if (!channel) {
           await interaction.guild.channels.create({
