@@ -1,6 +1,7 @@
 const { EmbedBuilder, GuildScheduledEventPrivacyLevel, GuildScheduledEventEntityType, PermissionsBitField, ChannelType, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js")
 const { get, ref, getDatabase } = require("firebase/database")
-const moment = require("moment")
+const moment = require("moment");
+const { data } = require("../../slash/misc/test");
 
 /**
  * @file Modal interaction: game
@@ -14,6 +15,12 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
+    function hasDST (date = new Date()) {
+      const january = new Date(date.getFullYear(), 0, 1).getTimezoneOffset();
+      const july = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
+
+      return Math.max(january, july) !== date.getTimezoneOffset();
+    }
     const events = interaction.guild.scheduledEvents.cache
     for(let event of events.values()) {
       if (event.description.includes(interaction.user.toString())) {
@@ -46,7 +53,14 @@ module.exports = {
           null
         }
         const combinedDate = mapArray[2][1].value[0] + ' ' + mapArray[1][1].value+':00'
-        const date = await moment(combinedDate, "DD.MM.YYYY HH:mm", 'de').valueOf()
+        let date = await moment(combinedDate, "DD.MM.YYYY HH:mm", 'de').valueOf()
+        console.log(date)
+        date -= (60 * 1000 * 60 * 24)
+        console.log(date)
+        if (hasDST(new Date(date))) {
+          date-=(60 * 1000 * 60 * 24)
+        }
+        console.log(date)
         let channel = await interaction.guild.channels.cache.find(channel => channel.name === 'waiting')
         if (!channel) {
           await interaction.guild.channels.create({
