@@ -71,7 +71,7 @@ module.exports = {
           await prev.prevCER.editReply({ embeds: [roleEmbed] })
           await m.first().delete()
         } catch (e) {
-          console.log(e)
+
         }
         unsubRoles()
       })

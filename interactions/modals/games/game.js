@@ -16,17 +16,20 @@ module.exports = {
   async execute (interaction) {
     const events = interaction.guild.scheduledEvents.cache
     for(let event of events.values()) {
-      console.log(event)
       if (event.description.includes(interaction.user.toString())) {
         return interaction.reply({ content: "You already have a game scheduled!", ephemeral: true })
       }
     }
     try {
-      interaction.deferReply({ ephemeral: true })
+      await interaction.deferReply({ ephemeral: true })
       const mapArray = Array.from(interaction.fields.fields)
       if (moment(mapArray[1][1].value, "HH:mm", true).isValid()) {
         const game = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[0][1].value[0] + '/name'))).slice(1, -1)
         const logo = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[0][1].value[0] + '/logo'))).slice(1, -1)
+        let banner = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[0][1].value[0] + '/banner'))).slice(1, -1)
+        if (banner === "ul") {
+          banner = null
+        }
         const embed = new EmbedBuilder()
           .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
           .setTitle('Spielersuche')
@@ -56,7 +59,6 @@ module.exports = {
             channel = c
           })
         }
-        console.log(channel)
         try {
           const rowRow = new ActionRowBuilder()
             .addComponents(
@@ -70,8 +72,8 @@ module.exports = {
             name: game,
             scheduledStartTime: date,
             channel: channel,
-            description: `${interaction.member} sucht nach ${mapArray[3][1].value[0]} Spielern, um ${game} zu spielen.`,
-            image: logo,
+            description: `${interaction.member} sucht nach ${mapArray[3][1].value[0]} Spieler(n), um ${game} zu spielen.`,
+            image: banner,
             privacyLevel: GuildScheduledEventPrivacyLevel.GuildOnly,
             entityType: GuildScheduledEventEntityType.Voice
           }).then(async event => {
@@ -119,7 +121,6 @@ module.exports = {
             run()
           })
         } catch (e) {
-          console.log(e)
           interaction.editReply({ content: 'Event liegt in der Vergangenheit' })
         }
       }

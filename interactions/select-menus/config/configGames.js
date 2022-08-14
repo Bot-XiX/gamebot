@@ -20,7 +20,6 @@ module.exports = {
       return msg
     }
     try {
-      console.log(prev)
       prev.prev.interaction.editReply({
         components: [interaction.message.components[0]]
       })
@@ -51,6 +50,28 @@ module.exports = {
             null
           }
           interaction.editReply({
+            content: 'Bitte sende das Spiel-Banner als Bild oder Link!\n Schreibe `none` um kein Banner zu setzen.'
+          })
+        } else {
+          interaction.editReply({
+            content: 'Bitte sende das Spiel-Banner als Bild oder Link!\n Schreibe `none` um kein Banner zu setzen.'
+          })
+        }
+        msg2.first().delete()
+        const msg3 = await collect()
+        if (msg3.first().content !== 'none') {
+          try {
+            let gameBanner
+            if (msg3.first().attachments.size > 0) {
+              gameBanner = msg3.first().attachments.first().url
+            } else {
+              gameBanner = msg3.first().content
+            }
+            await set(ref(db, id + '/games/' + gameName.toLowerCase() + '/banner'), gameBanner)
+          } catch {
+            null
+          }
+          interaction.editReply({
             content: 'Fertig!'
           })
         } else {
@@ -58,8 +79,8 @@ module.exports = {
             content: 'Fertig!'
           })
         }
+        msg3.first().delete()
         set(ref(db, id + '/games/' + gameName.toLowerCase() + '/name'), gameName)
-        msg2.first().delete()
       } else {
         remove(ref(db, id + '/games/' + interaction.values[0]))
         interaction.reply({ content: 'Spiel gelöscht!', ephemeral: true })
@@ -82,11 +103,11 @@ module.exports = {
           })
           unsub()
         } catch (e) {
-          console.log(e)
+          null
         }
       })
-    } catch (e) {
-      console.log(e)
+    } catch {
+      null
     }
   }
 }

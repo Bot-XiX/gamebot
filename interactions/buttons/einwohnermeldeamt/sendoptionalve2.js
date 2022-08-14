@@ -21,7 +21,6 @@ module.exports = {
         ephemeral: true
       })
     } catch (e) {
-      console.log(e)
       interaction.reply({
         content: 'User akzeptiert keine Nachricht',
         ephemeral: true

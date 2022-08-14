@@ -86,7 +86,6 @@ module.exports = {
           interaction.reply({ content: `${name} Ticket created.`, ephemeral: true })
           module.exports.prev = { interaction, rowRow, channel, msg }
         } catch (err) {
-          console.log(err)
         }
         unsub()
       })
