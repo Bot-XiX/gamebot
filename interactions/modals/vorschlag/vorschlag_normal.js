@@ -4,6 +4,7 @@
  * @since 2.0.0
 */
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
+const { getDatabase, ref, set } = require('firebase/database')
 module.exports = {
   id: 'vorschlag_normal',
 
@@ -45,6 +46,7 @@ module.exports = {
           autoArchiveDuration: 1440 * 7,
           type: 'GUILD_PUBLIC_THREAD'
         })
+        set(ref(getDatabase(), interaction.guild.id + '/anonym/messages/' + message.id), interaction.member.id)
       })
       .catch()
     async function run () {

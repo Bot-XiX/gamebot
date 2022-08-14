@@ -9,6 +9,7 @@ const {
   ButtonBuilder,
   ButtonStyle
 } = require('discord.js')
+const { set, ref, getDatabase } = require('firebase/database')
 module.exports = {
   id: 'vorschlag_anonym',
 
@@ -45,6 +46,7 @@ module.exports = {
           autoArchiveDuration: 1440 * 7,
           type: 'GUILD_PUBLIC_THREAD'
         })
+        set(ref(getDatabase(), interaction.guild.id + '/anonym/messages/' + message.id), interaction.member.id)
       })
       .catch()
     async function run () {
