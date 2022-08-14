@@ -51,10 +51,13 @@ module.exports = {
           await channel.permissionOverwrites.delete(mapArray[i][1].id)
         }
       }
-      channel.permissionOverwrites.edit(modRole, {
+      await channel.permissionOverwrites.edit(modRole, {
         ViewChannel: true,
         SendMessages: true,
-        ReadMessageHistory: true
+        ReadMessageHistory: true,
+        AttachFiles: true,
+        EmbedLinks: true,
+        ManageChannels: true
       })
       channel.setName(`🔒-${channelName}`).then(async () => {
         const closedEmbed = new EmbedBuilder()
