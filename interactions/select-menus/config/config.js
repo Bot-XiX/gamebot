@@ -2,7 +2,7 @@
  * @file Select menu interaction: config
  * @since 1.0.0
 */
-const { getDatabase, ref, set, get } = require('firebase/database')
+const { getDatabase, ref, set, get, onValue } = require('firebase/database')
 const { ActionRowBuilder, SelectMenuBuilder, ButtonStyle, ButtonBuilder } = require('discord.js')
 const { EmbedBuilder } = require('discord.js')
 module.exports = {
@@ -223,6 +223,30 @@ module.exports = {
         embeds: [ticketConfigEmbed],
         ephemeral: true,
         attachments: []
+      })
+    }
+    if (interaction.values.includes('games')) {
+      const games = await ref(db, id + '/games')
+      console.log(games)
+      const gameSelectMenu = new SelectMenuBuilder()
+        .setCustomId('configGames')
+        .setPlaceholder('Nothing selected')
+      const unsub = onValue(games, async (snapshot)  => {
+        const games = snapshot.val()
+        gameSelectMenu.addOptions([{ label: 'Spiel hinzufügen', value: 'addGame' }])
+        console.log(games)
+        for (const game in games) {
+          gameSelectMenu.addOptions([{ label: games[game].name, value: game }])
+        }
+        const configRow = new ActionRowBuilder().addComponents(gameSelectMenu)
+        interaction.reply({
+          content: 'Was magst du anpassen?',
+          components: [configRow],
+          embeds: [],
+          ephemeral: true,
+          attachments: []
+        })
+        unsub()
       })
     }
     module.exports.prev = { interaction, configRow }

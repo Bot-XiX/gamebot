@@ -34,6 +34,11 @@ module.exports = {
               label: 'Ticket config',
               description: 'Ticketeinstellungen',
               value: 'ticket'
+            },
+            {
+              label: 'Game config',
+              description: 'Spieleeinstellungen',
+              value: 'games'
             }
           ])
       )
