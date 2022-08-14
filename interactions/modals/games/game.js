@@ -53,17 +53,7 @@ module.exports = {
         }
         const combinedDate = mapArray[2][1].value[0] + ' ' + mapArray[1][1].value + ':00'
         let date = await moment(combinedDate, "DD.MM.YYYY HH:mm", 'de').toDate()
-        let channel = interaction.guild.channels.cache.get(await get(ref(getDatabase(), interaction.guild.id + '/game/waitingChannel')))
-        if (!channel) {
-          await interaction.guild.channels.create({
-            name: 'waiting',
-            type: ChannelType.GuildVoice,
-            permissionOverwrites: [
-              { id: interaction.guild.roles.everyone.id, deny: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ReadMessageHistory, PermissionsBitField.Flags.AttachFiles, PermissionsBitField.Flags.EmbedLinks] }
-            ]
-          }).then(c => {
-            channel = c
-          })
+        let channel = interaction.guild.channels.cache.get(JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/game/waitingChannel'))).slice(1,-1))
         }
         try {
           const rowRow = new ActionRowBuilder()
