@@ -247,6 +247,10 @@ module.exports = {
             new ButtonBuilder()
               .setCustomId('addGameRole')
               .setLabel('Set role')
+              .setStyle(ButtonStyle.Primary), // Primary, Secondary, Success, Danger, Link
+            new ButtonBuilder()
+              .setCustomId('addPremiumRole')
+              .setLabel('Set premium role')
               .setStyle(ButtonStyle.Primary) // Primary, Secondary, Success, Danger, Link
           )
         interaction.reply({

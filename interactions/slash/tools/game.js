@@ -29,7 +29,12 @@ module.exports = {
         .setLabel('Looking for Group')
         .setCustomId('lfg')
         .setStyle(ButtonStyle.Primary)
-        .setEmoji('🎮')
+        .setEmoji('🎮'),
+      new ButtonBuilder()
+        .setLabel('Looking for custom Game')
+        .setCustomId('lfcg')
+        .setStyle(ButtonStyle.Secondary)
+        .setEmoji('✨')
     )
     interaction.channel.send({
       content: 'Drücke hier um nach einer Gruppe zu suchen',

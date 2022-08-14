@@ -30,7 +30,10 @@ module.exports = {
       const mapArray = Array.from(interaction.fields.fields)
       if (moment(mapArray[1][1].value, "HH:mm", true).isValid()) {
         await interaction.deferReply({ ephemeral: true })
-        const game = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[0][1].value[0] + '/name'))).slice(1, -1)
+        let game = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[0][1].value[0] + '/name'))).slice(1, -1)
+        if (game === "ul") {
+          game = mapArray[0][1].value
+        }
         const logo = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[0][1].value[0] + '/logo'))).slice(1, -1)
         let banner = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[0][1].value[0] + '/banner'))).slice(1, -1)
         if (banner === "ul") {
@@ -88,7 +91,12 @@ module.exports = {
                   .setLabel('Looking for Group')
                   .setCustomId('lfg')
                   .setStyle(ButtonStyle.Primary)
-                  .setEmoji('🎮')
+                  .setEmoji('🎮'),
+                new ButtonBuilder()
+                  .setLabel('Looking for custom Game')
+                  .setCustomId('lfcg')
+                  .setStyle(ButtonStyle.Secondary)
+                  .setEmoji('✨')
               )
               const fetch = await interaction.channel.messages.fetch({
                 limit: 10
