@@ -53,7 +53,7 @@ module.exports = {
         }
         const combinedDate = mapArray[2][1].value[0] + ' ' + mapArray[1][1].value + ':00'
         let date = await moment(combinedDate, "DD.MM.YYYY HH:mm", 'de').toDate()
-        let channel = await interaction.guild.channels.cache.find(channel => channel.name === 'waiting')
+        let channel = interaction.guild.channels.cache.get(await get(ref(getDatabase(), interaction.guild.id + '/game/waitingChannel')))
         if (!channel) {
           await interaction.guild.channels.create({
             name: 'waiting',
@@ -90,7 +90,8 @@ module.exports = {
                 .setStyle(ButtonStyle.Link)
                 .setEmoji('🔗')
             )
-            interaction.channel.send({ embeds: [embed], components: [rowRow] })
+            const role = interaction.guild.roles.cache.get(JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/game/waitingRole'))).slice(1, -1))
+            interaction.channel.send({ content: role.toString(), embeds: [embed], components: [rowRow] })
             interaction.editReply({ content: 'Event erfolgreich erstellt!' })
             async function run () {
               const row1 = new ActionRowBuilder().addComponents(
