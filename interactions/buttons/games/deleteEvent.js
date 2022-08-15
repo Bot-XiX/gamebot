@@ -26,6 +26,8 @@ module.exports = {
         } catch {
           null
         }
+      } else {
+        interaction.editReply({ content: "Du bist nicht Besitzer dieses Events" })
       }
     }
   }

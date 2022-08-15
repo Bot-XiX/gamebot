@@ -29,6 +29,8 @@ module.exports = {
         await event.edit({ channel: channel })
         event.setStatus(GuildScheduledEventStatus.Active)
         interaction.editReply({ content: 'Event gestartet!' })
+      } else {
+        interaction.editReply({ content: "Du bist nicht Besitzer dieses Events" })
       }
     }
   }
