@@ -61,6 +61,11 @@ module.exports = {
           const rowRow = new ActionRowBuilder()
             .addComponents(
               new ButtonBuilder()
+                .setCustomId('startEvent')
+                .setLabel('Event starten')
+                .setStyle(ButtonStyle.Success)
+                .setEmoji('✅'),
+              new ButtonBuilder()
                 .setCustomId('deleteEvent')
                 .setLabel('Event schließen')
                 .setStyle(ButtonStyle.Danger)
@@ -125,7 +130,6 @@ module.exports = {
             run()
           })
         } catch (e) {
-          console.log(e)
           interaction.editReply({ content: 'Event liegt in der Vergangenheit' })
         }
       }

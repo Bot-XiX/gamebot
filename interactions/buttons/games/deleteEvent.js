@@ -10,12 +10,24 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
+    await interaction.deferReply({ ephemeral: true })
     const events = interaction.guild.scheduledEvents.cache
     for (let event of events.values()) {
       if (event.description.includes(interaction.user.toString())) {
-        event.delete()
-        interaction.reply({ content: "Event geschlossen", ephemeral: true })
+        try {
+          event.delete()
+        } catch {
+          null
+        }
+        interaction.editReply({ content: "Event geschlossen" })
         interaction.message.delete()
+        try {
+          interaction.guild.channels.cache.find(channel => channel.name === event.name+' '+interaction.user.tag).delete()
+        } catch {
+          null
+        }
+      } else {
+        interaction.reply({ content: "Du bist nicht Besitzer dieses Events" })
       }
     }
   }

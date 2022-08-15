@@ -17,7 +17,7 @@ require('dotenv').config()
  * @description Main Application Client */
 const Discord = require('discord.js')
 const client = new Client({
-  intents: new Discord.IntentsBitField(1179647)
+  intents: new Discord.IntentsBitField(3276799)
 })
 module.exports = client
 const token = process.env.token
