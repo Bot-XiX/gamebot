@@ -13,7 +13,6 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
-    await interaction.deferReply({ ephemeral: true })
     const events = interaction.guild.scheduledEvents.cache
     for (let event of events.values()) {
       if (event.description.includes(interaction.user.toString()) && interaction.message.embeds[0].author.name.includes(interaction.user.tag)) {
@@ -28,9 +27,7 @@ module.exports = {
         interaction.message.edit({ components: [new ActionRowBuilder().addComponents(newButton, interaction.message.components[0].components[1], interaction.message.components[0].components[2])] })
         await event.edit({ channel: channel })
         event.setStatus(GuildScheduledEventStatus.Active)
-        interaction.editReply({ content: 'Event gestartet!' })
-      } else {
-        interaction.editReply({ content: "Du bist nicht Besitzer dieses Events" })
+        interaction.reply({ content: 'Event gestartet!', ephemeral: true })
       }
     }
   }
