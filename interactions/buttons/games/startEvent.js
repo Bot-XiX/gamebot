@@ -16,7 +16,7 @@ module.exports = {
     await interaction.deferReply({ ephemeral: true })
     const events = interaction.guild.scheduledEvents.cache
     for (let event of events.values()) {
-      if (event.description.includes(interaction.user.toString())) {
+      if (event.description.includes(interaction.user.toString()) && interaction.message.embeds[0].author.name.includes(interaction.user.tag)) {
         const channel = await interaction.guild.channels.create({
           name: event.name+' '+interaction.user.tag,
           type: ChannelType.GuildVoice,
