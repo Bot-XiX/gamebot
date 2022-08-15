@@ -14,7 +14,7 @@ module.exports = {
   async execute (interaction) {
     const db = getDatabase()
     const id = interaction.guild.id
-    const modalModal = new ModalBuilder().setCustomId('game').setTitle('title');
+    const modalModal = new ModalBuilder().setCustomId('game').setTitle('LFG');
     const gameList = []
     const games = await ref(db, id + '/games')
     const unsub = onValue(games, async (snapshot) => {

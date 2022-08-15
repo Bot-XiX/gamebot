@@ -17,7 +17,7 @@ module.exports = {
     const premiumRole = JSON.stringify(await get(ref(db, id + '/game/premiumRole'))).slice(1, -1)
     const premiumRoleObj = interaction.guild.roles.cache.get(premiumRole)
     if( interaction.member.roles.cache.has(premiumRoleObj.id)) {
-      const modalModal = new ModalBuilder().setCustomId('game').setTitle('title');
+      const modalModal = new ModalBuilder().setCustomId('game').setTitle('LFG');
       const gameList = []
       const games = await ref(db, id + '/games')
       const unsub = onValue(games, async (snapshot) => {
