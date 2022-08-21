@@ -93,7 +93,7 @@ module.exports = {
         unsub()
       })
     } else {
-      interaction.reply({ content: 'Du bist kein Premium-User!', ephemeral: true })
+      interaction.reply({ content: 'Dieses Feature ist noch in Entwicklung!', ephemeral: true })
     }
   }
 }
