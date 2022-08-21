@@ -1,47 +1,33 @@
-const { EmbedBuilder, GuildScheduledEventPrivacyLevel, GuildScheduledEventEntityType, PermissionsBitField, ChannelType, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js")
+const { EmbedBuilder, GuildScheduledEventPrivacyLevel, GuildScheduledEventEntityType, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js")
 const { get, ref, getDatabase } = require("firebase/database")
 const moment = require("moment");
 
 /**
- * @file Modal interaction: LFGgame
+ * @file Modal interaction: LFGcustom
  * @since 1.0.0
 */
 module.exports = {
-  id: 'LFGgame',
+  id: 'LFGcustom',
   /**
-* @description Executes when the modal with ID LFGgame is called.
+* @description Executes when the modal with ID LFGcustom is called.
 
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
     try {
       const mapArray = Array.from(interaction.fields.fields)
-      if (moment(mapArray[1][1].value, "HH:mm", true).isValid() && moment(mapArray[0][1].value, "DD.MM.YYYY", true).isValid()) {
+      if (moment(mapArray[2][1].value, "HH:mm", true).isValid() && moment(mapArray[1][1].value, "DD.MM.YYYY", true).isValid()) {
         await interaction.deferReply({ ephemeral: true })
-        let game = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[2][0].toLowerCase() + '/name'))).slice(1, -1)
-        if (game === "ul") {
-          game = mapArray[2][0]
-        }
-        const logo = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[2][0].toLowerCase() + '/logo'))).slice(1, -1)
-        let banner = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[2][0].toLowerCase() + '/banner'))).slice(1, -1)
-        if (banner === "ul") {
-          banner = null
-        }
         const embed = new EmbedBuilder()
           .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
           .setTitle('Spielersuche')
           .addFields(
-            { name: 'Spiel', value: game },
-            { name: 'Zeit', value: mapArray[1][1].value },
-            { name: 'Tag', value: mapArray[0][1].value }
+            { name: 'Spiel', value: mapArray[0][1].value },
+            { name: 'Zeit', value: mapArray[2][1].value },
+            { name: 'Tag', value: mapArray[1][1].value }
           )
           .setFooter({ text: 'Das Event kann nur vom Ersteller geschlossen werden' })
-        try {
-          embed.setThumbnail(logo)
-        } catch {
-          null
-        }
-        const combinedDate = mapArray[0][1].value + ' ' + mapArray[1][1].value + ':00'
+        const combinedDate = mapArray[1][1].value + ' ' + mapArray[2][1].value + ':00'
         let date = await moment(combinedDate, "DD.MM.YYYY HH:mm", 'de').toDate()
         let channel = interaction.guild.channels.cache.get(JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/game/waitingChannel'))).slice(1, -1))
         try {
@@ -59,26 +45,25 @@ module.exports = {
                 .setEmoji('🗑️')
             )
           let description
-          if (mapArray[2][1].value) {
-            description = `${interaction.member} sucht nach ${mapArray[2][1].value} Spieler(n), um ${game} zu spielen.`
+          if (mapArray[3][1].value) {
+            description = `${interaction.member} sucht nach ${mapArray[3][1].value} Spieler(n), um ${mapArray[0][1].value} zu spielen.`
             embed.addFields(
-              { name: 'Anzahl Spieler', value: mapArray[2][1].value }
+              { name: 'Anzahl Spieler', value: mapArray[3][1].value }
             )
           } else {
-            description = `${interaction.member} sucht Mitspieler, um ${game} zu spielen.`
+            description = `${interaction.member} sucht Mitspieler, um ${mapArray[0][1].value} zu spielen.`
           }
-          if (mapArray[3][1].value) {
-            description += `\n**Zusätzliche Infos:**\n${mapArray[3][1].value}`
+          if (mapArray[4][1].value) {
+            description += `\n**Zusätzliche Infos:**\n${mapArray[4][1].value}`
             embed.addFields(
-              { name: 'Zusätzliche Infos', value: mapArray[3][1].value }
+              { name: 'Zusätzliche Infos', value: mapArray[4][1].value }
             )
           }
           await interaction.guild.scheduledEvents.create({
-            name: game,
+            name: mapArray[0][1].value.toString(),
             scheduledStartTime: date,
             channel: channel,
             description: description,
-            image: banner,
             privacyLevel: GuildScheduledEventPrivacyLevel.GuildOnly,
             entityType: GuildScheduledEventEntityType.Voice
           }).then(async event => {
@@ -132,6 +117,7 @@ module.exports = {
             run()
           })
         } catch (e) {
+          console.log(e)
           interaction.editReply({ content: 'Event liegt in der Vergangenheit' })
         }
       }
