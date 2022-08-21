@@ -1,5 +1,5 @@
-const { ModalBuilder, TextInputBuilder, ActionRowBuilder, SelectMenuBuilder } = require('discord.js');
-const { onValue, ref, getDatabase, get } = require('firebase/database');
+const { ModalBuilder, TextInputBuilder, ActionRowBuilder } = require('discord.js')
+const { ref, getDatabase, get } = require('firebase/database')
 /**
  * @file Button interaction: lfcg
  * @since 1.0.0
@@ -13,17 +13,17 @@ module.exports = {
 */
   async execute (interaction) {
     const events = interaction.guild.scheduledEvents.cache
-    for (let event of events.values()) {
+    for (const event of events.values()) {
       if (event.description.includes(interaction.user.toString())) {
-        return interaction.reply({ content: "You already have a game scheduled!", ephemeral: true })
+        return interaction.reply({ content: 'You already have a game scheduled!', ephemeral: true })
       }
     }
     const db = getDatabase()
     const id = interaction.guild.id
     const premiumRole = JSON.stringify(await get(ref(db, id + '/game/premiumRole'))).slice(1, -1)
     const premiumRoleObj = interaction.guild.roles.cache.get(premiumRole)
-    if( interaction.member.roles.cache.has(premiumRoleObj.id)) {
-      const modal = new ModalBuilder().setCustomId('LFGcustom').setTitle('Custom Game');
+    if (interaction.member.roles.cache.has(premiumRoleObj.id)) {
+      const modal = new ModalBuilder().setCustomId('LFGcustom').setTitle('Custom Game')
       // Add components to modal
       // Create the text input components
       const game = new TextInputBuilder()
@@ -71,9 +71,9 @@ module.exports = {
       const row4 = new ActionRowBuilder().addComponents(players)
       const row5 = new ActionRowBuilder().addComponents(description)
       // Add inputs to the modal
-      modal.addComponents(row1, row2, row3, row4, row5);
+      modal.addComponents(row1, row2, row3, row4, row5)
       // Show the modal to the user
-      await interaction.showModal(modal);
+      await interaction.showModal(modal)
     } else {
       interaction.reply({ content: 'Du hast darauf kein Zugriff!', ephemeral: true })
     }

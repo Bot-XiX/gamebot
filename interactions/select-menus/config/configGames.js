@@ -1,5 +1,5 @@
-const { SelectMenuBuilder, ActionRowBuilder } = require("discord.js")
-const { set, ref, getDatabase, remove, push, onValue } = require("firebase/database")
+const { SelectMenuBuilder, ActionRowBuilder } = require('discord.js')
+const { set, ref, getDatabase, remove, onValue } = require('firebase/database')
 const prev = require('./config')
 
 /**
@@ -47,7 +47,7 @@ module.exports = {
             }
             await set(ref(db, id + '/games/' + gameName.toLowerCase() + '/logo'), gameLogo)
           } catch {
-            null
+            return null
           }
           interaction.editReply({
             content: 'Bitte sende das Spiel-Banner als Bild oder Link!\n Schreibe `none` um kein Banner zu setzen.'
@@ -69,7 +69,7 @@ module.exports = {
             }
             await set(ref(db, id + '/games/' + gameName.toLowerCase() + '/banner'), gameBanner)
           } catch {
-            null
+            return null
           }
           interaction.editReply({
             content: 'Fertig!'
@@ -103,11 +103,11 @@ module.exports = {
           })
           unsub()
         } catch (e) {
-          null
+          return null
         }
       })
     } catch {
-      null
+      return null
     }
   }
 }

@@ -1,5 +1,5 @@
-const { ModalBuilder, TextInputBuilder, ActionRowBuilder } = require("discord.js");
-const { get, ref, getDatabase } = require("firebase/database");
+const { ModalBuilder, TextInputBuilder, ActionRowBuilder } = require('discord.js')
+const { get, ref, getDatabase } = require('firebase/database')
 
 /**
  * @file Select menu interaction: LFGgame
@@ -13,8 +13,8 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
-    let game = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + interaction.values.toString() + '/name'))).slice(1, -1)
-    const modal = new ModalBuilder().setCustomId('LFGgame').setTitle(game);
+    const game = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + interaction.values.toString() + '/name'))).slice(1, -1)
+    const modal = new ModalBuilder().setCustomId('LFGgame').setTitle(game)
     // Add components to modal
     // Create the text input components
     const day = new TextInputBuilder()
@@ -55,8 +55,8 @@ module.exports = {
     const row3 = new ActionRowBuilder().addComponents(players)
     const row4 = new ActionRowBuilder().addComponents(description)
     // Add inputs to the modal
-    modal.addComponents(row1, row2, row3, row4);
+    modal.addComponents(row1, row2, row3, row4)
     // Show the modal to the user
-    await interaction.showModal(modal);
+    await interaction.showModal(modal)
   }
 }

@@ -1,6 +1,6 @@
-const { EmbedBuilder, GuildScheduledEventPrivacyLevel, GuildScheduledEventEntityType, PermissionsBitField, ChannelType, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js")
-const { get, ref, getDatabase } = require("firebase/database")
-const moment = require("moment");
+const { EmbedBuilder, GuildScheduledEventPrivacyLevel, GuildScheduledEventEntityType, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
+const { get, ref, getDatabase } = require('firebase/database')
+const moment = require('moment')
 
 /**
  * @file Modal interaction: LFGgame
@@ -16,15 +16,15 @@ module.exports = {
   async execute (interaction) {
     try {
       const mapArray = Array.from(interaction.fields.fields)
-      if (moment(mapArray[1][1].value, "HH:mm", true).isValid() && moment(mapArray[0][1].value, "DD.MM.YYYY", true).isValid()) {
+      if (moment(mapArray[1][1].value, 'HH:mm', true).isValid() && moment(mapArray[0][1].value, 'DD.MM.YYYY', true).isValid()) {
         await interaction.deferReply({ ephemeral: true })
         let game = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[2][0].toLowerCase() + '/name'))).slice(1, -1)
-        if (game === "ul") {
+        if (game === 'ul') {
           game = mapArray[2][0]
         }
         const logo = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[2][0].toLowerCase() + '/logo'))).slice(1, -1)
         let banner = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[2][0].toLowerCase() + '/banner'))).slice(1, -1)
-        if (banner === "ul") {
+        if (banner === 'ul') {
           banner = null
         }
         const embed = new EmbedBuilder()
@@ -39,11 +39,11 @@ module.exports = {
         try {
           embed.setThumbnail(logo)
         } catch {
-          null
+          return null
         }
         const combinedDate = mapArray[0][1].value + ' ' + mapArray[1][1].value + ':00'
-        let date = await moment(combinedDate, "DD.MM.YYYY HH:mm", 'de').toDate()
-        let channel = interaction.guild.channels.cache.get(JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/game/waitingChannel'))).slice(1, -1))
+        const date = await moment(combinedDate, 'DD.MM.YYYY HH:mm', 'de').toDate()
+        const channel = interaction.guild.channels.cache.get(JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/game/waitingChannel'))).slice(1, -1))
         try {
           const rowRow = new ActionRowBuilder()
             .addComponents(
@@ -76,8 +76,8 @@ module.exports = {
           await interaction.guild.scheduledEvents.create({
             name: game,
             scheduledStartTime: date,
-            channel: channel,
-            description: description,
+            channel,
+            description,
             image: banner,
             privacyLevel: GuildScheduledEventPrivacyLevel.GuildOnly,
             entityType: GuildScheduledEventEntityType.Voice
@@ -136,7 +136,7 @@ module.exports = {
         }
       }
     } catch {
-      null
+      return null
     }
   }
 }

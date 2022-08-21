@@ -57,7 +57,7 @@ module.exports = {
       const keyName = `${interaction.options.getString('module').toUpperCase()} ${command.data.name}`
       client.contextCommands.set(keyName, command)
     } else {
-      null
+      return null
     }
     // Registration of Slash-Commands in Discord API
     const commandJsonData = [

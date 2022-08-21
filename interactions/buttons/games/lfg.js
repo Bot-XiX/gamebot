@@ -1,5 +1,5 @@
-const { ModalBuilder, TextInputBuilder, ActionRowBuilder, SelectMenuBuilder } = require('discord.js');
-const { onValue, ref, getDatabase } = require('firebase/database');
+const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
+const { onValue, ref, getDatabase } = require('firebase/database')
 /**
  * @file Button interaction: lfg
  * @since 1.0.0
@@ -13,9 +13,9 @@ module.exports = {
 */
   async execute (interaction) {
     const events = interaction.guild.scheduledEvents.cache
-    for (let event of events.values()) {
+    for (const event of events.values()) {
       if (event.description.includes(interaction.user.toString())) {
-        return interaction.reply({ content: "You already have a game scheduled!", ephemeral: true })
+        return interaction.reply({ content: 'You already have a game scheduled!', ephemeral: true })
       }
     }
     const db = getDatabase()

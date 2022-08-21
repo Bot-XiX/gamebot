@@ -1,6 +1,6 @@
-const { EmbedBuilder, GuildScheduledEventPrivacyLevel, GuildScheduledEventEntityType, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js")
-const { get, ref, getDatabase } = require("firebase/database")
-const moment = require("moment");
+const { EmbedBuilder, GuildScheduledEventPrivacyLevel, GuildScheduledEventEntityType, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
+const { get, ref, getDatabase } = require('firebase/database')
+const moment = require('moment')
 
 /**
  * @file Modal interaction: LFGcustom
@@ -16,7 +16,7 @@ module.exports = {
   async execute (interaction) {
     try {
       const mapArray = Array.from(interaction.fields.fields)
-      if (moment(mapArray[2][1].value, "HH:mm", true).isValid() && moment(mapArray[1][1].value, "DD.MM.YYYY", true).isValid()) {
+      if (moment(mapArray[2][1].value, 'HH:mm', true).isValid() && moment(mapArray[1][1].value, 'DD.MM.YYYY', true).isValid()) {
         await interaction.deferReply({ ephemeral: true })
         const embed = new EmbedBuilder()
           .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() })
@@ -28,8 +28,8 @@ module.exports = {
           )
           .setFooter({ text: 'Das Event kann nur vom Ersteller geschlossen werden' })
         const combinedDate = mapArray[1][1].value + ' ' + mapArray[2][1].value + ':00'
-        let date = await moment(combinedDate, "DD.MM.YYYY HH:mm", 'de').toDate()
-        let channel = interaction.guild.channels.cache.get(JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/game/waitingChannel'))).slice(1, -1))
+        const date = await moment(combinedDate, 'DD.MM.YYYY HH:mm', 'de').toDate()
+        const channel = interaction.guild.channels.cache.get(JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/game/waitingChannel'))).slice(1, -1))
         try {
           const rowRow = new ActionRowBuilder()
             .addComponents(
@@ -62,8 +62,8 @@ module.exports = {
           await interaction.guild.scheduledEvents.create({
             name: mapArray[0][1].value.toString(),
             scheduledStartTime: date,
-            channel: channel,
-            description: description,
+            channel,
+            description,
             privacyLevel: GuildScheduledEventPrivacyLevel.GuildOnly,
             entityType: GuildScheduledEventEntityType.Voice
           }).then(async event => {
@@ -121,7 +121,7 @@ module.exports = {
         }
       }
     } catch {
-      null
+      return null
     }
   }
 }

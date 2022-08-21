@@ -230,7 +230,7 @@ module.exports = {
       const gameSelectMenu = new SelectMenuBuilder()
         .setCustomId('configGames')
         .setPlaceholder('Nothing selected')
-      const unsub = onValue(games, async (snapshot)  => {
+      const unsub = onValue(games, async (snapshot) => {
         const games = snapshot.val()
         gameSelectMenu.addOptions([{ label: 'Spiel hinzufügen', value: 'addGame' }])
         for (const game in games) {
