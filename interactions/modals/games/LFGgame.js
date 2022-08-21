@@ -23,9 +23,7 @@ module.exports = {
           game = mapArray[2][0]
         }
         const logo = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[2][0].toLowerCase() + '/logo'))).slice(1, -1)
-        console.log(logo)
         let banner = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/games/' + mapArray[2][0].toLowerCase() + '/banner'))).slice(1, -1)
-        console.log(banner)
         if (banner === "ul") {
           banner = null
         }
@@ -38,7 +36,6 @@ module.exports = {
             { name: 'Tag', value: mapArray[0][1].value }
           )
           .setFooter({ text: 'Das Event kann nur vom Ersteller geschlossen werden' })
-        console.log('Test')
         try {
           embed.setThumbnail(logo)
         } catch {
@@ -47,7 +44,6 @@ module.exports = {
         const combinedDate = mapArray[0][1].value + ' ' + mapArray[1][1].value + ':00'
         let date = await moment(combinedDate, "DD.MM.YYYY HH:mm", 'de').toDate()
         let channel = interaction.guild.channels.cache.get(JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/game/waitingChannel'))).slice(1, -1))
-        console.log('Test')
         try {
           const rowRow = new ActionRowBuilder()
             .addComponents(
@@ -62,7 +58,6 @@ module.exports = {
                 .setStyle(ButtonStyle.Danger)
                 .setEmoji('🗑️')
             )
-          console.log('Test')
           let description
           if (mapArray[2][1].value) {
             description = `${interaction.member} sucht nach ${mapArray[2][1].value} Spieler(n), um ${game} zu spielen.`
@@ -72,7 +67,6 @@ module.exports = {
           } else {
             description = `${interaction.member} sucht Mitspieler, um ${game} zu spielen.`
           }
-          console.log('Test')
           if (mapArray[3][1].value) {
             description += `\n**Zusätzliche Infos:**\n${mapArray[3][1].value}`
             embed.addFields(
