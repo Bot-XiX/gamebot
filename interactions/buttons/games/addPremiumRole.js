@@ -1,4 +1,4 @@
-const { getDatabase, set, ref } = require("firebase/database")
+const { getDatabase, set, ref } = require('firebase/database')
 
 /**
  * @file Button interaction: addPremiumRole

@@ -11,7 +11,7 @@ module.exports = {
 */
   async execute (interaction) {
     const events = interaction.guild.scheduledEvents.cache
-    for (let event of events.values()) {
+    for (const event of events.values()) {
       if (event.description.includes(interaction.user.toString()) && interaction.message.embeds[0].author.name.includes(interaction.user.tag)) {
         try {
           await event.delete()
@@ -21,9 +21,9 @@ module.exports = {
         interaction.reply({ content: 'Event geschlossen', ephemeral: true })
         interaction.message.delete()
         try {
-          interaction.guild.channels.cache.find(channel => channel.name === event.name+' '+interaction.user.tag).delete()
+          interaction.guild.channels.cache.find(channel => channel.name === event.name + ' ' + interaction.user.tag).delete()
         } catch {
-          null
+          return null
         }
       }
     }
