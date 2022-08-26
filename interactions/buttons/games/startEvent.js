@@ -12,7 +12,8 @@ module.exports = {
 
 * @param {Object} interaction The Interaction Object of the command.
 */
-  async execute (interaction) {
+  async execute(interaction) {
+    const role = interaction.guild.roles.cache.get(JSON.stringify(await get(ref(getDatabase(), interaction.guild.id +'game/waitingRole'))).slice(1, -1))
     const events = interaction.guild.scheduledEvents.cache
     for (const event of events.values()) {
       if (event.description.includes(interaction.user.toString()) && interaction.message.embeds[0].author.name.includes(interaction.user.tag)) {
@@ -23,6 +24,13 @@ module.exports = {
           permissionOverwrites: [{ id: interaction.user.id, allow: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.MoveMembers, PermissionsBitField.Flags.MuteMembers] }],
           userLimit: parseInt(event.description.split(' ')[3]) + 1
         })
+        channel.permissionOverwrites.edit(
+          role, {
+            ViewChannel: true,
+            Connect: true,
+            Speak: true
+          }
+        )
         const newButton = ButtonBuilder.from(interaction.message.components[0].components[0]).setDisabled(true)
         interaction.message.edit({ components: [new ActionRowBuilder().addComponents(newButton, interaction.message.components[0].components[1], interaction.message.components[0].components[2])] })
         await event.edit({ channel })
