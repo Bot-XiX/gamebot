@@ -13,7 +13,6 @@ module.exports = {
     .setName('removeglobal')
     .setDescription('Remove global command')
     .addStringOption((option) => option.setName('id').setDescription('Command ID').setRequired(false)),
-
   /**
 * @description Executes when the slash command with ID removeglobal is called.
 * @author Felix

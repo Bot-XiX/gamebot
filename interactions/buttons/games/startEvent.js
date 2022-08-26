@@ -14,14 +14,22 @@ module.exports = {
 */
   async execute (interaction) {
     const events = interaction.guild.scheduledEvents.cache
+    const gamerole = JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/game/waitingRole'))).slice(1, -1)
     for (const event of events.values()) {
       if (event.description.includes(interaction.user.toString()) && interaction.message.embeds[0].author.name.includes(interaction.user.tag)) {
         const channel = await interaction.guild.channels.create({
           name: event.name + ' ' + interaction.user.tag,
           type: ChannelType.GuildVoice,
           parent: interaction.guild.channels.cache.get(JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/game/waitingChannel'))).slice(1, -1)).parent,
-          permissionOverwrites: [{ id: interaction.user.id, allow: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.MoveMembers, PermissionsBitField.Flags.MuteMembers] }],
+          permissionOverwrites: [{
+            id: interaction.user.id, allow: [PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.MoveMembers, PermissionsBitField.Flags.MuteMembers]
+          }],
           userLimit: parseInt(event.description.split(' ')[3]) + 1
+        })
+        channel.permissionOverwrites.edit(gamerole, {
+          ViewChannel: true,
+          Connect: true,
+          Speak: true
         })
         const newButton = ButtonBuilder.from(interaction.message.components[0].components[0]).setDisabled(true)
         interaction.message.edit({ components: [new ActionRowBuilder().addComponents(newButton, interaction.message.components[0].components[1], interaction.message.components[0].components[2])] })
