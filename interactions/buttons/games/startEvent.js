@@ -13,7 +13,7 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute(interaction) {
-    const role = interaction.guild.roles.cache.get(JSON.stringify(await get(ref(getDatabase(), interaction.guild.id +'game/waitingRole'))).slice(1, -1))
+    const role = interaction.guild.roles.cache.get(JSON.stringify(await get(ref(getDatabase(), interaction.guild.id +'/game/waitingRole'))).slice(1, -1))
     const events = interaction.guild.scheduledEvents.cache
     for (const event of events.values()) {
       if (event.description.includes(interaction.user.toString()) && interaction.message.embeds[0].author.name.includes(interaction.user.tag)) {
