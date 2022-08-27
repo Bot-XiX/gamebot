@@ -38,7 +38,7 @@ module.exports = {
       .setMaxLength(5)
     const players = new TextInputBuilder()
       .setCustomId(game)
-      .setLabel('Spieleranzahl')
+      .setLabel('Wie viele Mitspieler suchst du?')
       .setStyle(1)
       .setPlaceholder('Anzahl')
       .setRequired(false)
