@@ -17,9 +17,9 @@ module.exports = {
     const db = getDatabase()
     const id = interaction.guild.id
     const log = interaction.guild.channels.cache.get(JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/vorstellungLog'))).slice(1).slice(0, -1))
-    if (interaction.fields.getTextInputValue('name') &&
-      interaction.fields.getTextInputValue('age') &&
+    if (interaction.fields.getTextInputValue('nameAndAge') &&
       interaction.fields.getTextInputValue('location') &&
+      interaction.fields.getTextInputValue('sexuality') &&
       interaction.fields.getTextInputValue('gender') &&
       interaction.fields.getTextInputValue('hobbies')
     ) {
@@ -30,10 +30,10 @@ module.exports = {
         })
 
         .addFields(
-          { name: 'Name', value: interaction.fields.getTextInputValue('name') },
-          { name: 'Alter', value: interaction.fields.getTextInputValue('age') },
+          { name: 'Name&Alter', value: interaction.fields.getTextInputValue('nameAndAge') },
           { name: 'Wohnort', value: interaction.fields.getTextInputValue('location') },
-          { name: 'Sexualität + Gender/Pronomen', value: interaction.fields.getTextInputValue('gender') },
+          { name: 'Sexualität', value: interaction.fields.getTextInputValue('sexuality') },
+          { name: 'Gender/Pronomen', value: interaction.fields.getTextInputValue('gender') },
           { name: 'Hobbies', value: interaction.fields.getTextInputValue('hobbies') }
         )
       try {
