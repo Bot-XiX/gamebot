@@ -48,7 +48,7 @@ module.exports = {
           if (mapArray[3][1].value) {
             description = `${interaction.member} sucht nach ${mapArray[3][1].value} Spieler(n), um ${mapArray[0][1].value} zu spielen.`
             embed.addFields(
-              { name: 'Anzahl Spieler', value: mapArray[3][1].value }
+              { name: 'Anzahl an Spielern gesucht', value: mapArray[3][1].value }
             )
           } else {
             description = `${interaction.member} sucht Mitspieler, um ${mapArray[0][1].value} zu spielen.`

@@ -14,9 +14,9 @@ module.exports = {
     for (const event of events.values()) {
       if (event.description.includes(interaction.user.toString()) && interaction.message.embeds[0].author.name.includes(interaction.user.tag)) {
         try {
-          event.delete()
-        } catch {
-          return null
+          await event.delete()
+        } catch (e) {
+          console.log(e)
         }
         interaction.reply({ content: 'Event geschlossen', ephemeral: true })
         interaction.message.delete()
