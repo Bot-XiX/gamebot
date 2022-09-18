@@ -6,7 +6,7 @@
 
 // Deconstructed the constants we need in this file.
 
-const { SlashCommandBuilder, MessageActionRow, MessageButton, ButtonStyle } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = {
   // The data needed to register slash commands to Discord.
@@ -18,8 +18,8 @@ module.exports = {
    */
 
   async execute (interaction) {
-    const row = new MessageActionRow().addComponents(
-      new MessageButton().setLabel('Satz hinzufügen').setCustomId('story').setStyle(ButtonStyle.PRIMARY)
+    const row = new ActionRowBuilder().addComponents(
+      new ButtonBuilder().setLabel('Satz hinzufügen').setCustomId('story').setStyle(ButtonStyle.PRIMARY)
     );
     interaction.reply({
       content: 'Beginne eine neue Story!',
