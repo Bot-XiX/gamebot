@@ -16,15 +16,16 @@ module.exports = {
     // eslint-disable-next-line no-console
     console.log(`Ready! Logged in as ${client.user.tag}`)
     // dashboard.run()
-    function deleteThis () {
+    async function deleteThis () {
       let objDate = new Date();
       let hours = objDate.getHours();
       let check = 0
-      if (hours === 21) {
+      if (hours === 5) {
         while (check === 0) {
           try {
-            const channel = client.channels.cache.get('1021142137380814920')
-            channel.bulkDelete(100)
+            const channel = client.channels.cache.get('1011003542095548436')
+            await channel.bulkDelete(100)
+            return null
           } catch {
             check = 1
             return null
@@ -32,6 +33,6 @@ module.exports = {
         }
       }
     }
-    setInterval(deleteThis(), 1000 * 10) // Runs every 1 hour
+    setInterval(deleteThis, 1000*60*10) // Runs every 10 minutes
   }
 }
