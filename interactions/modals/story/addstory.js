@@ -20,5 +20,6 @@ module.exports = {
     await channel.bulkDelete(1)
     channel.send({ content: satz, components: [row] })
     channel2.send({ content: satz })
+    interaction.reply({ content: 'Satz hinzugefügt!', ephemeral: true })
   }
 }
