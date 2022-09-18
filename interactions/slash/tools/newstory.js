@@ -19,7 +19,7 @@ module.exports = {
 
   async execute (interaction) {
     const row = new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setLabel('Satz hinzufügen').setCustomId('story').setStyle(ButtonStyle.PRIMARY)
+      new ButtonBuilder().setLabel('Satz hinzufügen').setCustomId('story').setStyle(ButtonStyle.Primary)
     );
     interaction.reply({
       content: 'Beginne eine neue Story!',
