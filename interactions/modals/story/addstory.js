@@ -17,7 +17,7 @@ module.exports = {
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder().setLabel('Satz hinzufügen').setCustomId('story').setStyle(ButtonStyle.Primary)
     );
-    channel.bulkDelete(1)
+    await channel.bulkDelete(1)
     channel.send({ content: satz, components: [row] })
     channel2.send({ content: satz })
   }
