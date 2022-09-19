@@ -77,7 +77,7 @@ module.exports = {
           try {
             if (oldstate.channel.members.size === 0) {
               oldstate.channel.delete()
-              set(ref(db, newstate.guild.id + '/openChannels'), null)
+              set(ref(db, newstate.guild.id + '/openChannels/' + oldstate.channelId), null)
             }
           } catch {
             return null
