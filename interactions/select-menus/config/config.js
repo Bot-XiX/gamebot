@@ -286,6 +286,42 @@ module.exports = {
         unsub()
       })
     }
+    if (interaction.values.includes('bump')) {
+      const bumpChannel = interaction.guild.channels.cache.get(`${JSON.stringify(await get(ref(db, id + '/bump/channel'))).slice(1, -1)}`)
+      const bumpRole = interaction.guild.roles.cache.get(`${JSON.stringify(await get(ref(db, id + '/bump/role'))).slice(1, -1)}`)
+      const bumpEmbed = new EmbedBuilder()
+        .setTitle('Bump Einstellungen')
+        .addFields(
+          { name: 'Bump Channel', value: String(bumpChannel) },
+          { name: 'Bump Role', value: String(bumpRole) }
+        )
+      //! ###########################################
+      configRow = new ActionRowBuilder()
+        .addComponents(
+          new SelectMenuBuilder()
+            .setCustomId('configBump')
+            .setPlaceholder('Nothing selected')
+            .addOptions([
+              {
+                label: 'Bump Channel',
+                description: 'Ändere den Bump Channel',
+                value: 'bumpChannel'
+              },
+              {
+                label: 'Bump Role',
+                description: 'Ändere die Bump Rolle',
+                value: 'bumpRole'
+              }
+            ])
+        )
+      interaction.reply({
+        content: 'Was magst du anpassen?',
+        components: [configRow],
+        embeds: [bumpEmbed],
+        ephemeral: true,
+        attachments: []
+      })
+    }
     module.exports.prev = { interaction, configRow }
   }
 }

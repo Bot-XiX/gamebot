@@ -44,6 +44,11 @@ module.exports = {
               label: 'Custom channel config',
               description: 'Einstellungen für eigene Channels',
               value: 'customChannel'
+            },
+            {
+              label: 'Bump config',
+              description: 'Bump Einstellungen',
+              value: 'bump'
             }
           ])
       )
