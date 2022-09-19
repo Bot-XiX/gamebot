@@ -34,7 +34,7 @@ module.exports = {
             permissionOverwrites: [{ id: member.id, allow: [PermissionsBitField.Flags.ManageChannels] }]
           }).then(channel => {
             member.voice.setChannel(channel)
-            set(ref(db, newstate.guild.id + '/openChannels'), channel.id)
+            set(ref(db, newstate.guild.id + '/openChannels/' + channel.id), channel.id)
             const configRow = new ActionRowBuilder()
               .addComponents(
                 new ButtonBuilder()
