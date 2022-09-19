@@ -21,34 +21,37 @@ module.exports = {
     // dashboard.run()
     const db = getDatabase()
     const data = ref(db, 'radio')
-    const unsub = onValue(data, async (snapshot) => {
-      const radio = await snapshot.val()
-      for (const guild in radio) {
-        try {
-          const guildData = radio[guild]
-          const channel = client.channels.cache.get(guildData.id)
-          const link = guildData.link
-          if (channel) {
-            const player = createAudioPlayer({
-              behaviors: {
-                noSubscriber: NoSubscriberBehavior.Pause
-              }
-            })
-            const resource = createAudioResource(link)
-            player.play(resource)
-            const connection = joinVoiceChannel({
-              channelId: channel.id,
-              guildId: channel.guild.id,
-              adapterCreator: channel.guild.voiceAdapterCreator
-            })
-            connection.subscribe(player)
+    async function reSub () {
+      const unsub = onValue(data, async (snapshot) => {
+        const radio = await snapshot.val()
+        for (const guild in radio) {
+          try {
+            const guildData = radio[guild]
+            const channel = client.channels.cache.get(guildData.id)
+            const link = guildData.link
+            if (channel) {
+              const player = createAudioPlayer({
+                behaviors: {
+                  noSubscriber: NoSubscriberBehavior.Pause
+                }
+              })
+              const resource = createAudioResource(link)
+              player.play(resource)
+              const connection = joinVoiceChannel({
+                channelId: channel.id,
+                guildId: channel.guild.id,
+                adapterCreator: channel.guild.voiceAdapterCreator
+              })
+              connection.subscribe(player)
+            }
+          } catch {
+            return null
           }
-        } catch {
-          return null
         }
-      }
-      unsub()
-    })
+        unsub()
+      })
+    }
+    setInterval(reSub, 1000 * 60 * 10) // Runs every 10 minutes
     async function deleteThis () {
       const objDate = new Date()
       const hours = objDate.getHours()
@@ -74,17 +77,19 @@ module.exports = {
         const channel = client.channels.cache.get(JSON.stringify(await get(ref(db, guild.id + '/bump/channel/'))).slice(1, -1))
         channel.messages.fetch({ limit: 1 }).then(async messages => {
           let lastMessage = messages.first().content;
-          lastMessage = lastMessage.slice(17, -3)*1000
+          lastMessage = lastMessage.slice(17, -3) * 1000
+          console.log(lastMessage)
           const date = new Date()
+          console.log(date.getTime())
           if (lastMessage < date.getTime()) {
             const role = guild.roles.cache.get(JSON.stringify(await get(ref(getDatabase(), guild.id + '/bump/role'))).slice(1, -1))
             await channel.bulkDelete(1)
             channel.send(`${role} wieder möglich. Nutze /bump, um den Server zu bumpen!`)
             channel.edit({ name: '🤜﹞bump-me-now' })
+            console.log('Bump wieder möglich\n\n\n\n\n')
           }
         })
       } catch (e) {
-        console.log(e)
         return null
       }
     }
