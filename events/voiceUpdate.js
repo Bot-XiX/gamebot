@@ -71,15 +71,17 @@ module.exports = {
     })
     const data2 = ref(db, newstate.guild.id + '/openChannels')
     const unsub2 = onValue(data2, async (snapshot) => {
-      const channel = await snapshot.val()
-      if (channel === oldstate.channelId) {
-        try {
-          if (oldstate.channel.members.size === 0) {
-            oldstate.channel.delete()
-            set(ref(db, newstate.guild.id + '/openChannels'), null)
+      const channels = await snapshot.val()
+      for (const channel in channels) {
+        if (channel === oldstate.channelId) {
+          try {
+            if (oldstate.channel.members.size === 0) {
+              oldstate.channel.delete()
+              set(ref(db, newstate.guild.id + '/openChannels'), null)
+            }
+          } catch {
+            return null
           }
-        } catch {
-          return null
         }
       }
       unsub2()
