@@ -74,7 +74,7 @@ module.exports = {
         const channel = client.channels.cache.get(JSON.stringify(await get(ref(db, guild.id + '/bump/channel/'))).slice(1, -1))
         channel.messages.fetch({ limit: 1 }).then(async messages => {
           let lastMessage = messages.first().content;
-          lastMessage = lastMessage.slice(20, -1)
+          lastMessage = lastMessage.slice(17, -3)
           const date = new Date()
           if (lastMessage > date.getTime()) {
             const role = guild.roles.cache.get(JSON.stringify(await get(ref(getDatabase(), guild.id + '/bump/role'))).slice(1, -1))

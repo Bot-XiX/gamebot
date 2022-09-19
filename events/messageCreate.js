@@ -42,9 +42,9 @@ module.exports = {
             minute = '0' + minute
           }
           const user = message.interaction.user
-          message.channel.bulkDelete(2)
+          await message.channel.bulkDelete(2)
           message.channel.send({ content: `Danke fürs Bumpen ${user}! ♥️` })
-          message.channel.send({ content: `Nächster Bump am <t:${timestamp}>` })
+          message.channel.send({ content: `Nächster Bump <t:${timestamp}:R>` })
           message.channel.edit({ name: `⏰﹞☾${hour}┊${minute}☽` })
         }
       }
