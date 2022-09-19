@@ -17,26 +17,21 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
-    const channel = interaction.options.getChannel('channel')
-    console.log(channel)
-    const link = interaction.options.getString('link')
-    console.log(link)
-    const player = createAudioPlayer({
+    const channel = await interaction.options.getChannel('channel')
+    const link = await interaction.options.getString('link')
+    const player = await createAudioPlayer({
       behaviors: {
         noSubscriber: NoSubscriberBehavior.Pause
       }
     })
-    console.log(player)
-    const resource = createAudioResource(link)
-    console.log(resource)
-    player.play(resource)
-    const connection = joinVoiceChannel({
+    const resource = await createAudioResource(link)
+    await player.play(resource)
+    const connection = await joinVoiceChannel({
       channelId: channel.id,
       guildId: channel.guild.id,
       adapterCreator: channel.guild.voiceAdapterCreator
     })
-    console.log(connection)
-    connection.subscribe(player)
+    await connection.subscribe(player)
     await interaction.reply({ content: 'Radio gestartet', ephemeral: true })
     set(ref(getDatabase(), '/radio/' + interaction.guild.id + '/id'), channel.id)
     set(ref(getDatabase(), '/radio/' + interaction.guild.id + '/link'), link)
