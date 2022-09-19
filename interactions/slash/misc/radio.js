@@ -19,11 +19,7 @@ module.exports = {
   async execute (interaction) {
     const channel = await interaction.options.getChannel('channel')
     const link = await interaction.options.getString('link')
-    const player = await createAudioPlayer({
-      behaviors: {
-        noSubscriber: NoSubscriberBehavior.Pause
-      }
-    })
+    const player = await createAudioPlayer()
     const resource = await createAudioResource(link)
     await player.play(resource)
     const connection = await joinVoiceChannel({
