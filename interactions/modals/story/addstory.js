@@ -2,7 +2,7 @@
  * @file Modal interaction: addStory
  * @since 1.0.0
 */
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 module.exports = {
   id: 'addStory',
   /**
@@ -16,7 +16,7 @@ module.exports = {
     const channel2 = interaction.guild.channels.cache.get('1020035934785380453')
     const row = new ActionRowBuilder().addComponents(
       new ButtonBuilder().setLabel('Satz hinzufügen').setCustomId('story').setStyle(ButtonStyle.Primary)
-    );
+    )
     await channel.bulkDelete(1)
     channel.send({ content: satz, components: [row] })
     channel2.send({ content: satz })

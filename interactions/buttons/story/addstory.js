@@ -3,7 +3,7 @@
  * @author Felix
  * @since 1.0.0
  */
-const { TextInputBuilder, ModalBuilder, ActionRowBuilder } = require('discord.js');
+const { TextInputBuilder, ModalBuilder, ActionRowBuilder } = require('discord.js')
 module.exports = {
   id: 'story',
 
@@ -21,9 +21,9 @@ module.exports = {
       // The label is the prompt the user sees for this input
       .setLabel('Satz')
       // Short means only a single line of text
-      .setStyle(1);
+      .setStyle(1)
     // An action row only holds one text input,
-    const row2 = new ActionRowBuilder().addComponents(input);
+    const row2 = new ActionRowBuilder().addComponents(input)
     // Add inputs to the modal
     addStory.addComponents(row2)
     // Show the modal to the user

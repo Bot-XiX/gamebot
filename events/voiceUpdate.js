@@ -1,5 +1,5 @@
-const { ChannelType, PermissionsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js")
-const { get, ref, getDatabase, onValue, set } = require("firebase/database")
+const { ChannelType, PermissionsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
+const { ref, getDatabase, onValue, set } = require('firebase/database')
 
 module.exports = {
   name: 'voiceStateUpdate',

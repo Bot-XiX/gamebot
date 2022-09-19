@@ -1,4 +1,4 @@
-const { PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require('discord.js')
 /**
  * @file Button interaction: customVoiceBan
  * @since 1.0.0

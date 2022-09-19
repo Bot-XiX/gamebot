@@ -1,4 +1,4 @@
-const { PermissionsBitField } = require("discord.js")
+const { PermissionsBitField } = require('discord.js')
 
 /**
  * @file Button interaction: customVoiceOwner
@@ -14,7 +14,7 @@ module.exports = {
   async execute (interaction) {
     const channel = interaction.guild.channels.cache.get(interaction.channelId)
     if (!channel.permissionsFor(interaction.user.id).has(PermissionsBitField.Flags.ManageChannels)) {
-      let members = []
+      const members = []
       for (const member of channel.members) {
         if (channel.permissionsFor(member[1].id).has(PermissionsBitField.Flags.ManageChannels)) {
           members.push(member[1].id)

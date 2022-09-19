@@ -17,8 +17,8 @@ module.exports = {
     console.log(`Ready! Logged in as ${client.user.tag}`)
     // dashboard.run()
     async function deleteThis () {
-      let objDate = new Date();
-      let hours = objDate.getHours();
+      const objDate = new Date()
+      const hours = objDate.getHours()
       let check = 0
       if (hours === 5) {
         while (check === 0) {
@@ -33,6 +33,6 @@ module.exports = {
         }
       }
     }
-    setInterval(deleteThis, 1000*60*10) // Runs every 10 minutes
+    setInterval(deleteThis, 1000 * 60 * 10) // Runs every 10 minutes
   }
 }
