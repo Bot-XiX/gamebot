@@ -63,7 +63,7 @@ module.exports = {
                   .setStyle(ButtonStyle.Primary)
                   .setEmoji('👑')
               )
-            channel.send({ content: 'Willkommen im Custom Channel!', components: [configRow] })
+            channel.send({ content: `Willkommen im Custom Channel ${member}!`, components: [configRow] })
           })
         }
       }

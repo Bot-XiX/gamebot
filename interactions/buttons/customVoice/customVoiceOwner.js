@@ -21,7 +21,7 @@ module.exports = {
         }
       }
       if (members.length > 0) {
-        interaction.reply({ content: 'Der Channel Owner ist noch im Channel!', ephemeral: true })
+        interaction.reply({ content: 'Der Channel Owner oder ein Teammitglied ist noch im Channel!', ephemeral: true })
       } else {
         // eslint-disable-next-line camelcase
         const map = channel.permissionOverwrites.cache
