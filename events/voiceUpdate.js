@@ -72,7 +72,6 @@ module.exports = {
     const data2 = ref(db, newstate.guild.id + '/openChannels')
     const unsub2 = onValue(data2, async (snapshot) => {
       const channel = await snapshot.val()
-      console.log(channel)
       if (channel === oldstate.channelId) {
         try {
           if (oldstate.channel.members.size === 0) {
