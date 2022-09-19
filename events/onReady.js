@@ -28,7 +28,6 @@ module.exports = {
           const guildData = radio[guild]
           const channel = client.channels.cache.get(guildData.id)
           const link = guildData.link
-          console.log(channel.id, link)
           if (channel) {
             const player = createAudioPlayer({
               behaviors: {

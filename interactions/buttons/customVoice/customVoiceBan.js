@@ -21,7 +21,6 @@ module.exports = {
       interaction.reply({ content: 'Bitte erwähne den User der vom Channel gebannt werden soll!', ephemeral: true })
       const msg = await collect()
       const user = msg.first().mentions.members.first()
-      console.log(user.user)
       msg.first().delete()
       if (user) {
         if (user.user !== interaction.member) {
