@@ -88,6 +88,6 @@ module.exports = {
         return null
       }
     }
-    setInterval(checkBump, 1000 * 10) // Runs every 1 minute
+    setInterval(checkBump, 1000 * 10) // Runs every 10 seconds
   }
 }
