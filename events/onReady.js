@@ -51,6 +51,7 @@ module.exports = {
         unsub()
       })
     }
+    reSub()
     setInterval(reSub, 1000 * 60 * 10) // Runs every 10 minutes
     async function deleteThis () {
       const objDate = new Date()
@@ -69,7 +70,6 @@ module.exports = {
         }
       }
     }
-    deleteThis()
     setInterval(deleteThis, 1000 * 60 * 10) // Runs every 10 minutes
     async function checkBump () {
       try {
