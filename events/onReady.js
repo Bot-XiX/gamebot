@@ -69,10 +69,11 @@ module.exports = {
         }
       }
     }
+    deleteThis()
     setInterval(deleteThis, 1000 * 60 * 10) // Runs every 10 minutes
     async function checkBump () {
       try {
-        const guild = client.guilds.cache.get('1000066569776402492')
+        const guild = client.guilds.cache.get('265117785686933515')
         JSON.stringify(await get(ref(db, guild.id + '/bump/channel/'))).slice(1, -1)
         const channel = client.channels.cache.get(JSON.stringify(await get(ref(db, guild.id + '/bump/channel/'))).slice(1, -1))
         channel.messages.fetch({ limit: 1 }).then(async messages => {
