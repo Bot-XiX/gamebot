@@ -28,7 +28,7 @@ module.exports = {
         const first = [...map][0]
         channel.permissionOverwrites.delete(first[0])
         channel.permissionOverwrites.edit(interaction.user.id, { ManageChannels: true })
-        interaction.reply({ content: 'Du bist nun der Channel Owner', ephemeral: true })
+        interaction.reply({ content: `${interaction.user} ist nun der Channel Owner` })
       }
     } else {
       interaction.reply({ content: 'Dieser Channel gehört dir schon!', ephemeral: true })

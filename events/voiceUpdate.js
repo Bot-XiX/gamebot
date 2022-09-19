@@ -30,9 +30,9 @@ module.exports = {
             name: channelName,
             type: ChannelType.GuildVoice,
             parent: category,
-            userLimit: channelData.users,
-            permissionOverwrites: [{ id: member.id, allow: [PermissionsBitField.Flags.ManageChannels] }]
+            userLimit: channelData.users
           }).then(channel => {
+            channel.permissionOverwrites.edit(member.id, { ManageChannels: true })
             member.voice.setChannel(channel)
             set(ref(db, newstate.guild.id + '/openChannels/' + channel.id), channel.id)
             const configRow = new ActionRowBuilder()
