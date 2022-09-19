@@ -27,8 +27,8 @@ module.exports = {
         for (const guild in radio) {
           try {
             const guildData = radio[guild]
-            const channel = client.channels.cache.get(guildData.id)
-            const link = guildData.link
+            const channel = await client.channels.cache.get(guildData.id)
+            const link = await guildData.link
             if (channel) {
               const player = await createAudioPlayer({
                 behaviors: {
@@ -52,7 +52,7 @@ module.exports = {
       })
     }
     reSub()
-    setInterval(reSub, 1000 * 60 * 10) // Runs every 10 minutes
+    setInterval(reSub, 1000 * 60 * 30) // Runs every 30 minutes
     async function deleteThis () {
       const objDate = new Date()
       const hours = objDate.getHours()
@@ -92,6 +92,6 @@ module.exports = {
         return null
       }
     }
-    setInterval(checkBump, 1000 * 10) // Runs every 10 seconds
+    setInterval(checkBump, 1000 * 60) // Runs every 60 seconds
   }
 }
