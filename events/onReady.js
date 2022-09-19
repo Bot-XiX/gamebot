@@ -30,19 +30,19 @@ module.exports = {
             const channel = client.channels.cache.get(guildData.id)
             const link = guildData.link
             if (channel) {
-              const player = createAudioPlayer({
+              const player = await createAudioPlayer({
                 behaviors: {
                   noSubscriber: NoSubscriberBehavior.Pause
                 }
               })
-              const resource = createAudioResource(link)
-              player.play(resource)
-              const connection = joinVoiceChannel({
+              const resource = await createAudioResource(link)
+              await player.play(resource)
+              const connection = await joinVoiceChannel({
                 channelId: channel.id,
                 guildId: channel.guild.id,
                 adapterCreator: channel.guild.voiceAdapterCreator
               })
-              connection.subscribe(player)
+              await connection.subscribe(player)
             }
           } catch {
             return null
