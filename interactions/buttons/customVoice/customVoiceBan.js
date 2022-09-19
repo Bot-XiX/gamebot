@@ -22,7 +22,6 @@ module.exports = {
       const msg = await collect()
       const user = msg.first().mentions.members.first()
       msg.first().delete()
-      console.log(user)
       if (user) {
         if (!user === interaction.member) {
           if (user.VoiceChannel !== channel) {

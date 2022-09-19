@@ -16,19 +16,16 @@ module.exports = {
     if (!channel.permissionsFor(interaction.user.id).has(PermissionsBitField.Flags.ManageChannels)) {
       let members = []
       for (const member of channel.members) {
-        console.log(member)
         if (channel.permissionsFor(member[1].id).has(PermissionsBitField.Flags.ManageChannels)) {
           members.push(member[1].id)
         }
       }
-      console.log(members)
       if (members.length > 0) {
         interaction.reply({ content: 'Der Channel Owner ist noch im Channel!', ephemeral: true })
       } else {
         // eslint-disable-next-line camelcase
         const map = channel.permissionOverwrites.cache
         const first = [...map][0]
-        console.log(first)
         channel.permissionOverwrites.delete(first[0])
         channel.permissionOverwrites.edit(interaction.user.id, { ManageChannels: true })
         interaction.reply({ content: 'Du bist nun der Channel Owner', ephemeral: true })
