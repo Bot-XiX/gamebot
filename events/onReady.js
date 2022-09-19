@@ -79,7 +79,7 @@ module.exports = {
           if (lastMessage > date.getTime()) {
             const role = guild.roles.cache.get(JSON.stringify(await get(ref(getDatabase(), guild.id + '/bump/role'))).slice(1, -1))
             await channel.bulkDelete(1)
-            channel.send(`${role} Bump wieder möglich!`)
+            channel.send(`${role} wieder möglich. Nutze /bump, um den Server zu bumpen!`)
             channel.edit({ name: '🤜﹞bump-me-now' })
           }
         })
