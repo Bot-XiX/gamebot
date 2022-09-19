@@ -32,6 +32,7 @@ module.exports = {
             parent: category,
             userLimit: channelData.users
           }).then(channel => {
+            channel.lockPermissions()
             channel.permissionOverwrites.edit(member.id, { ManageChannels: true })
             member.voice.setChannel(channel)
             set(ref(db, newstate.guild.id + '/openChannels/' + channel.id), channel.id)
