@@ -66,24 +66,11 @@ module.exports = {
               )
             channel.send({ content: `Willkommen im Custom Channel ${member}!`, components: [configRow] })
           })
-        } else {
-          const data3 = ref(db, newstate.guild.id + '/openChannels')
-          const unsub3 = onValue(data3, async (snapshot) => {
-            const channels = await snapshot.val()
-            for (const channel in channels) {
-              if (channel === newstate.channelId) {
-                const channelData = channels[channel]
-                const c = newstate.guild.channels.cache.get(channelData)
-                c.permissionOverwrites.edit(newstate.id, { ReadMessageHistory: true })
-              }
-            }
-            unsub3()
-          })
         }
       }
       unsub()
     })
-    const data2 = ref(db, oldstate.guild.id + '/openChannels')
+    const data2 = ref(db, newstate.guild.id + '/openChannels')
     const unsub2 = onValue(data2, async (snapshot) => {
       const channels = await snapshot.val()
       for (const channel in channels) {
@@ -91,10 +78,7 @@ module.exports = {
           try {
             if (oldstate.channel.members.size === 0) {
               oldstate.channel.delete()
-              set(ref(db, oldstate.guild.id + '/openChannels/' + oldstate.channelId), null)
-            } else {
-              const member = oldstate.guild.members.cache.get(oldstate.id)
-              oldstate.channel.permissionOverwrites.delete(member.id)
+              set(ref(db, newstate.guild.id + '/openChannels/' + oldstate.channelId), null)
             }
           } catch {
             return null
