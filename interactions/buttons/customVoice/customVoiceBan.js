@@ -21,6 +21,7 @@ module.exports = {
       interaction.reply({ content: 'Bitte erwähne den User der vom Channel gebannt werden soll!', ephemeral: true })
       const msg = await collect()
       const user = msg.first().mentions.members.first()
+      console.log(user)
       msg.first().delete()
       if (user) {
         if (!user === interaction.member) {
@@ -38,10 +39,10 @@ module.exports = {
             interaction.editReply({ content: 'User ist nicht in diesem Channel!', ephemeral: true })
           }
         } else {
-          interaction.editReply({ content: 'Du hast keinen User erwähnt!', ephemeral: true })
+          interaction.editReply({ content: 'Du kannst dich nicht selbst bannen!', ephemeral: true })
         }
       } else {
-        interaction.editReply({ content: 'Du kannst dich nicht selbst bannen!', ephemeral: true })
+        interaction.editReply({ content: 'Du hast keinen User erwähnt!', ephemeral: true })
       }
     }
   }
