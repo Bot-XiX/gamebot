@@ -24,24 +24,28 @@ module.exports = {
     const unsub = onValue(data, async (snapshot) => {
       const radio = await snapshot.val()
       for (const guild in radio) {
-        const guildData = radio[guild]
-        const channel = client.channels.cache.get(guildData.id)
-        const link = guildData.link
-        console.log(channel.id, link)
-        if (channel) {
-          const player = createAudioPlayer({
-            behaviors: {
-              noSubscriber: NoSubscriberBehavior.Pause
-            }
-          })
-          const resource = createAudioResource(link)
-          player.play(resource)
-          const connection = joinVoiceChannel({
-            channelId: channel.id,
-            guildId: channel.guild.id,
-            adapterCreator: channel.guild.voiceAdapterCreator
-          })
-          connection.subscribe(player)
+        try {
+          const guildData = radio[guild]
+          const channel = client.channels.cache.get(guildData.id)
+          const link = guildData.link
+          console.log(channel.id, link)
+          if (channel) {
+            const player = createAudioPlayer({
+              behaviors: {
+                noSubscriber: NoSubscriberBehavior.Pause
+              }
+            })
+            const resource = createAudioResource(link)
+            player.play(resource)
+            const connection = joinVoiceChannel({
+              channelId: channel.id,
+              guildId: channel.guild.id,
+              adapterCreator: channel.guild.voiceAdapterCreator
+            })
+            connection.subscribe(player)
+          }
+        } catch {
+          return null
         }
       }
       unsub()
