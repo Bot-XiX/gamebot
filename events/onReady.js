@@ -69,24 +69,25 @@ module.exports = {
     setInterval(deleteThis, 1000 * 60 * 10) // Runs every 10 minutes
     async function checkBump () {
       try {
-        const guild = client.guilds.cache.get('265117785686933515')
+        const guild = client.guilds.cache.get('1000066569776402492')
         JSON.stringify(await get(ref(db, guild.id + '/bump/channel/'))).slice(1, -1)
         const channel = client.channels.cache.get(JSON.stringify(await get(ref(db, guild.id + '/bump/channel/'))).slice(1, -1))
         channel.messages.fetch({ limit: 1 }).then(async messages => {
           let lastMessage = messages.first().content;
-          lastMessage = lastMessage.slice(17, -3)
+          lastMessage = lastMessage.slice(17, -3)*1000
           const date = new Date()
-          if (lastMessage > date.getTime()) {
+          if (lastMessage < date.getTime()) {
             const role = guild.roles.cache.get(JSON.stringify(await get(ref(getDatabase(), guild.id + '/bump/role'))).slice(1, -1))
             await channel.bulkDelete(1)
             channel.send(`${role} wieder möglich. Nutze /bump, um den Server zu bumpen!`)
             channel.edit({ name: '🤜﹞bump-me-now' })
           }
         })
-      } catch {
+      } catch (e) {
+        console.log(e)
         return null
       }
     }
-    setInterval(checkBump, 1000 * 60) // Runs every 1 minute
+    setInterval(checkBump, 1000 * 10) // Runs every 1 minute
   }
 }
