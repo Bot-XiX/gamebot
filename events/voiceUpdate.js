@@ -55,7 +55,7 @@ module.exports = {
                   .setEmoji('📝'),
                 new ButtonBuilder()
                   .setCustomId('customVoiceBan')
-                  .setLabel('User vom  Channel bannen')
+                  .setLabel('User vom Channel bannen')
                   .setStyle(ButtonStyle.Danger)
                   .setEmoji('🔨'),
                 new ButtonBuilder()
