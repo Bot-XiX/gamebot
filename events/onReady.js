@@ -68,20 +68,24 @@ module.exports = {
     }
     setInterval(deleteThis, 1000 * 60 * 10) // Runs every 10 minutes
     async function checkBump () {
-      const guild = client.guilds.cache.get('265117785686933515')
-      JSON.stringify(await get(ref(db, guild.id + '/bump/channel/'))).slice(1, -1)
-      const channel = client.channels.cache.get(JSON.stringify(await get(ref(db, guild.id + '/bump/channel/'))).slice(1, -1))
-      channel.messages.fetch({ limit: 1 }).then(async messages => {
-        let lastMessage = messages.first().content;
-        lastMessage = lastMessage.slice(20, -1)
-        const date = new Date()
-        if (lastMessage > date.getTime()) {
-          const role = guild.roles.cache.get(JSON.stringify(await get(ref(getDatabase(), guild.id + '/bump/role'))).slice(1, -1))
-          await channel.bulkDelete(1)
-          channel.send(`${role} Bump wieder möglich!`)
-          channel.edit({ name: '🤜﹞bump-me-now' })
-        }
-      })
+      try {
+        const guild = client.guilds.cache.get('265117785686933515')
+        JSON.stringify(await get(ref(db, guild.id + '/bump/channel/'))).slice(1, -1)
+        const channel = client.channels.cache.get(JSON.stringify(await get(ref(db, guild.id + '/bump/channel/'))).slice(1, -1))
+        channel.messages.fetch({ limit: 1 }).then(async messages => {
+          let lastMessage = messages.first().content;
+          lastMessage = lastMessage.slice(20, -1)
+          const date = new Date()
+          if (lastMessage > date.getTime()) {
+            const role = guild.roles.cache.get(JSON.stringify(await get(ref(getDatabase(), guild.id + '/bump/role'))).slice(1, -1))
+            await channel.bulkDelete(1)
+            channel.send(`${role} Bump wieder möglich!`)
+            channel.edit({ name: '🤜﹞bump-me-now' })
+          }
+        })
+      } catch {
+        return null
+      }
     }
     setInterval(checkBump, 1000 * 60) // Runs every 1 minute
   }
