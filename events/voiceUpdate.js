@@ -1,4 +1,4 @@
-const { ChannelType, PermissionsBitField, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
+const { ChannelType, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 const { ref, getDatabase, onValue, set } = require('firebase/database')
 
 module.exports = {
