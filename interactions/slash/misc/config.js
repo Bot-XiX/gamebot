@@ -37,8 +37,13 @@ module.exports = {
             },
             {
               label: 'Game config',
-              description: 'Spieleeinstellungen',
+              description: 'Spiel Einstellungen',
               value: 'games'
+            },
+            {
+              label: 'Custom channel config',
+              description: 'Einstellungen für eigene Channels',
+              value: 'customChannel'
             }
           ])
       )

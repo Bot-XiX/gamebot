@@ -263,6 +263,29 @@ module.exports = {
         unsub()
       })
     }
+    if (interaction.values.includes('customChannel')) {
+      const customChannel = await ref(db, id + '/customChannels')
+      const channelSelectMenu = new SelectMenuBuilder()
+        .setCustomId('configCustomChannel')
+        .setPlaceholder('Nothing selected')
+      const unsub = onValue(customChannel, async (snapshot) => {
+        const channels = snapshot.val()
+        channelSelectMenu.addOptions([{ label: 'Channel hinzufügen', value: 'addChannel' }])
+        for (const channel in channels) {
+          const name = interaction.guild.channels.cache.get(channels[channel].id).name
+          channelSelectMenu.addOptions([{ label: channels[channel].id, description: name, value: channel }])
+        }
+        const configRow = new ActionRowBuilder().addComponents(channelSelectMenu)
+        interaction.reply({
+          content: 'Was magst du anpassen?',
+          components: [configRow],
+          embeds: [],
+          ephemeral: true,
+          attachments: []
+        })
+        unsub()
+      })
+    }
     module.exports.prev = { interaction, configRow }
   }
 }
