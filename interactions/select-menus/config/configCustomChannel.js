@@ -44,17 +44,10 @@ module.exports = {
         msg2.first().delete()
         const msg3 = await collect()
         const channelName = msg3.first().content
-        interaction.editReply({
-          content: 'Bitte gib an ob der Channel vom Creator bearbeitet werden kann.\n Schreibe `true` oder `false`.'
-        })
         msg3.first().delete()
-        const msg4 = await collect()
-        const channelEditable = msg4.first().content
-        msg4.first().delete()
         await set(ref(db, id + '/customChannels/' + channelID + '/id'), channelID)
         await set(ref(db, id + '/customChannels/' + channelID + '/users'), channelUsers)
         await set(ref(db, id + '/customChannels/' + channelID + '/name'), channelName)
-        await set(ref(db, id + '/customChannels/' + channelID + '/editable'), channelEditable)
         interaction.editReply({
           content: 'Der Channel wurde erfolgreich hinzugefügt.'
         })
