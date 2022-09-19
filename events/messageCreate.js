@@ -30,6 +30,7 @@ module.exports = {
     const channel = message.guild.channels.cache.get(JSON.stringify(await get(ref(getDatabase(), message.guild.id + '/bump/channel'))).slice(1, -1))
     try {
       if (message.channel.id === channel.id) {
+        console.log(message)
         if (message.embeds[0]) {
           let date = new Date()
           let timestamp = date.getTime()
@@ -41,6 +42,9 @@ module.exports = {
           if (minute < 10) {
             minute = '0' + minute
           }
+          const user = message.interaction.user
+          message.channel.bulkDelete(1)
+          message.channel.send({ content: `Danke fürs Bumpen! ♥️\n${user}` })
           message.channel.send({ content: `Nächster Bump in <t:${timestamp}>` })
           message.channel.edit({ name: `⏰﹞☾${hour}┊${minute}☽` })
         }
