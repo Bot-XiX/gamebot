@@ -79,9 +79,7 @@ module.exports = {
         channel.messages.fetch({ limit: 1 }).then(async messages => {
           let lastMessage = messages.first().content;
           lastMessage = lastMessage.slice(17, -3) * 1000
-          console.log(lastMessage)
           const date = new Date()
-          console.log(date.getTime())
           if (lastMessage < date.getTime()) {
             const role = guild.roles.cache.get(JSON.stringify(await get(ref(getDatabase(), guild.id + '/bump/role'))).slice(1, -1))
             await channel.bulkDelete(1)
@@ -91,6 +89,7 @@ module.exports = {
           }
         })
       } catch (e) {
+        console.log(e)
         return null
       }
     }
