@@ -3,6 +3,8 @@
  * @since 1.0.0
 */
 
+const { get, ref, getDatabase } = require('firebase/database')
+
 module.exports = {
   name: 'messageCreate',
 
@@ -24,6 +26,23 @@ module.exports = {
       message.content === `<@!${client.user.id}>`
     ) {
       require('../messages/onMention').execute(message)
+    }
+    const channel = message.guild.channels.cache.get(JSON.stringify(await get(ref(getDatabase(), message.guild.id + '/bump/channel'))).slice(1, -1))
+    if(message.channel.id === channel.id) {
+      if (message.embeds[0]) {
+        let date = new Date()
+        let timestamp = date.getTime()
+        timestamp = timestamp + 1000 * 60 * 60 * 2
+        timestamp = Math.floor(timestamp / 1000)
+        date = new Date(timestamp * 1000)
+        const hour = date.getHours()
+        let minute = date.getMinutes()
+        if (minute < 10) {
+          minute = '0' + minute
+        }
+        message.channel.send({ content: `Nächster Bump in <t:${timestamp}>` })
+        message.channel.edit({ name: `⏰﹞☾${hour}┊${minute}☽` })
+      }
     }
   }
 }
