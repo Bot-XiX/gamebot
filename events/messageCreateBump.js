@@ -56,15 +56,13 @@ module.exports = {
             try {
               const disboardMsg = await message.channel.messages.fetch({ limit: 10 })
               const msg = disboardMsg.filter(m => m.author.id === '302050872383242240')
-              console.log(msg)
               try {
                 msg.first().delete()
               } catch {
-                console.log('No disboard message found')
+                return null
               }
               await delBotMsgs()
-            } catch (e) {
-              console.log(e)
+            } catch {
               await delBotMsgs()
             }
           } else {
