@@ -24,8 +24,8 @@ module.exports = {
       msg.first().delete()
       if (user) {
         if (user.user !== interaction.member) {
-          console.log(user)
-          if (user.VoiceChannel === channel) {
+          try {
+            const member = channel.members.get(user.id)
             channel.permissionOverwrites.edit(user.id, {
               Connect: false
             })
@@ -35,15 +35,18 @@ module.exports = {
             } catch {
               interaction.editReply({ content: 'User konnte nicht vom Channel gebannt werden!', ephemeral: true })
             }
-          } else {
-            interaction.editReply({ content: 'User ist nicht in diesem Channel!', ephemeral: true })
+          } catch {
+            interaction.reply({ content: 'Der User ist nicht in diesem Channel!', ephemeral: true })
           }
         } else {
-          interaction.editReply({ content: 'Du kannst dich nicht selbst bannen!', ephemeral: true })
+          interaction.editReply({ content: 'User ist nicht in diesem Channel!', ephemeral: true })
         }
       } else {
-        interaction.editReply({ content: 'Du hast keinen User erwähnt!', ephemeral: true })
+        interaction.editReply({ content: 'Du kannst dich nicht selbst bannen!', ephemeral: true })
       }
+    } else {
+      interaction.editReply({ content: 'Du hast keinen User erwähnt!', ephemeral: true })
     }
   }
+
 }
