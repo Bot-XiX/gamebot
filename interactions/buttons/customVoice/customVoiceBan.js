@@ -26,10 +26,14 @@ module.exports = {
         if (user.user !== interaction.member) {
           try {
             const member = channel.members.get(user.id)
-            channel.permissionOverwrites.edit(user.id, {
-              Connect: false
-            })
-            interaction.editReply({ content: 'User gebannt!', ephemeral: true })
+            if (member.VoiceChannel === channel) {
+              channel.permissionOverwrites.edit(user.id, {
+                Connect: false
+              })
+              interaction.editReply({ content: 'User gebannt!', ephemeral: true })
+            } else {
+              interaction.reply({ content: 'Der User ist nicht in diesem Channel!', ephemeral: true })
+            }
             try {
               user.voice.setChannel(null)
             } catch {
