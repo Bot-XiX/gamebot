@@ -50,7 +50,25 @@ module.exports = {
           try {
             user = message.interaction.user
           } catch {
-            return
+            user = message.author
+          }
+          if (bumpDelEmbed) {
+            try {
+              const disboardMsg = await message.channel.messages.fetch({ limit: 10 })
+              const msg = disboardMsg.filter(m => m.author.id === '302050872383242240')
+              console.log(msg)
+              try {
+                msg.first().delete()
+              } catch {
+                console.log('No disboard message found')
+              }
+              await delBotMsgs()
+            } catch (e) {
+              console.log(e)
+              await delBotMsgs()
+            }
+          } else {
+            await delBotMsgs()
           }
           if (bumpThanks) {
             bumpThanks = bumpThanks.replace('{user}', user)
@@ -61,15 +79,6 @@ module.exports = {
             bumpThanks = bumpThanks.replace('{channel}', message.channel)
             bumpThanks = bumpThanks.replaceAll('\\n', '\n')
             message.channel.send({ content: bumpThanks })
-          }
-          if (bumpDelEmbed) {
-            try {
-              await message.channel.bulkDelete(2)
-            } catch {
-              delBotMsgs()
-            }
-          } else {
-            delBotMsgs()
           }
           if (bumpChannelWait) {
             bumpChannelWait = bumpChannelWait.replace('{user}', user)
