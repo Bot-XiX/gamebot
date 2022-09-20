@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js')
-const { createAudioPlayer, NoSubscriberBehavior, createAudioResource, joinVoiceChannel } = require('@discordjs/voice')
+const { createAudioPlayer, createAudioResource, joinVoiceChannel } = require('@discordjs/voice')
 const { getDatabase, ref, set } = require('firebase/database')
 /**
  * @file Slash interaction: label

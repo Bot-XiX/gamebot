@@ -13,7 +13,7 @@ module.exports = {
   async execute (interaction) {
     const channel = interaction.guild.channels.cache.get(interaction.channelId)
     if (channel.permissionsFor(interaction.user.id).has(PermissionsBitField.Flags.ManageChannels)) {
-      if(channel.userLimit > 0) {
+      if (channel.userLimit > 0) {
         channel.edit({ userLimit: channel.userLimit - 1 })
         interaction.reply({ content: 'Benutzerlimit um 1 verringert!', ephemeral: true })
       }

@@ -287,13 +287,28 @@ module.exports = {
       })
     }
     if (interaction.values.includes('bump')) {
-      const bumpChannel = interaction.guild.channels.cache.get(`${JSON.stringify(await get(ref(db, id + '/bump/channel'))).slice(1, -1)}`)
-      const bumpRole = interaction.guild.roles.cache.get(`${JSON.stringify(await get(ref(db, id + '/bump/role'))).slice(1, -1)}`)
+      const bumpChannel = interaction.guild.channels.cache.get(`${JSON.stringify(await get(ref(db, 'bump/' + id + '/channel'))).slice(1, -1)}`)
+      const bumpRole = interaction.guild.roles.cache.get(`${JSON.stringify(await get(ref(db, 'bump/' + id + '/role'))).slice(1, -1)}`)
+      const bumpReady = JSON.stringify(await get(ref(db, 'bump/' + id + '/bumpReady'))).slice(1, -1)
+      const bumpWait = JSON.stringify(await get(ref(db, 'bump/' + id + '/bumpWait'))).slice(1, -1)
+      let bumpChannelReady = JSON.stringify(await get(ref(db, 'bump/' + id + '/channelReady'))).slice(1, -1)
+      let bumpChannelWait = JSON.stringify(await get(ref(db, 'bump/' + id + '/channelWait'))).slice(1, -1)
+      let bumpThanks = JSON.stringify(await get(ref(db, 'bump/' + id + '/thanks'))).slice(1, -1)
+      const bumpDelEmbed = JSON.stringify(await get(ref(db, 'bump/' + id + '/delEmbed')))
+      bumpChannelReady = bumpChannelReady.replaceAll('\\n', '\n')
+      bumpChannelWait = bumpChannelWait.replaceAll('\\n', '\n')
+      bumpThanks = bumpThanks.replaceAll('\\n', '\n')
       const bumpEmbed = new EmbedBuilder()
         .setTitle('Bump Einstellungen')
         .addFields(
           { name: 'Bump Channel', value: String(bumpChannel) },
-          { name: 'Bump Role', value: String(bumpRole) }
+          { name: 'Bump Role', value: String(bumpRole) },
+          { name: 'Bump Ready Message', value: String(bumpReady) },
+          { name: 'Bump Wait Message', value: String(bumpWait) },
+          { name: 'Bump Channel Ready', value: String(bumpChannelReady) },
+          { name: 'Bump Channel Wait', value: String(bumpChannelWait) },
+          { name: 'Bump Thanks Message', value: String(bumpThanks) },
+          { name: 'Bump Delete Embed', value: String(bumpDelEmbed) }
         )
       //! ###########################################
       configRow = new ActionRowBuilder()
@@ -311,6 +326,36 @@ module.exports = {
                 label: 'Bump Role',
                 description: 'Ändere die Bump Rolle',
                 value: 'bumpRole'
+              },
+              {
+                label: 'Bump Ready Message',
+                description: 'Ändere die Bump Ready Message',
+                value: 'bumpReady'
+              },
+              {
+                label: 'Bump Wait Message',
+                description: 'Ändere die Bump Wait Message',
+                value: 'bumpWait'
+              },
+              {
+                label: 'Bump Channel Ready',
+                description: 'Ändere den Bump Channel Ready Namen',
+                value: 'bumpChannelReady'
+              },
+              {
+                label: 'Bump Channel Wait',
+                description: 'Ändere den Bump Channel Wait Namen',
+                value: 'bumpChannelWait'
+              },
+              {
+                label: 'Bump Thanks Message',
+                description: 'Ändere die Bump Thanks Message',
+                value: 'bumpThanks'
+              },
+              {
+                label: 'Bump Delete Embed',
+                description: 'Ändere die Bump Delete Einstellung',
+                value: 'bumpDelEmbed'
               }
             ])
         )

@@ -23,11 +23,10 @@ module.exports = {
       if (members.length > 0) {
         interaction.reply({ content: 'Der Channel Owner oder ein Teammitglied ist noch im Channel!', ephemeral: true })
       } else {
-        // eslint-disable-next-line camelcase
         const map = channel.permissionOverwrites.cache
         const first = [...map][0]
-        channel.permissionOverwrites.delete(first[0])
-        channel.permissionOverwrites.edit(interaction.user.id, { ManageChannels: true })
+        await channel.permissionOverwrites.delete(first[0])
+        await channel.permissionOverwrites.edit(interaction.user.id, { ManageChannels: true })
         interaction.reply({ content: `${interaction.user} ist nun der Channel Owner` })
       }
     } else {
