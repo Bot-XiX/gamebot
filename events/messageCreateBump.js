@@ -38,7 +38,10 @@ module.exports = {
           const time = currentTimestamp + 1000 * 60 * 60 * 2
           const timestamp = Math.floor(time / 1000)
           date = new Date(timestamp * 1000)
-          const hour = date.getHours()
+          let hour = date.getHours()
+          if (hour < 10) {
+            hour = '0' + hour
+          }
           let minute = date.getMinutes()
           if (minute < 10) {
             minute = '0' + minute
