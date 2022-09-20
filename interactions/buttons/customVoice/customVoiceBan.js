@@ -24,7 +24,8 @@ module.exports = {
       msg.first().delete()
       if (user) {
         if (user.user !== interaction.member) {
-          if (user.user.VoiceChannel === channel) {
+          console.log(user)
+          if (user.VoiceChannel === channel) {
             channel.permissionOverwrites.edit(user.id, {
               Connect: false
             })
