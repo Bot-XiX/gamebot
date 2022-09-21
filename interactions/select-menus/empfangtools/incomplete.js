@@ -15,6 +15,7 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
+    interaction.deferReply({ ephemeral: true })
     const newRow = await new ActionRowBuilder().addComponents(prev.prev.interaction.message.components[0].components[3])
     await prev.prev.interaction.message.edit({ components: [] })
     const db = getDatabase()
@@ -66,7 +67,7 @@ module.exports = {
       await target.user.send({
         embeds: [incompleteMsgEmbed]
       })
-      interaction.reply({
+      interaction.editReply({
         content: 'Vorstellung als unvollständig markiert.',
         ephemeral: true
       })
@@ -81,7 +82,7 @@ module.exports = {
         return null
       }
     } catch (e) {
-      interaction.reply({
+      interaction.editReply({
         content: 'User akzeptiert keine Nachrichten.\nSetze den User stattdessen in VE2',
         ephemeral: true
       })
