@@ -51,40 +51,32 @@ module.exports = {
           break
       }
     }
-    console.log('1')
     prev.prev.interaction.editReply({
       content: `Deine Auswahl (${valuelist}) wurde gespeichert.`,
       components: []
     })
-    console.log('2')
     const incompleteMsgEmbed = new EmbedBuilder()
       .setTitle('QueerCity Verifizierung')
       .setThumbnail(serverIcon)
       .setDescription(JSON.stringify(await get(ref(db, interaction.member.guild.id + '/einwohnermeldeamt/config/incompleteMsg'))).slice(1).slice(0, -1).replaceAll('\\n', '\n') + '\n**Folgende Angaben fehlten oder waren falsch:**\n' + valuelist.toString().replaceAll(',', '\n'))
       .setFooter({ text: 'QueerCity Verifizierungssystem', iconURL: serverIcon })
     const newmsg = (prev.prev.interaction.message.content) + '\nUnvollständig markiert durch: ' + String(interaction.user)
-    console.log('3')
     const embed = prev.prev.embed
-    console.log('4')
     embed.data.color = 15158332
-    console.log('5')
     try {
       await target.user.send({
         embeds: [incompleteMsgEmbed]
       })
-      console.log('6')
       interaction.editReply({
         content: 'Vorstellung als unvollständig markiert.',
         ephemeral: true
       })
-      console.log('7')
       try {
         await prev.prev.interaction.message.edit({
           content: newmsg,
           components: [],
           embeds: [embed]
         })
-        console.log('8')
       } catch {
         return null
       }
