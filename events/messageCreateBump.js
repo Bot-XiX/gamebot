@@ -24,7 +24,12 @@ module.exports = {
         return null
       }
     }
-    const channel = message.guild.channels.cache.get(JSON.stringify(await get(ref(getDatabase(), 'bump/' + message.guild.id + '/channel'))).slice(1, -1))
+    let channel
+    try {
+      channel = message.guild.channels.cache.get(JSON.stringify(await get(ref(getDatabase(), 'bump/' + message.guild.id + '/channel'))).slice(1, -1))
+    } catch {
+      return null
+    }
     try {
       if (message.channel.id === channel.id) {
         if (message.embeds[0]) {
