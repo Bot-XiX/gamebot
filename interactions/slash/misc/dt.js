@@ -22,6 +22,7 @@ module.exports = {
           { name: 'ask-away', value: '976052223358406656' },
           // { name: 'betrayal', value: '773336526917861400' },
           { name: 'blazing8s', value: '832025144389533716' },
+          { name: 'bashout', value: '1006584476094177371' },
           { name: 'bobble-league', value: '947957217959759964' },
           { name: 'checkers', value: '832013003968348200' },
           { name: 'chess', value: '832012774040141894' },
