@@ -26,10 +26,10 @@ module.exports = {
     }
     if (
       interaction.member.roles.cache.some(
-        (role) => role.name === 'Technikchef'
+        (role) => role.name === 'Development'
       ) ||
       interaction.member.roles.cache.some(
-        (role) => role.name === 'Stadtsekretär:in'
+        (role) => role.name === 'Mädchen für aööes'
       )
     ) {
       deleteThread()
