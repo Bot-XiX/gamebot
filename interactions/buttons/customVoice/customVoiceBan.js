@@ -29,7 +29,9 @@ module.exports = {
             if (member.voice.channel === channel) {
               console
               channel.permissionOverwrites.edit(user.id, {
-                Connect: false
+                Connect: false,
+                ReadMessageHistory: false,
+                SendMessages: false
               })
               interaction.editReply({ content: 'User gebannt!', ephemeral: true })
             } else {
