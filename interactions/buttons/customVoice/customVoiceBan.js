@@ -26,7 +26,8 @@ module.exports = {
         if (user.user !== interaction.member) {
           try {
             const member = channel.members.get(user.id)
-            if (member.VoiceChannel === channel) {
+            if (member.voice.channel === channel) {
+              console
               channel.permissionOverwrites.edit(user.id, {
                 Connect: false
               })
