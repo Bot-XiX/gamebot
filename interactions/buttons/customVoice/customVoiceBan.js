@@ -40,7 +40,7 @@ module.exports = {
               interaction.editReply({ content: 'User konnte nicht vom Channel gebannt werden!', ephemeral: true })
             }
           } catch {
-            interaction.reply({ content: 'Der User ist nicht in diesem Channel!', ephemeral: true })
+            interaction.editReply({ content: 'Der User ist nicht in diesem Channel!', ephemeral: true })
           }
         } else {
           interaction.editReply({ content: 'User ist nicht in diesem Channel!', ephemeral: true })
