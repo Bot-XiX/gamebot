@@ -45,6 +45,21 @@ module.exports = {
           name: `${titel}`,
           autoArchiveDuration: 1440 * 7,
           type: 'GUILD_PUBLIC_THREAD'
+        }).then(function (thread) {
+          const row3 = new ActionRowBuilder().addComponents(
+            new ButtonBuilder()
+              .setLabel('Anonym antworten')
+              .setCustomId('anonymantworten')
+              .setStyle(ButtonStyle.Secondary)
+          )
+          thread
+            .send({
+              content: 'Drücke hier um anonym zu antworten',
+              components: [row3]
+            })
+            .then(function (message) {
+              message.pin()
+            })
         })
         set(ref(getDatabase(), interaction.guild.id + '/anonym/messages/' + message.id), interaction.member.id)
       })
