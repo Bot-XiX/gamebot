@@ -80,6 +80,7 @@ module.exports = {
           const check2 = !members.includes(user[0])
           const check3 = !bans.includes(user[0])
           if (check1 && check2 && check3) {
+            console.log(user[0])
             channel.permissionOverwrites.delete(user[0])
           }
         }
