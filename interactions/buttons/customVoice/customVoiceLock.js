@@ -68,16 +68,7 @@ module.exports = {
         channel.permissionOverwrites.edit(interaction.guild.roles.everyone, { Connect: false, ReadMessageHistory: false, SendMessages: false })
         const members = channel.members.map((member) => member.id)
         for (const user of permissions) {
-          if (user[0] !== interaction.guild.roles.everyone.id) channel.permissionOverwrites.delete(user[0])
-        }
-        for (const member of members) {
-          if (!permissions.has(member)) {
-            channel.permissionOverwrites.edit(member, { ReadMessageHistory: true, SendMessages: true })
-          }
-        }
-        channel.permissionOverwrites.edit(interaction.user.id, { ManageChannels: true })
-        for (const ban of bans) {
-          channel.permissionOverwrites.edit(ban, { Connect: false, ReadMessageHistory: true, SendMessages: true })
+          if (user[0] !== interaction.guild.roles.everyone.id && !members.include(user[0]) && !bans.include(user[0])) channel.permissionOverwrites.delete(user[0])
         }
         interaction.reply({ content: 'Dieser Channel ist nun für alle geschlossen!', ephemeral: true })
         const row1 = interaction.message.components[0]
