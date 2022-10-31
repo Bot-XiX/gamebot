@@ -12,6 +12,7 @@ module.exports = {
   * @param {Object} interaction The Interaction Object of the command.
   */
   async execute (interaction) {
+    interaction.deferReply({ ephemeral: true })
     const channel = interaction.channel
     if (channel.permissionsFor(interaction.user.id).has(PermissionsBitField.Flags.ManageChannels)) {
       const db = getDatabase()
@@ -66,7 +67,7 @@ module.exports = {
             .setLabel('Nicht-Freunde kicken')
             .setStyle(ButtonStyle.Danger)
         )
-        interaction.reply({ content: 'Nur noch deine Freunde können diesem Channel beitreten!', components: [row], ephemeral: true })
+        interaction.editReply({ content: 'Nur noch deine Freunde können diesem Channel beitreten!', components: [row], ephemeral: true })
         const row1 = interaction.message.components[0]
         const row2 = interaction.message.components[1]
         const newRow1 = new ActionRowBuilder()
@@ -103,7 +104,7 @@ module.exports = {
             channel.permissionOverwrites.delete(user[0])
           }
         }
-        interaction.reply({ content: 'Dieser Channel ist nun für alle geschlossen!', ephemeral: true })
+        interaction.editReply({ content: 'Dieser Channel ist nun für alle geschlossen!', ephemeral: true })
         const row1 = interaction.message.components[0]
         const row2 = interaction.message.components[1]
         const newRow1 = new ActionRowBuilder()
@@ -131,7 +132,7 @@ module.exports = {
             channel.permissionOverwrites.edit(ban, { Connect: false, ReadMessageHistory: false, SendMessages: false })
           }
         }
-        interaction.reply({ content: 'Du hast den Raum geöffnet!', ephemeral: true })
+        interaction.editReply({ content: 'Du hast den Raum geöffnet!', ephemeral: true })
         const row1 = interaction.message.components[0]
         const row2 = interaction.message.components[1]
         const newRow1 = new ActionRowBuilder()
