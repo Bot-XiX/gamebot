@@ -12,7 +12,6 @@ module.exports = {
    */
 
   async execute (oldState, newState) {
-    if (newState.guild.id === '265117785686933515') return
     const db = getDatabase()
     const customChannels = await get(ref(db, newState.guild.id + '/customChannels')).then((snapshot) => {
       return snapshot.val()

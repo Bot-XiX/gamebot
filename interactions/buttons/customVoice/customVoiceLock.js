@@ -71,6 +71,7 @@ module.exports = {
         for (const member of memberList) {
           members = members.concat(member)
         }
+        console.log(members)
         for (const user of permissions) {
           if (user[0] !== interaction.guild.roles.everyone.id && !members.include(user[0]) && !bans.include(user[0])) channel.permissionOverwrites.delete(user[0])
         }
