@@ -12,7 +12,7 @@ module.exports = {
   * @param {Object} interaction The Interaction Object of the command.
   */
   async execute (interaction) {
-    interaction.deferReply({ ephemeral: true })
+    await interaction.deferReply({ ephemeral: true })
     const channel = interaction.channel
     if (channel.permissionsFor(interaction.user.id).has(PermissionsBitField.Flags.ManageChannels)) {
       const db = getDatabase()
