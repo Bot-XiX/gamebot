@@ -21,7 +21,6 @@ module.exports = {
         return []
       }
     })
-    console.log(friends)
     const buttons = interaction.message.components[0].components
     const disabledButtons = buttons.map((button) => {
       return ButtonBuilder.from(button).setDisabled(true)
