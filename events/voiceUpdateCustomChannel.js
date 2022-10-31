@@ -54,7 +54,7 @@ module.exports = {
               new ButtonBuilder()
                 .setCustomId('customVoiceLock')
                 .setStyle(ButtonStyle.Secondary)
-                .setEmoji('🔒'),
+                .setEmoji('🔐'),
               new ButtonBuilder()
                 .setCustomId('customVoiceAdd')
                 .setStyle(ButtonStyle.Secondary)

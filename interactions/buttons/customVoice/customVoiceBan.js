@@ -32,7 +32,8 @@ module.exports = {
               })
               interaction.editReply({ content: `${user.toString()} gebannt!`, ephemeral: true })
             } else {
-              interaction.editReply({ content: `${user.toString()} ist nicht in diesem Channel!`, ephemeral: true })
+              channel.permissionOverwrites.delete(user.id)
+              interaction.editReply({ content: `${user.toString()} vom Channel entbannt!`, ephemeral: true })
             }
             try {
               user.voice.setChannel(null)
@@ -40,7 +41,8 @@ module.exports = {
               interaction.editReply({ content: `${user.toString()} konnte nicht vom Channel gebannt werden!`, ephemeral: true })
             }
           } catch (e) {
-            interaction.editReply({ content: `${user.toString()} ist nicht in diesem Channel!`, ephemeral: true })
+            channel.permissionOverwrites.delete(user.id)
+            interaction.editReply({ content: `${user.toString()} vom Channel entbannt!`, ephemeral: true })
           }
         } else {
           interaction.editReply({ content: 'Du kannst dich nicht selbst bannen!', ephemeral: true })
