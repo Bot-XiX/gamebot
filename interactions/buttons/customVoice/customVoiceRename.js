@@ -12,7 +12,7 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
-    const channel = interaction.guild.channels.cache.get(interaction.channelId)
+    const channel = interaction.channel
     if (channel.permissionsFor(interaction.user.id).has(PermissionsBitField.Flags.ManageChannels)) {
       const modalModal = new ModalBuilder().setCustomId('customVoiceRename').setTitle('Channel umbenen')
       // Add components to modal

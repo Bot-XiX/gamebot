@@ -14,11 +14,11 @@ module.exports = {
 */
   async execute (interaction) {
     const row3 = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-          .setLabel('Anonym antworten')
-          .setCustomId('anonymantworten')
-          .setStyle(ButtonStyle.Secondary)
-      )
+      new ButtonBuilder()
+        .setLabel('Anonym antworten')
+        .setCustomId('anonymantworten')
+        .setStyle(ButtonStyle.Secondary)
+    )
     await interaction.reply({ content: 'Anonym antworten', components: [row3], ephemeral: false })
   }
 }

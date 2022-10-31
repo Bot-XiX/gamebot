@@ -15,24 +15,33 @@
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended"
   ],
-    "rules": { 
-            "no-console": "warn",
-            "@typescript-eslint/no-var-requires": "off",
-            "space-before-function-paren": "error",
-            "no-trailing-spaces": "error",
-            "comma-dangle": "error",
-            "no-tabs": "error",
-            "eqeqeq": "error",
-            "padded-blocks": ["error", "never", {"allowSingleLineBlocks": true}],
-            "brace-style": "error",
-            "@typescript-eslint/indent": [
-              "error",
-              2
-            ],
-            "camelcase": "error",
-            "eol-last": "error",
-            "no-extra-semi": "error",
-            "object-curly-spacing": ["error", "always"],
-            "no-multiple-empty-lines": "error"
-    }
+  "rules": {
+    "no-console": "warn",
+    "@typescript-eslint/no-var-requires": "off",
+    "space-before-function-paren": "error",
+    "no-trailing-spaces": "error",
+    "comma-dangle": "error",
+    "no-tabs": "error",
+    "eqeqeq": "error",
+    "padded-blocks": [
+      "error",
+      "never",
+      {
+        "allowSingleLineBlocks": true
+      }
+    ],
+    "brace-style": "error",
+    "@typescript-eslint/indent": [
+      "error",
+      2
+    ],
+    "camelcase": "error",
+    "eol-last": "error",
+    "no-extra-semi": "error",
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "no-multiple-empty-lines": "error"
+  }
 }

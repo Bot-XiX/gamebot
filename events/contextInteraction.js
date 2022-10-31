@@ -63,7 +63,7 @@ module.exports = {
         // eslint-disable-next-line no-console
         console.log(err)
         await client.users.fetch('605740766345822218').then(function (user) {
-          user.send({ content: '**Error in *' + command.name+'*:**\n\n' + err + '\n\n**Data:**\n\n' + interaction })
+          user.send({ content: '**Error in *' + command.name + '*:**\n\n' + err + '\n\n**Data:**\n\n' + interaction })
         })
         try {
           await interaction.reply({
