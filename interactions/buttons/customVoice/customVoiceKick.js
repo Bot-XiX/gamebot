@@ -20,11 +20,13 @@ module.exports = {
         if (!friends.includes(member[1].id)) {
           try {
             member[1].voice.setChannel(null)
+            interaction.channel.permissionOverwrites.edit(member[1].id, { Connect: false, ReadMessageHistory: false, SendMessages: false })
           } catch {
             // Do nothing
           }
         }
       }
     }
+    interaction.reply({ content: 'Alle User die nicht deine Freunde sind gekickt.', ephemeral: true })
   }
 }

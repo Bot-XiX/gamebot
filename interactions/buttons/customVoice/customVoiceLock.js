@@ -30,9 +30,33 @@ module.exports = {
         }
       })
       if (status === 1) {
+        const permissions = channel.permissionOverwrites.cache
+        let bans = []
+        for (const user of permissions) {
+          if (user[0] !== interaction.guild.roles.everyone.id) {
+            if (!channel.permissionsFor(user[0]).has(PermissionsBitField.Flags.Speak)) {
+              bans = bans.concat(user[0])
+            }
+          }
+        }
+        channel.permissionOverwrites.edit(interaction.guild.roles.everyone, { Connect: false, ReadMessageHistory: false, SendMessages: false })
+        const members = channel.members.map((member) => member.id)
+        for (const member of members) {
+          await channel.permissionOverwrites.edit(member, { Connect: true, ReadMessageHistory: true, SendMessages: true })
+        }
         for (const friend of friends) {
           if (channel.permissionsFor(friend).has(PermissionsBitField.Flags.Speak)) {
             channel.permissionOverwrites.edit(friend, { Connect: true, ReadMessageHistory: true, SendMessages: true })
+          }
+        }
+        await channel.permissionOverwrites.edit(interaction.user.id, { ManageChannels: true })
+        for (const user of permissions) {
+          const check1 = user[0] !== interaction.guild.roles.everyone.id
+          const check2 = !members.includes(user[0])
+          const check3 = !bans.includes(user[0])
+          const check4 = !friends.includes(user[0])
+          if (check1 && check2 && check3 && check4) {
+            channel.permissionOverwrites.delete(user[0])
           }
         }
         set(ref(db, interaction.guild.id + '/openChannels/' + channel.id), 2)
