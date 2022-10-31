@@ -24,6 +24,7 @@ module.exports = {
           try {
             const member = channel.members.get(user.id)
             if (member.voice.channel === channel) {
+              if (channel.permissionsFor(user.id).has(PermissionsBitField.Flags.ManageChannels)) return interaction.editReply({ content: `${user.toString()} kann nicht gebannt werden!`, ephemeral: true })
               channel.permissionOverwrites.edit(user.id, {
                 Speak: false,
                 Connect: false,
