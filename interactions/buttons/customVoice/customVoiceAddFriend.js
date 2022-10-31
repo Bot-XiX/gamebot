@@ -37,7 +37,7 @@ module.exports = {
         if (friends.includes(user.id)) {
           interaction.editReply({ content: `${user} ist schon dein Freund!`, ephemeral: true })
         } else {
-          friends = await friends.push(user.id)
+          friends.push(user.id)
           interaction.editReply({ content: `${user} wurde als Freund hinzugefügt!`, ephemeral: true })
           set(ref(db, `users/${interaction.user.id}/friends`), friends)
         }
