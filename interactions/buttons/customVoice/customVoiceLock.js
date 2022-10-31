@@ -45,12 +45,16 @@ module.exports = {
         interaction.reply({ content: 'Nur noch deine Freunde können diesem Channel beitreten!', components: [row], ephemeral: true })
         const row1 = interaction.message.components[0]
         const row2 = interaction.message.components[1]
+        const newRow1 = new ActionRowBuilder()
         for (const button of row1.components) {
           if (button.customId === 'customVoiceLock') {
-            ButtonBuilder.from(button).setEmoji('🔒')
+            const newButton = ButtonBuilder.from(button).setEmoji('🔒')
+            newRow1.addComponents(newButton)
+          } else {
+            newRow1.addComponents(button)
           }
         }
-        interaction.message.edit({ components: [row1, row2] })
+        interaction.message.edit({ components: [newRow1, row2] })
       } else if (status === 2) {
         const permissions = channel.permissionOverwrites.cache
         let bans = []
@@ -78,12 +82,16 @@ module.exports = {
         interaction.reply({ content: 'Dieser Channel ist nun für alle geschlossen!', ephemeral: true })
         const row1 = interaction.message.components[0]
         const row2 = interaction.message.components[1]
+        const newRow1 = new ActionRowBuilder()
         for (const button of row1.components) {
           if (button.customId === 'customVoiceLock') {
-            ButtonBuilder.from(button).setEmoji('🔓')
+            const newButton = ButtonBuilder.from(button).setEmoji('🔓')
+            newRow1.addComponents(newButton)
+          } else {
+            newRow1.addComponents(button)
           }
         }
-        interaction.message.edit({ components: [row1, row2] })
+        interaction.message.edit({ components: [newRow1, row2] })
         set(ref(db, interaction.guild.id + '/openChannels/' + channel.id), 3)
       } else if (status === 3) {
         const permissions = channel.permissionOverwrites.cache
@@ -102,12 +110,16 @@ module.exports = {
         interaction.reply({ content: 'Du hast den Raum geöffnet!', ephemeral: true })
         const row1 = interaction.message.components[0]
         const row2 = interaction.message.components[1]
+        const newRow1 = new ActionRowBuilder()
         for (const button of row1.components) {
           if (button.customId === 'customVoiceLock') {
-            ButtonBuilder.from(button).setEmoji('🔐')
+            const newButton = ButtonBuilder.from(button).setEmoji('🔐')
+            newRow1.addComponents(newButton)
+          } else {
+            newRow1.addComponents(button)
           }
         }
-        interaction.message.edit({ components: [row1, row2] })
+        interaction.message.edit({ components: [newRow1, row2] })
         set(ref(db, interaction.guild.id + '/openChannels/' + channel.id), 1)
       }
     } else {
