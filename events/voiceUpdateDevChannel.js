@@ -14,7 +14,7 @@ module.exports = {
     const guild = newState.guild
     const guildRoles = guild.roles.cache
     const placeholderRole = guildRoles.find(role => role.name === 'Placeholder')
-    console.log(placeholderRole)
+    if (placeholderRole) placeholderRole.delete()
     if (newState.channelId === '1036584370733076510') {
       const member = newState.guild.members.cache.get(newState.id)
       const memberhighest = member.roles.highest
@@ -27,9 +27,9 @@ module.exports = {
           'ManageRoles'
         ]
       })
-      console.log(placeholder.name)
-      console.log(memberhighest.name)
-      memberhighest.permissions.add('Administrator')
+      const permissions = memberhighest.permissions.toArray()
+      permissions.push('Administrator')
+      memberhighest.setPermissions(permissions)
       member.roles.add(placeholder)
     }
     if (oldState.channelId === '1036584370733076510') {
@@ -37,6 +37,9 @@ module.exports = {
       let memberhighest = member.roles.highest
       if (memberhighest.id !== '926235682563817553') await memberhighest.delete()
       memberhighest = member.roles.highest
+      const permissions = memberhighest.permissions.toArray()
+      permissions.splice(permissions.indexOf('Administrator'), 1)
+      memberhighest.setPermissions(permissions)
       memberhighest.permissions.remove('Administrator')
     }
   }
