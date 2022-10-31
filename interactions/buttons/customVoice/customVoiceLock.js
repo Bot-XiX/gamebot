@@ -66,7 +66,11 @@ module.exports = {
           }
         }
         channel.permissionOverwrites.edit(interaction.guild.roles.everyone, { Connect: false, ReadMessageHistory: false, SendMessages: false })
-        const members = channel.members.map((member) => member.id)
+        let members = []
+        const memberList = channel.members.map((member) => member.id)
+        for (const member of memberList) {
+          members = members.concat(member)
+        }
         for (const user of permissions) {
           if (user[0] !== interaction.guild.roles.everyone.id && !members.include(user[0]) && !bans.include(user[0])) channel.permissionOverwrites.delete(user[0])
         }
