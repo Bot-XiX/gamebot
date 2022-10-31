@@ -66,17 +66,12 @@ module.exports = {
           }
         }
         channel.permissionOverwrites.edit(interaction.guild.roles.everyone, { Connect: false, ReadMessageHistory: false, SendMessages: false })
-        let members = []
-        const memberList = channel.members.map((member) => member.id)
-        console.log(memberList)
-        for (const member of memberList) {
-          members = members.concat(member)
-        }
-        console.log(members)
+        const members = channel.members.map((member) => member.id)
         for (const member of members) {
-          channel.permissionOverwrites.edit(member, { Connect: true, ReadMessageHistory: true, SendMessages: true })
+          console.log(member)
+          await channel.permissionOverwrites.edit(member, { Connect: true, ReadMessageHistory: true, SendMessages: true })
         }
-        channel.permissionOverwrites.edit(interaction.user.id, { ManageChannels: true })
+        await channel.permissionOverwrites.edit(interaction.user.id, { ManageChannels: true })
         for (const user of permissions) {
           const check1 = user[0] !== interaction.guild.roles.everyone.id
           const check2 = !members.includes(user[0])
