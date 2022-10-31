@@ -12,7 +12,7 @@ module.exports = {
   */
   async execute (interaction) {
     const db = getDatabase()
-    const friends = get(ref(db, `users/${interaction.user.id}/friends`)).then((snapshot) => {
+    const friends = await get(ref(db, `users/${interaction.user.id}/friends`)).then((snapshot) => {
       if (snapshot.exists()) {
         return snapshot.val()
       } else {
