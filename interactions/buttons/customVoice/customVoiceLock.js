@@ -47,7 +47,7 @@ module.exports = {
         const row2 = interaction.message.components[1]
         for (const button of row1.components) {
           if (button.customId === 'customVoiceLock') {
-            button.setEmoji('🔒')
+            ButtonBuilder.from(button).setEmoji('🔒')
           }
         }
         interaction.message.edit({ components: [row1, row2] })
@@ -80,7 +80,7 @@ module.exports = {
         const row2 = interaction.message.components[1]
         for (const button of row1.components) {
           if (button.customId === 'customVoiceLock') {
-            button.setEmoji('🔓')
+            ButtonBuilder.from(button).setEmoji('🔓')
           }
         }
         interaction.message.edit({ components: [row1, row2] })
@@ -104,7 +104,7 @@ module.exports = {
         const row2 = interaction.message.components[1]
         for (const button of row1.components) {
           if (button.customId === 'customVoiceLock') {
-            button.setEmoji('🔐')
+            ButtonBuilder.from(button).setEmoji('🔐')
           }
         }
         interaction.message.edit({ components: [row1, row2] })
