@@ -12,7 +12,13 @@ module.exports = {
   */
   async execute (interaction) {
     const db = getDatabase()
-    const friends = get(ref(db, `users/${interaction.user.id}/friends`))
+    const friends = get(ref(db, `users/${interaction.user.id}/friends`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        return snapshot.val()
+      } else {
+        return []
+      }
+    })
     const channel = interaction.channel
     const members = channel.members
     for (const member of members) {

@@ -92,7 +92,6 @@ module.exports = {
         channel.permissionOverwrites.edit(interaction.guild.roles.everyone, { Connect: false, ReadMessageHistory: false, SendMessages: false })
         const members = channel.members.map((member) => member.id)
         for (const member of members) {
-          console.log(member)
           await channel.permissionOverwrites.edit(member, { Connect: true, ReadMessageHistory: true, SendMessages: true })
         }
         await channel.permissionOverwrites.edit(interaction.user.id, { ManageChannels: true })
