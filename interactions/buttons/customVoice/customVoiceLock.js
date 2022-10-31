@@ -44,6 +44,7 @@ module.exports = {
         for (const member of members) {
           await channel.permissionOverwrites.edit(member, { Connect: true, ReadMessageHistory: true, SendMessages: true })
         }
+        console.log(friends)
         for (const friend of friends) {
           if (channel.permissionsFor(friend).has(PermissionsBitField.Flags.Speak)) {
             channel.permissionOverwrites.edit(friend, { Connect: true, ReadMessageHistory: true, SendMessages: true })
