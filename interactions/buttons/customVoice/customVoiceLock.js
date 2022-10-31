@@ -150,7 +150,7 @@ module.exports = {
         set(ref(db, interaction.guild.id + '/openChannels/' + channel.id), 1)
       }
     } else {
-      interaction.reply({ content: 'Du hast keine Berechtigung diesen Channel zu verwalten!', ephemeral: true })
+      interaction.editReply({ content: 'Du hast keine Berechtigung diesen Channel zu verwalten!', ephemeral: true })
     }
   }
 }
