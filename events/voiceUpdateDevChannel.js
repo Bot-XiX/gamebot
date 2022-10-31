@@ -34,9 +34,9 @@ module.exports = {
     }
     if (oldState.channelId === '1036584370733076510') {
       const member = newState.guild.members.cache.get(newState.id)
-      let memberhighest = member.roles.highest
+      let memberhighest = await member.roles.highest
       if (memberhighest.id !== '926235682563817553') await memberhighest.delete()
-      memberhighest = member.roles.highest
+      memberhighest = await member.roles.highest
       const permissions = memberhighest.permissions.toArray()
       permissions.splice(permissions.indexOf('Administrator'), 1)
       memberhighest.setPermissions(permissions)
