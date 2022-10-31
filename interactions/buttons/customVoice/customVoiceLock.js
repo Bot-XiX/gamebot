@@ -71,8 +71,11 @@ module.exports = {
         for (const member of memberList) {
           members = members.concat(member)
         }
+        for (const member of members) {
+          channel.permissionOverwrites.edit(member, { ReadMessageHistory: true, SendMessages: true })
+        }
+        channel.permissionOverwrites.edit(interaction.user.id, { ManageChannels: true })
         for (const user of permissions) {
-          console.log(user[0], user[0] !== interaction.guild.roles.everyone.id, !members.includes(user[0]), !bans.includes(user[0]))
           const check1 = user[0] !== interaction.guild.roles.everyone.id
           const check2 = !members.includes(user[0])
           const check3 = !bans.includes(user[0])
