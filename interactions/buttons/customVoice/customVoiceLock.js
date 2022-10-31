@@ -71,9 +71,8 @@ module.exports = {
         for (const member of memberList) {
           members = members.concat(member)
         }
-        console.log(members)
         for (const user of permissions) {
-          if (user[0] !== interaction.guild.roles.everyone.id && !members.include(user[0]) && !bans.include(user[0])) channel.permissionOverwrites.delete(user[0])
+          if (user[0] !== interaction.guild.roles.everyone.id && !members.includes(user[0]) && !bans.includes(user[0])) channel.permissionOverwrites.delete(user[0])
         }
         interaction.reply({ content: 'Dieser Channel ist nun für alle geschlossen!', ephemeral: true })
         const row1 = interaction.message.components[0]
