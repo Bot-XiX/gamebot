@@ -56,7 +56,7 @@ module.exports = {
           const check2 = !members.includes(user[0])
           const check3 = !bans.includes(user[0])
           const check4 = !friends.includes(user[0])
-          const check5 = !channel.permissionsFor(user[0]).has(PermissionsBitField.Flags.KickMembers)
+          const check5 = !channel.permissionsFor(user[0]).has(PermissionsBitField.Flags.ManageChannels)
           if (check1 && check2 && check3 && check4 && check5) {
             channel.permissionOverwrites.delete(user[0])
           }
@@ -101,7 +101,7 @@ module.exports = {
           const check1 = user[0] !== interaction.guild.roles.everyone.id
           const check2 = !members.includes(user[0])
           const check3 = !bans.includes(user[0])
-          const check5 = !channel.permissionsFor(user[0]).has(PermissionsBitField.Flags.KickMembers)
+          const check5 = !channel.permissionsFor(user[0]).has(PermissionsBitField.Flags.ManageChannels)
           if (check1 && check2 && check3 && check5) {
             channel.permissionOverwrites.delete(user[0])
           }
