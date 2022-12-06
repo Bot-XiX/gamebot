@@ -16,9 +16,7 @@ module.exports = {
    */
 
   async execute (interaction) {
-    if (
-      interaction.member.roles.cache.some((role) => role.name === 'Technikchef')
-    ) {
+    {
       const row1 = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
           .setLabel('Frage')
@@ -28,11 +26,6 @@ module.exports = {
       interaction.channel.send({
         content: 'Drücke hier um einen Beichte oder Frage einzureichen',
         components: [row1]
-      })
-    } else {
-      return interaction.reply({
-        content: 'No permissions',
-        ephemeral: true
       })
     }
   }
