@@ -73,14 +73,18 @@ module.exports = {
                 .setCustomId('customVoiceGame')
                 .setStyle(ButtonStyle.Secondary)
                 .setEmoji('🎮'),
-              new ButtonBuilder()
-                .setCustomId('customVoiceRegion')
-                .setStyle(ButtonStyle.Secondary)
-                .setEmoji('🌍'),
+              // new ButtonBuilder()
+              //   .setCustomId('customVoiceRegion')
+              //   .setStyle(ButtonStyle.Secondary)
+              //   .setEmoji('🌍'),
               new ButtonBuilder()
                 .setCustomId('customVoiceOwner')
                 .setStyle(ButtonStyle.Secondary)
-                .setEmoji('👑')
+                .setEmoji('👑'),
+              new ButtonBuilder()
+                .setCustomId('customVoiceHelp')
+                .setStyle(ButtonStyle.Secondary)
+                .setEmoji('❓')
             )
           channel.send({ content: `Willkommen im Custom Channel ${member}!`, components: [configRow1, configRow2] })
         })
