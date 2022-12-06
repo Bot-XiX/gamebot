@@ -61,7 +61,7 @@ module.exports = {
     async function run () {
       const row1 = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
-          .setLabel('Frage')
+          .setLabel('Post')
           .setCustomId('anonymerKummerkasten')
           .setStyle(ButtonStyle.Primary)
       )
