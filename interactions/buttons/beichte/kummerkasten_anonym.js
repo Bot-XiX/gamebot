@@ -18,7 +18,7 @@ module.exports = {
 
   async execute (interaction) {
     const modal = new ModalBuilder()
-      .setCustomId('anonyme_frage')
+      .setCustomId('anonymerKummerkasten')
       .setTitle('Anonyme Frage')
     // Add components to modal
     // Create the text input components

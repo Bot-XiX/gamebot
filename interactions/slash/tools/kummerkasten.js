@@ -16,17 +16,15 @@ module.exports = {
    */
 
   async execute (interaction) {
-    {
-      const row1 = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-          .setLabel('Frage')
-          .setCustomId('anonymerKummerkasten')
-          .setStyle(ButtonStyle.Primary)
-      )
-      interaction.channel.send({
-        content: 'Drücke hier um einen Beichte oder Frage einzureichen',
-        components: [row1]
-      })
-    }
+    const row1 = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+        .setLabel('Frage')
+        .setCustomId('anonymerKummerkasten')
+        .setStyle(ButtonStyle.Primary)
+    )
+    interaction.channel.send({
+      content: 'Drücke hier um anonym einen Post zu erstellen',
+      components: [row1]
+    })
   }
 }
