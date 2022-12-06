@@ -51,7 +51,7 @@ module.exports = {
           name: '👑',
           value: 'Werde der Besitzer des Channels, wenn der Besitzer nicht mehr im Channel ist.'
         })
-    channel.send({
+    interaction.reply({
       embeds: [embed],
       components: []
     }
