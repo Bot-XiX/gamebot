@@ -20,9 +20,13 @@ module.exports = {
       return msg
     }
     try {
-      prev.prev.interaction.editReply({
-        components: [interaction.message.components[0]]
-      })
+      try {
+        prev.prev.interaction.editReply({
+          components: [interaction.message.components[0]]
+        })
+      } catch {
+        return null
+      }
       const db = getDatabase()
       const id = interaction.guild.id
       if (interaction.values.includes('addChannel')) {
