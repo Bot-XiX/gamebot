@@ -25,7 +25,7 @@ module.exports = {
           components: [interaction.message.components[0]]
         })
       } catch {
-        return null
+        // do nothing
       }
       const db = getDatabase()
       const id = interaction.guild.id
@@ -77,8 +77,8 @@ module.exports = {
 
           })
           unsub()
-        } catch (e) {
-          return null
+        } catch {
+          // do nothing
         }
       })
     } catch {
