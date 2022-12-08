@@ -10,7 +10,7 @@ module.exports = {
     .setName('radio')
     .setDescription('Stelle den Radio-Channel ein')
     .addChannelOption((option) => option.setName('channel').setDescription('Channel in dem 24/7 Musik gespielt wird').setRequired(true))
-    .addStringOption((option) => option.setName('link').setDescription('Link zum Radio').setRequired(true)),
+    .addStringOption((option) => option.setName('link').setDescription('Link zum Radio').setRequired(false)),
   /**
 * @description Executes when the slash command with ID label is called.
 
@@ -18,7 +18,10 @@ module.exports = {
 */
   async execute (interaction) {
     const channel = await interaction.options.getChannel('channel')
-    const link = await interaction.options.getString('link')
+    let link = await interaction.options.getString('link')
+    if (!link) {
+      link = 'https://live.hunter.fm/lofi_high'
+    }
     const player = await createAudioPlayer()
     const resource = await createAudioResource(link)
     await player.play(resource)
