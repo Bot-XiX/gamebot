@@ -1,6 +1,5 @@
 const { SelectMenuBuilder, ActionRowBuilder } = require('discord.js')
-const { set, ref, getDatabase, remove, onValue } = require('firebase/database')
-const prev = require('./config')
+const { ref, getDatabase, onValue } = require('firebase/database')
 
 /**
  * @file Select menu interaction: configCustomChannel
@@ -39,3 +38,4 @@ module.exports = {
     })
   }
 }
+unnecessary
