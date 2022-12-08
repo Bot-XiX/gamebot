@@ -25,7 +25,11 @@ module.exports = {
         channelName = await channelName.replace('{user}', newState.member.displayName)
         channelName = await channelName.replace('{users}', channelData.users)
         channelName = await channelName.replace('{server}', newState.guild.name)
-        channelName = await channelName.replace('{category}', category.name)
+        try {
+          channelName = await channelName.replace('{category}', category.name)
+        } catch {
+          channelName = await channelName.replace('{category}', 'None')
+        }
         newState.guild.channels.create({
           name: channelName,
           type: ChannelType.GuildVoice,
