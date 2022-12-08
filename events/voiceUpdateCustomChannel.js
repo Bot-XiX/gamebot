@@ -36,7 +36,11 @@ module.exports = {
           parent: category,
           userLimit: channelData.users
         }).then(async channel => {
-          await channel.lockPermissions()
+          try {
+            await channel.lockPermissions()
+          } catch {
+            // Do nothing
+          }
           await channel.permissionOverwrites.edit(member.id, { ManageChannels: true })
           member.voice.setChannel(channel)
           set(ref(db, newState.guild.id + '/openChannels/' + channel.id), 1)
