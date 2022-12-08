@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js')
+const { SlashCommandBuilder, ChannelType } = require('discord.js')
 const { createAudioPlayer, createAudioResource, joinVoiceChannel } = require('@discordjs/voice')
 const { getDatabase, ref, set } = require('firebase/database')
 /**
@@ -18,6 +18,10 @@ module.exports = {
 */
   async execute (interaction) {
     const channel = await interaction.options.getChannel('channel')
+    // check if channel is voice channel
+    if (channel.type !== ChannelType.GuildVoice) {
+      return interaction.reply({ content: 'Bitte gib einen VoiceChannel an!', ephemeral: true })
+    }
     let link = await interaction.options.getString('link')
     if (!link) {
       link = 'https://live.hunter.fm/lofi_high'
