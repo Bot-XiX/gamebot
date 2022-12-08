@@ -8,7 +8,7 @@ const { ref, getDatabase, onValue } = require('firebase/database')
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('customchannel')
-    .setDescription('Überprüft, ob Freischaltungen ausstehen.'),
+    .setDescription('Konfiguriert die Custom Channels.'),
   /**
 * @description Executes when the slash interaction with ID customchannel is called.
 
