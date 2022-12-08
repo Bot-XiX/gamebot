@@ -1,14 +1,16 @@
-const { SelectMenuBuilder, ActionRowBuilder } = require('discord.js')
+const { SelectMenuBuilder, ActionRowBuilder, SlashCommandBuilder } = require('discord.js')
 const { ref, getDatabase, onValue } = require('firebase/database')
 
 /**
- * @file Select menu interaction: configCustomChannel
+ * @file Slash interaction: checkwork
  * @since 1.0.0
 */
 module.exports = {
-  id: 'configCustomChannel',
+  data: new SlashCommandBuilder()
+    .setName('checkwork')
+    .setDescription('Überprüft, ob Freischaltungen ausstehen.'),
   /**
-* @description Executes when the select menu with ID configCustomChannel is called.
+* @description Executes when the slash interaction with ID checkwork is called.
 
 * @param {Object} interaction The Interaction Object of the command.
 */
