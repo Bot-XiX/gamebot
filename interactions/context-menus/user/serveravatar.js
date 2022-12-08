@@ -45,4 +45,3 @@ module.exports = {
     module.exports.interaction = interaction
   }
 }
-unnecessary
