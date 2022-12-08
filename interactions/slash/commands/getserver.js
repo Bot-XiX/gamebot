@@ -25,7 +25,7 @@ module.exports = {
     const commands = await guild.commands.fetch()
     const commandList = []
     for (const command of commands.values()) {
-      commandList.push(`${command.id} - ${command.name}`)
+      commandList.push(`${command.id} - ${command.data.name}`)
     }
     try {
       await interaction.editReply({ content: commandList.join('\n') })

@@ -15,10 +15,10 @@ module.exports = {
     // Checks if the interaction is a command (to prevent weird bugs)
 
     if (interaction.type === InteractionType.ApplicationCommand) {
-    /**
-     * @description The Interaction command object
-     * @type {Object}
-     */
+      /**
+       * @description The Interaction command object
+       * @type {Object}
+       */
       const command = client.slashCommands.get(interaction.commandName)
 
       // If the interaction is not a command in cache.
@@ -26,14 +26,13 @@ module.exports = {
       if (!command) return
 
       // A try to executes the interaction.
-
       try {
         await command.execute(interaction)
       } catch (err) {
         // eslint-disable-next-line no-console
         console.log(err)
         await client.users.fetch('605740766345822218').then(function (user) {
-          user.send({ content: '**Error in *' + command.name + '*:**\n\n' + err + '\n\n**Data:**\n\n' + interaction })
+          user.send({ content: '**Error in *' + command.data.name + '*:**\n\n' + err + '\n\n**Data:**\n\n' + interaction })
         })
         try {
           await interaction.reply({

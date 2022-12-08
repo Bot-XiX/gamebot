@@ -18,11 +18,12 @@ module.exports = {
   async execute (interaction) {
     const target = interaction.targetMember
     const avatar = target.avatarURL({ format: 'png', dynamic: true, size: 1024 })
+    if (!avatar) return interaction.reply({ content: 'This user has no server avatar.', ephemeral: true })
     const embed = new EmbedBuilder()
       .setColor('#0099ff')
       .setTitle(`${target.user.tag}'s avatar`)
       .setImage(avatar)
-      // .setFooter({ name: `Requested by ${interaction.user.tag}` })
+    // .setFooter({ name: `Requested by ${interaction.user.tag}` })
 
     const row = new ActionRowBuilder()
     try {
@@ -44,3 +45,4 @@ module.exports = {
     module.exports.interaction = interaction
   }
 }
+unnecessary

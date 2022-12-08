@@ -29,7 +29,7 @@ module.exports = {
         (role) => role.name === 'Development'
       ) ||
       interaction.member.roles.cache.some(
-        (role) => role.name === 'Mädchen für aööes'
+        (role) => role.name === 'Mädchen für alles'
       )
     ) {
       deleteThread()

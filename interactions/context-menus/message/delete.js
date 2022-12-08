@@ -17,7 +17,7 @@ module.exports = {
 
   async execute (interaction) {
     if (
-      interaction.member.roles.cache.some((role) => role.name === 'Technikchef')
+      interaction.member.roles.cache.some((role) => role.name === 'Development')
     ) {
       interaction.targetMessage.delete()
       interaction.reply({
