@@ -2,15 +2,15 @@ const { SelectMenuBuilder, ActionRowBuilder, SlashCommandBuilder } = require('di
 const { ref, getDatabase, onValue } = require('firebase/database')
 
 /**
- * @file Slash interaction: checkwork
+ * @file Slash interaction: customchannel
  * @since 1.0.0
 */
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('checkwork')
+    .setName('customchannel')
     .setDescription('Überprüft, ob Freischaltungen ausstehen.'),
   /**
-* @description Executes when the slash interaction with ID checkwork is called.
+* @description Executes when the slash interaction with ID customchannel is called.
 
 * @param {Object} interaction The Interaction Object of the command.
 */
