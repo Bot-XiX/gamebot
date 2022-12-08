@@ -1,4 +1,4 @@
-const { SelectMenuBuilder, ActionRowBuilder } = require('discord.js')
+const { StringSelectMenuBuilder, ActionRowBuilder } = require('discord.js')
 const { set, ref, getDatabase, remove, onValue } = require('firebase/database')
 const prev = require('./config')
 
@@ -86,7 +86,7 @@ module.exports = {
         interaction.reply({ content: 'Spiel gelöscht!', ephemeral: true })
       }
       const games = await ref(db, id + '/games')
-      const gameSelectMenu = new SelectMenuBuilder()
+      const gameSelectMenu = new StringSelectMenuBuilder()
         .setCustomId('configGames')
         .setPlaceholder('Nothing selected')
       const unsub = onValue(games, async (snapshot) => {

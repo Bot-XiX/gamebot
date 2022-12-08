@@ -1,4 +1,4 @@
-const { SelectMenuBuilder, ActionRowBuilder } = require('discord.js')
+const { StringSelectMenuBuilder, ActionRowBuilder } = require('discord.js')
 
 /**
  * @file Button interaction: customVoiceGame
@@ -12,7 +12,7 @@ module.exports = {
   */
   async execute (interaction) {
     const row = new ActionRowBuilder()
-    const selectMenu = new SelectMenuBuilder(
+    const selectMenu = new StringSelectMenuBuilder(
       {
         customId: 'CVgameSelect',
         placeholder: 'Spiel auswählen',

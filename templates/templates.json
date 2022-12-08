@@ -172,7 +172,7 @@
         "body": [
             "    const ${1:row}Row = new ActionRowBuilder()",
             "    .addComponents(",
-            "    new SelectMenuBuilder()",
+            "    new StringSelectMenuBuilder()",
             "    .setCustomId('${2:ID}')",
             "    .setPlaceholder('${3:Nothing selected}')",
             "    .addOptions([",

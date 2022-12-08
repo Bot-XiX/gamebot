@@ -2,7 +2,7 @@
  * @file User menu interaction: Einwohnermeldeamt
  * @since 1.0.0
 */
-const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
+const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js')
 const { ref, get, getDatabase } = require('firebase/database')
 module.exports = {
   data: {
@@ -19,7 +19,7 @@ module.exports = {
     if (JSON.stringify(await get(ref(getDatabase(), interaction.guild.id + '/einwohnermeldeamt/config/enabled'))).slice(1).slice(0, -1) === 'true') {
       const target = interaction.targetMember
       const row1 = new ActionRowBuilder().addComponents(
-        new SelectMenuBuilder()
+        new StringSelectMenuBuilder()
           .setCustomId('empfangselect')
           .setPlaceholder('Nothing selected')
           .addOptions([

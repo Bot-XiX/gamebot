@@ -3,7 +3,7 @@
  * @since 1.0.0
 */
 const { getDatabase, ref, set, get, onValue } = require('firebase/database')
-const { ActionRowBuilder, SelectMenuBuilder, ButtonStyle, ButtonBuilder } = require('discord.js')
+const { ActionRowBuilder, StringSelectMenuBuilder, ButtonStyle, ButtonBuilder } = require('discord.js')
 const { EmbedBuilder } = require('discord.js')
 module.exports = {
   id: 'config',
@@ -81,7 +81,7 @@ module.exports = {
       //! ###########################################
       configRow = new ActionRowBuilder()
         .addComponents(
-          new SelectMenuBuilder()
+          new StringSelectMenuBuilder()
             .setCustomId('configEinwohnermeldeamt')
             .setPlaceholder('Nothing selected')
             .addOptions([
@@ -162,7 +162,7 @@ module.exports = {
       //! ###########################################
       configRow = new ActionRowBuilder()
         .addComponents(
-          new SelectMenuBuilder()
+          new StringSelectMenuBuilder()
             .setCustomId('configRoles')
             .setPlaceholder('Nothing selected')
             .addOptions([
@@ -201,7 +201,7 @@ module.exports = {
       //! ###########################################
       configRow = new ActionRowBuilder()
         .addComponents(
-          new SelectMenuBuilder()
+          new StringSelectMenuBuilder()
             .setCustomId('configTickets')
             .setPlaceholder('Nothing selected')
             .addOptions([
@@ -227,7 +227,7 @@ module.exports = {
     }
     if (interaction.values.includes('games')) {
       const games = await ref(db, id + '/games')
-      const gameSelectMenu = new SelectMenuBuilder()
+      const gameSelectMenu = new StringSelectMenuBuilder()
         .setCustomId('configGames')
         .setPlaceholder('Nothing selected')
       const unsub = onValue(games, async (snapshot) => {
@@ -265,7 +265,7 @@ module.exports = {
     }
     if (interaction.values.includes('customChannel')) {
       const customChannel = await ref(db, id + '/customChannels')
-      const channelSelectMenu = new SelectMenuBuilder()
+      const channelSelectMenu = new StringSelectMenuBuilder()
         .setCustomId('configCustomChannel')
         .setPlaceholder('Nothing selected')
       const unsub = onValue(customChannel, async (snapshot) => {
@@ -313,7 +313,7 @@ module.exports = {
       //! ###########################################
       configRow = new ActionRowBuilder()
         .addComponents(
-          new SelectMenuBuilder()
+          new StringSelectMenuBuilder()
             .setCustomId('configBump')
             .setPlaceholder('Nothing selected')
             .addOptions([

@@ -1,4 +1,4 @@
-const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
+const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js')
 const { SlashCommandBuilder } = require('@discordjs/builders')
 module.exports = {
   // The data needed to register slash commands to Discord.
@@ -26,7 +26,7 @@ module.exports = {
       )
     ) {
       const row1 = new ActionRowBuilder().addComponents(
-        new SelectMenuBuilder()
+        new StringSelectMenuBuilder()
           .setCustomId('empfangselect2')
           .setPlaceholder('Nothing selected')
           .addOptions([
@@ -58,11 +58,10 @@ module.exports = {
         addthis.push('Verifizierungsebene 2')
       }
       await interaction.reply({
-        content: `**${
-          target.user.tag
-        }** hat folgende Rollen: \n\`${addthis.join(
-          ' | '
-        )}\`\n\nWähle eine Rolle aus um sie zu ändern:`,
+        content: `**${target.user.tag
+          }** hat folgende Rollen: \n\`${addthis.join(
+            ' | '
+          )}\`\n\nWähle eine Rolle aus um sie zu ändern:`,
         components: [row1],
         ephemeral: true
       })

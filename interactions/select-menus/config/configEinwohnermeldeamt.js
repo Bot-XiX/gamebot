@@ -2,7 +2,7 @@
  * @file Select menu interaction: configEinwohnermeldeamt
  * @since 1.0.0
 */
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder } = require('discord.js')
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } = require('discord.js')
 const prev = require('./config')
 const { set, ref, get, getDatabase } = require('firebase/database')
 module.exports = {
@@ -62,7 +62,7 @@ module.exports = {
         .setTitle('Placeholder title')
       const editEmbedRow = new ActionRowBuilder()
         .addComponents(
-          new SelectMenuBuilder()
+          new StringSelectMenuBuilder()
             .setCustomId('editVorstellungEmbed')
             .setPlaceholder('Nothing selected')
             .addOptions([

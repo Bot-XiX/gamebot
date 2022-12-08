@@ -1,4 +1,4 @@
-const { SelectMenuBuilder, ActionRowBuilder } = require('discord.js')
+const { StringSelectMenuBuilder, ActionRowBuilder } = require('discord.js')
 const { set, ref, getDatabase, remove, onValue } = require('firebase/database')
 const prev = require('./config')
 
@@ -60,7 +60,7 @@ module.exports = {
         interaction.reply({ content: 'Channel gelöscht!', ephemeral: true })
       }
       const channels = await ref(db, id + '/customChannels')
-      const channelSelectMenu = new SelectMenuBuilder()
+      const channelSelectMenu = new StringSelectMenuBuilder()
         .setCustomId('configCustomChannel')
         .setPlaceholder('Nothing selected')
       const unsub = onValue(channels, async (snapshot) => {

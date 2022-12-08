@@ -1,4 +1,4 @@
-const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
+const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js')
 const { onValue, ref, getDatabase } = require('firebase/database')
 /**
  * @file Button interaction: lfg
@@ -27,7 +27,7 @@ module.exports = {
       for (const game in games) {
         await gameList.push({ label: games[game].name, value: game })
       }
-      const LFGgame = new SelectMenuBuilder()
+      const LFGgame = new StringSelectMenuBuilder()
         .setCustomId('LFGgame')
         .setPlaceholder('Spiel')
         .addOptions(gameList)

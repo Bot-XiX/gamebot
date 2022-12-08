@@ -2,7 +2,7 @@
  * @file Slash interaction: config
  * @since 1.0.0
 */
-const { ActionRowBuilder, SelectMenuBuilder, SlashCommandBuilder } = require('discord.js')
+const { ActionRowBuilder, StringSelectMenuBuilder, SlashCommandBuilder } = require('discord.js')
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -16,7 +16,7 @@ module.exports = {
   async execute (interaction) {
     const configRow = new ActionRowBuilder()
       .addComponents(
-        new SelectMenuBuilder()
+        new StringSelectMenuBuilder()
           .setCustomId('config')
           .setPlaceholder('Nothing selected')
           .addOptions([

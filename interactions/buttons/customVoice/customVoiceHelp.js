@@ -1,4 +1,4 @@
-const { PermissionsBitField, ActionRowBuilder, SelectMenuBuilder, EmbedBuilder } = require('discord.js')
+const { PermissionsBitField, ActionRowBuilder, StringSelectMenuBuilder, EmbedBuilder } = require('discord.js')
 /**
  * @file Button interaction: customVoiceHelp
  * @since 1.0.0

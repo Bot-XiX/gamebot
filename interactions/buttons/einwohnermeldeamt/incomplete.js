@@ -1,4 +1,4 @@
-const { SelectMenuBuilder } = require('@discordjs/builders')
+const { StringSelectMenuBuilder } = require('@discordjs/builders')
 const { ActionRowBuilder } = require('discord.js')
 /**
  * @file Button interaction: incomplete
@@ -16,7 +16,7 @@ module.exports = {
     const target = interaction.guild.members.cache.get(interaction.message.content.split('\n')[0].slice(8).slice(0, -1))
     const incompleteRow = new ActionRowBuilder()
       .addComponents(
-        new SelectMenuBuilder()
+        new StringSelectMenuBuilder()
           .setCustomId('incompleteReason')
           .setPlaceholder('Wähle den Grund aus...')
           .setMinValues(1)

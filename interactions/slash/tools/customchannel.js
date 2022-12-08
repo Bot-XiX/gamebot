@@ -1,4 +1,4 @@
-const { SelectMenuBuilder, ActionRowBuilder, SlashCommandBuilder } = require('discord.js')
+const { StringSelectMenuBuilder, ActionRowBuilder, SlashCommandBuilder } = require('discord.js')
 const { ref, getDatabase, onValue } = require('firebase/database')
 
 /**
@@ -18,7 +18,7 @@ module.exports = {
     const db = getDatabase()
     const id = interaction.guild.id
     const customChannel = await ref(db, id + '/customChannels')
-    const channelSelectMenu = new SelectMenuBuilder()
+    const channelSelectMenu = new StringSelectMenuBuilder()
       .setCustomId('configCustomChannel')
       .setPlaceholder('Nothing selected')
     const unsub = onValue(customChannel, async (snapshot) => {

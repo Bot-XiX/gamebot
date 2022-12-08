@@ -1,4 +1,4 @@
-const { PermissionsBitField, ActionRowBuilder, SelectMenuBuilder } = require('discord.js')
+const { PermissionsBitField, ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js')
 /**
  * @file Button interaction: customVoiceRegion
  * @since 1.0.0
@@ -14,7 +14,7 @@ module.exports = {
     if (channel.permissionsFor(interaction.user.id).has(PermissionsBitField.Flags.ManageChannels)) {
       interaction.client.fetchVoiceRegions()
         .then(regions => {
-          const regionSelect = new SelectMenuBuilder()
+          const regionSelect = new StringSelectMenuBuilder()
             .setCustomId('CVregionSelect')
             .setPlaceholder('Region auswählen')
             .setMinValues(1)

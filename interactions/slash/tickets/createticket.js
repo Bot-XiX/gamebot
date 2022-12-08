@@ -1,4 +1,4 @@
-const { EmbedBuilder, SlashCommandBuilder, ActionRowBuilder, SelectMenuBuilder, ButtonBuilder } = require('@discordjs/builders')
+const { EmbedBuilder, SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder } = require('@discordjs/builders')
 const { ButtonStyle } = require('discord.js')
 
 /**
@@ -31,7 +31,7 @@ module.exports = {
       .setTitle('Placeholder title')
     const editEmbedRow = new ActionRowBuilder()
       .addComponents(
-        new SelectMenuBuilder()
+        new StringSelectMenuBuilder()
           .setCustomId('editTicket')
           .setPlaceholder('Nothing selected')
           .addOptions([
@@ -83,7 +83,7 @@ module.exports = {
           .setCustomId('saveTicketEmbed')
           .setLabel('Save')
           .setStyle(ButtonStyle.Success) // Primary, Secondary, Success, Danger, Link
-          // .setEmoji('EMOJI') // If you want to use an emoji
+        // .setEmoji('EMOJI') // If you want to use an emoji
       )
     const msg = interaction.reply({
       components: [editEmbedRow, saveEmbedRow],
