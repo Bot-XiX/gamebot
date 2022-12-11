@@ -17,19 +17,19 @@ module.exports = {
       const id = interaction.guild.id
       const db = getDatabase()
       const configID = JSON.stringify(await get(ref(db, id + '/tickets/panels/' + interaction.message.id + '/config'))).slice(1, -1)
-      const modalsEnabled = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/0/modals/enabled')).then((snapshot) => snapshot.val())
+      const modalsEnabled = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/4/modals/enabled')).then((snapshot) => snapshot.val())
       console.log(modalsEnabled)
       if (modalsEnabled) {
-        const modalTitle = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/0/modals/title')).then((snapshot) => snapshot.val())
+        const modalTitle = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/4/modals/title')).then((snapshot) => snapshot.val())
         const modalModal = new ModalBuilder().setCustomId('ticket4').setTitle(modalTitle)
-        const modalAmount = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/0/modals/amount')).then((snapshot) => snapshot.val())
+        const modalAmount = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/4/modals/amount')).then((snapshot) => snapshot.val())
         const modalRows = []
         for (let i = 0; i < modalAmount; i++) {
           const modalRow = new ActionRowBuilder()
-          const modalText = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/0/modals/' + i + '/name')).then((snapshot) => snapshot.val())
-          const modalPlaceholder = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/0/modals/' + i + '/placeholder')).then((snapshot) => snapshot.val())
-          const modalType = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/0/modals/' + i + '/type')).then((snapshot) => snapshot.val())
-          const modalRequired = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/0/modals/' + i + '/required')).then((snapshot) => snapshot.val())
+          const modalText = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/4/modals/' + i + '/name')).then((snapshot) => snapshot.val())
+          const modalPlaceholder = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/4/modals/' + i + '/placeholder')).then((snapshot) => snapshot.val())
+          const modalType = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/4/modals/' + i + '/type')).then((snapshot) => snapshot.val())
+          const modalRequired = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/4/modals/' + i + '/required')).then((snapshot) => snapshot.val())
           modalRow.addComponents(new TextInputBuilder().setCustomId('modal' + i).setLabel(modalText).setPlaceholder(modalPlaceholder).setStyle(modalType).setRequired(modalRequired))
           modalRows.push(modalRow)
         }
