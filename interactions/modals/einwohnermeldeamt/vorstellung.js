@@ -63,11 +63,19 @@ module.exports = {
             // new ButtonBuilder()
             //   .setCustomId('banuser')
           )
-        // Add the row to the message
+        const delRow = new ActionRowBuilder()
+          .addComponents(
+            new ButtonBuilder()
+              .setCustomId('delete')
+              .setLabel('Löschen')
+              .setStyle(ButtonStyle.Danger)
+          )
+        const joinTimestamp = `<t:${Math.floor(interaction.member.joinedTimestamp / 1000)}:f>`
+        const createTimestamp = `<t:${Math.floor(interaction.user.createdTimestamp / 1000)}:f>`
         log.send({
-          content: `User: ${interaction.user.toString()} \nUser-ID: ${interaction.user.id}\nAccount erstellt: ${interaction.user.createdAt}\nServer beigetreten: ${interaction.member.joinedAt}`,
+          content: `User: ${interaction.user.toString()} \nUser-ID: ${interaction.user.id}\nAccount erstellt: ${createTimestamp}\nServer beigetreten: ${joinTimestamp}`,
           embeds: [embed],
-          components: [buttonRow]
+          components: [buttonRow, delRow]
         })
         const role = interaction.guild.roles.cache.get('926239165463556126')
         interaction.reply({ content: `Deine Vorstellung wurde gesendet! Das ${role} wird sich zeitnah um die Freischaltung kümmern.`, ephemeral: true })

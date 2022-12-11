@@ -53,8 +53,8 @@ module.exports = {
       .setThumbnail(serverIcon)
       .setDescription(JSON.stringify(await get(ref(db, interaction.member.guild.id + '/einwohnermeldeamt/config/incompleteMsg'))).slice(1).slice(0, -1).replaceAll('\\n', '\n') + '\n**Folgende Angaben fehlten oder waren falsch:**\n' + valuelist.toString().replaceAll(',', '\n'))
       .setFooter({ text: 'QueerCity Verifizierungssystem', iconURL: serverIcon })
-    const newmsg = (interaction.message.content) + '\nUnvollständig markiert durch: ' + String(interaction.user)
     const reference = await interaction.channel.messages.fetch(interaction.message.reference.messageId)
+    const newmsg = (reference.content) + '\nUnvollständig markiert durch: ' + String(interaction.user)
     const embed = reference.embeds[0]
     embed.data.color = 15158332
     try {
