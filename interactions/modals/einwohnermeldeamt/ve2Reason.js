@@ -2,7 +2,6 @@
  * @file Modal interaction: ve2Reason
  * @since 1.0.0
 */
-const prev = require('../../buttons/einwohnermeldeamt/declineuser.js')
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 const { ref, get, getDatabase } = require('firebase/database')
 module.exports = {
@@ -13,6 +12,7 @@ module.exports = {
       * @param {Object} interaction The Interaction Object of the command.
       */
   async execute (interaction) {
+    const target = interaction.guild.members.cache.get(interaction.message.content.split(' ')[1].slice(2, -1))
     const db = getDatabase()
     const id = interaction.guild.id
     const empfangslog = interaction.member.guild.channels.cache.get(JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/eLog'))).slice(1).slice(0, -1))
@@ -20,16 +20,14 @@ module.exports = {
     const role = interaction.member.guild.roles.cache.find(
       (role) => role.name === 'Verifizierungsebene 2'
     )
-    const target = prev.prev.target
     target.roles.add(role)
     empfangslog.send({
       content: `${interaction.user.tag} hat ${target.user} die Rolle \`Verifizierungsebene 2\` hinzugefügt`
     })
     ve2log.send({
       content: target.toString() + '\n\n' + interaction.fields.getTextInputValue('reason'),
-      embeds: [prev.prev.embed]
+      embeds: [interaction.message.embeds[0]]
     })
-    module.exports.prev = target
     const check = JSON.stringify(await get(ref(db, interaction.member.guild.id + '/einwohnermeldeamt/config/VE2MsgEnabled'))).slice(1).slice(0, -1)
     const serverIcon = interaction.guild.iconURL()
     const ve2MsgEmbed = new EmbedBuilder()
@@ -62,7 +60,7 @@ module.exports = {
             .setStyle(ButtonStyle.Primary)
         )
       interaction.reply({
-        content: `${'Verifizierungsebene 2'} hinzugefügt\n\n**Möchtest du die VE2-Nachricht an den User senden?**`,
+        content: `${target}\n${'Verifizierungsebene 2'} hinzugefügt\n\n**Möchtest du die VE2-Nachricht an den User senden?**`,
         components: [optionalRow],
         embeds: [ve2MsgEmbed],
         ephemeral: true,
@@ -74,11 +72,11 @@ module.exports = {
         ephemeral: true
       })
     }
-    const embed = await prev.prev.interaction.message.embeds[0]
+    const embed = await interaction.message.embeds[0]
     const newmsg = (interaction.message.content) + '\nVE2 durch: ' + String(interaction.user)
     embed.data.color = 15158332
     try {
-      await prev.prev.interaction.message.edit({
+      await interaction.message.edit({
         content: newmsg,
         components: [],
         embeds: [embed]

@@ -2,7 +2,6 @@
  * @file Button interaction: sendoptionalve2
  * @since 1.0.0
 */
-const prev = require('../../buttons/einwohnermeldeamt/declineuser.js')
 module.exports = {
   id: 'sendoptionalve2',
   /**
@@ -11,7 +10,7 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
-    const target = prev.prev.target
+    const target = interaction.guild.members.cache.get(interaction.message.content.split('\n')[0].slice(2, -1))
     try {
       target.user.send({
         embeds: interaction.message.embeds

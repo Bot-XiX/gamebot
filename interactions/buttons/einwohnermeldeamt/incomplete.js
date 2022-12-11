@@ -13,7 +13,7 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
-    const target = interaction.guild.members.cache.get(interaction.message.content.split('\n')[0].slice(8).slice(0, -1))
+    const target = interaction.guild.members.cache.get(interaction.message.content.split(' ')[1].slice(2, -1))
     const incompleteRow = new ActionRowBuilder()
       .addComponents(
         new StringSelectMenuBuilder()
@@ -57,7 +57,7 @@ module.exports = {
     // An action row only holds one text input,
     // Add inputs to the modal
     interaction.reply({
-      content: 'Bitte wähle im folgenden Menü *einen oder mehrere Gründe* aus und bestätige dies, indem du außerhalb des Menüs klickst.',
+      content: `User: ${target} \nBitte wähle im folgenden Menü *einen oder mehrere Gründe* aus und bestätige dies, indem du außerhalb des Menüs klickst.`,
       components: [incompleteRow],
       ephemeral: true
     })

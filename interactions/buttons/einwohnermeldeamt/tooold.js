@@ -17,7 +17,7 @@ module.exports = {
     await interaction.reply({ content: 'User aufgrund zu hohen Alters gebannt.', ephemeral: true })
     const db = getDatabase()
     const id = interaction.guild.id
-    const target = interaction.guild.members.cache.get(interaction.message.content.split('\n')[0].slice(8).slice(0, -1))
+    const target = interaction.guild.members.cache.get(interaction.message.content.split('\n')[0].slice(2, -1))
     const empfangslog = interaction.member.guild.channels.cache.get(JSON.stringify(await get(ref(db, id + '/einwohnermeldeamt/config/eLog'))).slice(1).slice(0, -1))
     const embed = (interaction.message.embeds[0])
     // Ban-Action
