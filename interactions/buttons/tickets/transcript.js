@@ -12,11 +12,14 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
+    const reference = interaction.message.reference
+    const referenceMsg = await interaction.channel.messages.fetch(reference.messageId)
+    const configId = referenceMsg.embeds[0].footer.text.split(' ')[3]
+    const button = referenceMsg.embeds[0].footer.text.split(' ')[5]
     const db = getDatabase()
     const id = interaction.guild.id
-    const transcriptChannel = await get(ref(db, id + '/tickets/config/transcriptChannel')).then((snapshot) => snapshot.val())
+    const transcriptChannel = await get(ref(db, id + '/tickets/config/' + configId + '/buttons/components/' + button + '/transcriptChannel')).then((snapshot) => snapshot.val())
     if (transcriptChannel) {
-      console.log(transcriptChannel)
       const transcript = await discordTranscripts.createTranscript(interaction.channel)
       const channel = interaction.guild.channels.cache.get(transcriptChannel)
       interaction.reply({

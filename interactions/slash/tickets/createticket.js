@@ -82,11 +82,7 @@ module.exports = {
         new ButtonBuilder()
           .setCustomId('saveTicketEmbed')
           .setLabel('Save')
-          .setStyle(ButtonStyle.Success), // Primary, Secondary, Success, Danger, Link
-        new ButtonBuilder()
-          .setCustomId('setTranscriptChannel')
-          .setLabel('Set transcript channel')
-          .setStyle(ButtonStyle.Primary)
+          .setStyle(ButtonStyle.Success) // Primary, Secondary, Success, Danger, Link
       )
     const msg = interaction.reply({
       components: [editEmbedRow, saveEmbedRow],

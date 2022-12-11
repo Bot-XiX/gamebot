@@ -364,84 +364,103 @@ module.exports = {
                       await collect().then(async (m) => {
                         set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/name'), m.first().content)
                         interaction.editReply({
-                          content: `Name gesetzt: ${m.first().content}\nMöchtest du Modals für dieses Ticket erstellen?\nSchreibe \`yes\` oder \`no\`.`
+                          content: `Name gesetzt: ${m.first().content}`
                         })
                         m.first().delete()
                         await collect().then(async (m) => {
-                          if (m.first().content.toLowerCase() === 'yes') {
-                            set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/enabled'), true)
-                            m.first().delete()
+                          if (m.first().content.toLowerCase() !== 'none') {
+                            let channelID
+                            if (m.first().mentions.channels.first()) {
+                              channelID = m.first().mentions.channels.first().id
+                            } else {
+                              channelID = m.first().content
+                            }
+                            set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/transcriptChannel'), channelID)
                             interaction.editReply({
-                              content: 'Modals aktiviert.\nBitte schreibe den Titel des Modals.'
+                              content: `Transcript Channel gesetzt: ${interaction.guild.channels.cache.get(channelID)}\nMöchtest du Modals für dieses Ticket erstellen?\nSchreibe \`yes\` oder \`no\`.`
                             })
                           } else {
-                            set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/enabled'), false)
-                            m.first().delete()
-                            return interaction.editReply({
-                              content: 'Modals deaktiviert.\nFertig.'
+                            interaction.editReply({
+                              content: `Kein Transcript Channel gesetzt.\nMöchtest du Modals für dieses Ticket erstellen?\nSchreibe \`yes\` oder \`no\`.`
                             })
                           }
+                          m.first().delete()
                           await collect().then(async (m) => {
-                            const title = m.first().content
-                            set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/title'), title)
-                            interaction.editReply({
-                              content: `Titel gesetzt: ${title}\nBitte schreibe die Anzahl der Modal-Komponenten.`
-                            })
-                            m.first().delete()
-                            await collect().then(async (m) => {
-                              const amount = parseInt(m.first().content)
-                              if (isNaN(amount)) {
-                                set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/enabled'), false)
-                                m.first().delete()
-                                return interaction.editReply({
-                                  content: 'Keine Zahl eingegeben.\nFertig.'
-                                })
-                              }
+                            if (m.first().content.toLowerCase() === 'yes') {
+                              set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/enabled'), true)
                               m.first().delete()
-                              set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/amount'), amount)
-                              for (let i = 0; i < amount; i++) {
-                                interaction.editReply({
-                                  content: 'Bitte schreibe die Namen der Modal-Komponente.'
-                                })
-                                await collect().then(async (m) => {
-                                  const name = m.first().content
-                                  interaction.editReply({
-                                    content: `Name gesetzt: ${name}\nBitte schreibe den Placeholder der Modal-Komponente.`
-                                  })
+                              interaction.editReply({
+                                content: 'Modals aktiviert.\nBitte schreibe den Titel des Modals.'
+                              })
+                            } else {
+                              set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/enabled'), false)
+                              m.first().delete()
+                              return interaction.editReply({
+                                content: 'Modals deaktiviert.\nFertig.'
+                              })
+                            }
+                            await collect().then(async (m) => {
+                              const title = m.first().content
+                              set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/title'), title)
+                              interaction.editReply({
+                                content: `Titel gesetzt: ${title}\nBitte schreibe die Anzahl der Modal-Komponenten.`
+                              })
+                              m.first().delete()
+                              await collect().then(async (m) => {
+                                const amount = parseInt(m.first().content)
+                                if (isNaN(amount)) {
+                                  set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/enabled'), false)
                                   m.first().delete()
-                                  set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/' + i + '/name'), name)
+                                  return interaction.editReply({
+                                    content: 'Keine Zahl eingegeben.\nFertig.'
+                                  })
+                                }
+                                m.first().delete()
+                                set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/amount'), amount)
+                                for (let i = 0; i < amount; i++) {
+                                  interaction.editReply({
+                                    content: 'Bitte schreibe die Namen der Modal-Komponente.'
+                                  })
                                   await collect().then(async (m) => {
-                                    const placeholder = m.first().content
+                                    const name = m.first().content
                                     interaction.editReply({
-                                      content: `Placeholder gesetzt: ${placeholder}\nBitte schreibe gib an ob es sich um eine kurze oder lange Eingabe handelt.\nSchreibe \`short\` oder \`long\`.`
+                                      content: `Name gesetzt: ${name}\nBitte schreibe den Placeholder der Modal-Komponente.`
                                     })
-                                    set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/' + i + '/placeholder'), placeholder)
                                     m.first().delete()
+                                    set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/' + i + '/name'), name)
                                     await collect().then(async (m) => {
-                                      if (m.first().content.toLowerCase() === 'short') {
-                                        set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/' + i + '/type'), '1')
-                                      } else {
-                                        set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/' + i + '/type'), '2')
-                                      }
+                                      const placeholder = m.first().content
                                       interaction.editReply({
-                                        content: `Typ gesetzt: ${m.first().content}\nIst dieses Feld required?\nSchreibe \`yes\` oder \`no\`.`
+                                        content: `Placeholder gesetzt: ${placeholder}\nBitte schreibe gib an ob es sich um eine kurze oder lange Eingabe handelt.\nSchreibe \`short\` oder \`long\`.`
                                       })
+                                      set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/' + i + '/placeholder'), placeholder)
                                       m.first().delete()
                                       await collect().then(async (m) => {
-                                        if (m.first().content.toLowerCase() === 'yes') {
-                                          set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/' + i + '/required'), true)
+                                        if (m.first().content.toLowerCase() === 'short') {
+                                          set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/' + i + '/type'), '1')
                                         } else {
-                                          set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/' + i + '/required'), false)
+                                          set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/' + i + '/type'), '2')
                                         }
                                         interaction.editReply({
-                                          content: `Required gesetzt: ${m.first().content}\nFertig.`
+                                          content: `Typ gesetzt: ${m.first().content}\nIst dieses Feld required?\nSchreibe \`yes\` oder \`no\`.`
                                         })
                                         m.first().delete()
+                                        await collect().then(async (m) => {
+                                          if (m.first().content.toLowerCase() === 'yes') {
+                                            set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/' + i + '/required'), true)
+                                          } else {
+                                            set(ref(db, id + '/tickets/config/' + interaction.message.id + '/buttons/components/' + length + '/modals/' + i + '/required'), false)
+                                          }
+                                          interaction.editReply({
+                                            content: `Required gesetzt: ${m.first().content}\nFertig.`
+                                          })
+                                          m.first().delete()
+                                        })
                                       })
                                     })
                                   })
-                                })
-                              }
+                                }
+                              })
                             })
                           })
                         })

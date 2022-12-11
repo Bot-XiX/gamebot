@@ -57,6 +57,7 @@ module.exports = {
           await channel.permissionOverwrites.delete(mapArray[i][1].id)
         }
       }
+      const footerText = interaction.message.embeds[0].footer.text
       channel.setName(`🔒-${channelName}`).then(async () => {
         const closedEmbed = new EmbedBuilder()
           .setTitle('Ticket geschlossen')
@@ -67,7 +68,7 @@ module.exports = {
           .setDescription(`Das Ticket wurde durch ${targetName} geschlossen.`)
           .setTimestamp()
           .setFooter({
-            text: `Ticket | ${target.user.id}`
+            text: footerText
           })
         const ticketControls = new ActionRowBuilder()
           .addComponents(
