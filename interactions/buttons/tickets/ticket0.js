@@ -1,5 +1,5 @@
 const { get, ref, getDatabase, set, onValue } = require('firebase/database')
-const { PermissionsBitField, ChannelType, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js')
+const { PermissionsBitField, ChannelType, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, TextInputBuilder, ModalBuilder } = require('discord.js')
 /**
  * @file Button interaction: ticket0
  * @since 1.0.0
@@ -17,8 +17,28 @@ module.exports = {
       const id = interaction.guild.id
       const db = getDatabase()
       const configID = JSON.stringify(await get(ref(db, id + '/tickets/panels/' + interaction.message.id + '/config'))).slice(1, -1)
+      const modalsEnabled = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/0/modals/enabled')).then((snapshot) => snapshot.val())
+      console.log(modalsEnabled)
+      if (modalsEnabled) {
+        const modalTitle = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/0/modals/title')).then((snapshot) => snapshot.val())
+        const modalModal = new ModalBuilder().setCustomId('ticket0').setTitle(modalTitle)
+        const modalAmount = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/0/modals/amount')).then((snapshot) => snapshot.val())
+        const modalRows = []
+        for (let i = 0; i < modalAmount; i++) {
+          const modalRow = new ActionRowBuilder()
+          const modalText = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/0/modals/' + i + '/name')).then((snapshot) => snapshot.val())
+          const modalPlaceholder = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/0/modals/' + i + '/placeholder')).then((snapshot) => snapshot.val())
+          const modalType = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/0/modals/' + i + '/type')).then((snapshot) => snapshot.val())
+          const modalRequired = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/0/modals/' + i + '/required')).then((snapshot) => snapshot.val())
+          modalRow.addComponents(new TextInputBuilder().setCustomId('modal' + i).setLabel(modalText).setPlaceholder(modalPlaceholder).setStyle(modalType).setRequired(modalRequired))
+          modalRows.push(modalRow)
+        }
+        modalModal.addComponents(modalRows)
+        console.log(modalModal)
+        return interaction.showModal(modalModal)
+      }
       const config = ref(db, id + '/tickets/config/' + configID + '/buttons/components/0')
-      let modRole
+      let modRoles
       let openCategory
       let name
       let counter = parseInt(JSON.stringify(await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/0/counter'))))
@@ -31,7 +51,7 @@ module.exports = {
       }
       const unsub = onValue(config, async (snapshot) => {
         const config = await snapshot.val()
-        modRole = interaction.guild.roles.cache.get(config.modRole)
+        modRoles = config.modRoles
         openCategory = interaction.guild.channels.cache.get(config.channel)
         try {
           name = config.name
@@ -54,14 +74,17 @@ module.exports = {
             AttachFiles: true,
             EmbedLinks: true
           })
-          await channel.permissionOverwrites.edit(modRole, {
-            ViewChannel: true,
-            SendMessages: true,
-            ReadMessageHistory: true,
-            AttachFiles: true,
-            EmbedLinks: true,
-            ManageChannels: true
-          })
+          for (let i = 0; i < modRoles.length; i++) {
+            console.log(modRoles[i])
+            await channel.permissionOverwrites.edit(modRoles[i], {
+              ViewChannel: true,
+              SendMessages: true,
+              ReadMessageHistory: true,
+              AttachFiles: true,
+              EmbedLinks: true,
+              ManageChannels: true
+            })
+          }
           const rowRow = new ActionRowBuilder()
             .addComponents(
               new ButtonBuilder()
@@ -78,6 +101,16 @@ module.exports = {
             .setFooter({
               text: `${name} Ticket | ${configID} | 0`
             })
+          // Get modRoles mentions
+          let modRole = ''
+          for (let i = 0; i < modRoles.length; i++) {
+            // check if modRole is a role
+            if (interaction.guild.roles.cache.get(modRoles[i])) {
+              modRole += `<@&${modRoles[i]}> `
+            } else {
+              modRole += `<@${modRoles[i]}> `
+            }
+          }
           const msg = channel.send({
             content: `Hey ${modRole}, ${target} hat ein Ticket für euch erstellt!`,
             embeds: [ticketEmbed],
@@ -90,7 +123,8 @@ module.exports = {
         }
         unsub()
       })
-    } catch {
+    } catch (e) {
+      console.log(e)
       interaction.reply({ content: 'Ein Fehler ist aufgetreten\nBitte gib einem Teammitglied Bescheid wenn er weiterhin auftritt.', ephemeral: true })
     }
   }
