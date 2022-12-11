@@ -75,7 +75,6 @@ module.exports = {
             EmbedLinks: true
           })
           for (let i = 0; i < modRoles.length; i++) {
-            console.log(modRoles[i])
             await channel.permissionOverwrites.edit(modRoles[i], {
               ViewChannel: true,
               SendMessages: true,

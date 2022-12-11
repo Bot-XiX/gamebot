@@ -21,7 +21,7 @@ module.exports = {
     const timer = JSON.stringify(await get(ref(db, id + '/tickets/channels/' + interaction.channel.id + '/time'))).slice(4, -2)
     const times = time().slice(3, -1) - timer
     if (times < 600) {
-      interaction.editReply({ content: `You can only a ticket every 10 minutes.\n Please wait another ${Math.floor((600 - times) / 60)} minutes.`, ephemeral: true })
+      interaction.editReply({ content: `You can only close a ticket every 10 minutes.\n Please wait another ${Math.floor((600 - times) / 60)} minutes.`, ephemeral: true })
     } else {
       const channel = interaction.channel
       const channelName = channel.name
@@ -39,7 +39,13 @@ module.exports = {
       const configId = getConfig[1]
       const button = getConfig[2]
       const parentId = JSON.stringify(await get(ref(db, id + '/tickets/config/' + configId + '/buttons/components/' + button + '/closedChannel'))).slice(1, -1)
-      const modRole = JSON.stringify(await get(ref(db, id + '/tickets/config/' + configId + '/buttons/components/' + button + '/modRole'))).slice(1, -1)
+      const modRoles = await get(ref(db, id + '/tickets/config/' + configId + '/buttons/components/' + button + '/modRoles')).then((snapshot) => {
+        if (snapshot.exists()) {
+          return snapshot.val()
+        } else {
+          return null
+        }
+      })
       channel.setParent(await interaction.guild.channels.cache.get(parentId), { lockPermissions: false })
       const map = channel.permissionOverwrites.cache
       const mapArray = Array.from(map)
@@ -47,18 +53,10 @@ module.exports = {
         await set(ref(db, id + '/tickets/channels/' + interaction.channel.id + '/permissions/' + mapArray[i][0] + '/id'), mapArray[i][1].id)
       }
       for (let i = 0; i < mapArray.length; i++) {
-        if (interaction.guild.roles.cache.get(mapArray[i][1].id) !== interaction.guild.roles.everyone) {
+        if (interaction.guild.roles.cache.get(mapArray[i][1].id) !== interaction.guild.roles.everyone && modRoles.includes(mapArray[i][1].id) === false) {
           await channel.permissionOverwrites.delete(mapArray[i][1].id)
         }
       }
-      await channel.permissionOverwrites.edit(modRole, {
-        ViewChannel: true,
-        SendMessages: true,
-        ReadMessageHistory: true,
-        AttachFiles: true,
-        EmbedLinks: true,
-        ManageChannels: true
-      })
       channel.setName(`🔒-${channelName}`).then(async () => {
         const closedEmbed = new EmbedBuilder()
           .setTitle('Ticket geschlossen')
