@@ -28,7 +28,7 @@ module.exports = {
           name: `Vorstellung von ${interaction.user.tag}`,
           iconURL: interaction.member.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 })
         })
-
+        .setThumbnail(interaction.member.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 }))
         .addFields(
           { name: 'Name&Alter', value: interaction.fields.getTextInputValue('nameAndAge') },
           { name: 'Wohnort', value: interaction.fields.getTextInputValue('location') },
@@ -64,7 +64,11 @@ module.exports = {
             //   .setCustomId('banuser')
           )
         // Add the row to the message
-        log.send({ content: 'User: ' + (interaction.user).toString() + '\nUser-ID: ' + interaction.user.id, embeds: [embed], components: [buttonRow] })
+        log.send({
+          content: `User: ${interaction.user.toString()} \nUser-ID: ${interaction.user.id}\nAccount erstellt: ${interaction.user.createdAt}\nServer beigetreten: ${interaction.member.joinedAt}`,
+          embeds: [embed],
+          components: [buttonRow]
+        })
         const role = interaction.guild.roles.cache.get('926239165463556126')
         interaction.reply({ content: `Deine Vorstellung wurde gesendet! Das ${role} wird sich zeitnah um die Freischaltung kümmern.`, ephemeral: true })
       } catch {
