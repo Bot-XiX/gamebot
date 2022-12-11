@@ -12,7 +12,7 @@ module.exports = {
 * @param {Object} interaction The Interaction Object of the command.
 */
   async execute (interaction) {
-    const target = interaction.guild.members.cache.get(interaction.message.content.split('\n')[0].slice(2, -1))
+    const target = interaction.guild.members.cache.get(interaction.message.content.split(' ')[1].slice(2, -1))
     target.roles.add(interaction.guild.roles.cache.find(r => r.name === 'Tourist'))
     interaction.reply({ content: 'Tourist role added.', ephemeral: true })
     const db = getDatabase()
