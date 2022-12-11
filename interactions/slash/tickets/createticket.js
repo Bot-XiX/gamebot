@@ -82,8 +82,11 @@ module.exports = {
         new ButtonBuilder()
           .setCustomId('saveTicketEmbed')
           .setLabel('Save')
-          .setStyle(ButtonStyle.Success) // Primary, Secondary, Success, Danger, Link
-        // .setEmoji('EMOJI') // If you want to use an emoji
+          .setStyle(ButtonStyle.Success), // Primary, Secondary, Success, Danger, Link
+        new ButtonBuilder()
+          .setCustomId('setTranscriptChannel')
+          .setLabel('Set transcript channel')
+          .setStyle(ButtonStyle.Primary)
       )
     const msg = interaction.reply({
       components: [editEmbedRow, saveEmbedRow],
