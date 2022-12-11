@@ -22,7 +22,11 @@ module.exports = {
         new ButtonBuilder()
           .setCustomId('cancelButton')
           .setLabel('Abbrechen')
-          .setStyle(ButtonStyle.Secondary) // Primary, Secondary, Success, Danger, Link
+          .setStyle(ButtonStyle.Secondary), // Primary, Secondary, Success, Danger, Link
+        new ButtonBuilder()
+          .setCustomId('transcript')
+          .setLabel('Transkript')
+          .setStyle(ButtonStyle.Primary) // Primary, Secondary, Success, Danger, Link
       )
     // Add the row to the message
     interaction.reply({
