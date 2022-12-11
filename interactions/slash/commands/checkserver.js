@@ -19,7 +19,12 @@ module.exports = {
     embed.setTitle('Servers')
     embed.setDescription(`I am in ${guilds.size} servers.`)
     for (const guild of guilds) {
-      const inviteLink = await guild[1].channels.cache.first().createInvite({ maxAge: 10 * 60 * 1000, maxUses: 1 })
+      let inviteLink
+      try {
+        inviteLink = await guild[1].channels.cache.first().createInvite({ maxAge: 10 * 60 * 1000, maxUses: 1 })
+      } catch {
+        inviteLink = 'No Invite'
+      }
       embed.addFields({ name: guild[1].name, value: `ID: ${guild[1].id}\nInvite: ${inviteLink}` })
     }
     await interaction.reply({ embeds: [embed] })
