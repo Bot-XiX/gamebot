@@ -98,7 +98,6 @@ module.exports = {
         })
         // Get modals inputs length
         const amount = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/4/modals/amount')).then((snapshot) => snapshot.val())
-        console.log(amount)
         for (let i = 0; i < amount; i++) {
           const modalTitle = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/4/modals/' + i + '/name'))
           // Get

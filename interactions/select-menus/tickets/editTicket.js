@@ -455,7 +455,6 @@ module.exports = {
         }
       }
     } catch (e) {
-      console.log(e)
       interaction.editReply({
         content: 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.'
       })

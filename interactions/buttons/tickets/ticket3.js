@@ -18,7 +18,6 @@ module.exports = {
       const db = getDatabase()
       const configID = JSON.stringify(await get(ref(db, id + '/tickets/panels/' + interaction.message.id + '/config'))).slice(1, -1)
       const modalsEnabled = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/3/modals/enabled')).then((snapshot) => snapshot.val())
-      console.log(modalsEnabled)
       if (modalsEnabled) {
         const modalTitle = await get(ref(db, id + '/tickets/config/' + configID + '/buttons/components/3/modals/title')).then((snapshot) => snapshot.val())
         const modalModal = new ModalBuilder().setCustomId('ticket3').setTitle(modalTitle)
@@ -34,7 +33,6 @@ module.exports = {
           modalRows.push(modalRow)
         }
         modalModal.addComponents(modalRows)
-        console.log(modalModal)
         return interaction.showModal(modalModal)
       }
       const config = ref(db, id + '/tickets/config/' + configID + '/buttons/components/3')
